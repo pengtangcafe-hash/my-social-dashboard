@@ -83,10 +83,6 @@
     .theme-btn:hover { background: var(--nav-active); }
     .theme-btn.active-theme { background: var(--nav-active); outline: 2px solid var(--card-border); }
 
-    /* intel tabs */
-    .intel-tab { background: transparent; }
-    .intel-tab.active-intel-tab { background: var(--nav-active); color: var(--nav-text); }
-
     /* misc */
     .view { display: none; }
     .view.active { display: block; }
@@ -138,8 +134,7 @@
     <div class="text-[10px]" style="color:var(--text-muted)">คลินิกทันตกรรม สกลนคร</div>
   </div>
   <button onclick="openSidebar()" class="p-2 rounded-xl transition-colors"
-    style="color:var(--text-muted);background:transparent"
-    aria-label="เปิดเมนู">
+    style="color:var(--text-muted);background:transparent" aria-label="เปิดเมนู">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
     </svg>
@@ -189,20 +184,6 @@
       <button onclick="showView('view-tiktok')" id="nav-tiktok" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors text-sm"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#010101"></span>TikTok</button>
 <button onclick="showView('view-facebook')" id="nav-facebook" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors text-sm"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#1877f2"></span>Facebook</button>
 <button onclick="showView('view-instagram')" id="nav-instagram" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors text-sm"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#e1306c"></span>Instagram</button>
-
-      <div class="pt-2 pb-1">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Intelligence</p>
-      </div>
-
-      <button onclick="showView('view-intel')" id="nav-intel"
-        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
-               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
-        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-        </svg>
-        ข่าวกรอง
-      </button>
 
       <div class="pt-2 pb-1">
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Tools</p>
@@ -303,28 +284,6 @@
 
 <div id="view-instagram" class="view"><div class="flex items-center gap-3 mb-6"><span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full text-white" style="background:#e1306c">Instagram</span><h1 class="text-3xl font-black text-slate-800">Dashboard</h1></div><!-- KPI Cards --><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ยอดดูรวม</div><div class="kpi-value text-4xl font-black text-slate-800">15,307</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ยอดดูเฉลี่ย/วัน</div><div class="kpi-value text-4xl font-black text-slate-800">546.7</div><div class="text-xs text-slate-400 mt-1">เฉลี่ย 28 วัน</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">อัตราการมีส่วนร่วม</div><div class="kpi-value text-4xl font-black" style="color:#e1306c">1.72%</div><div class="text-xs text-slate-400 mt-1">เฉลี่ยวันที่ active</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ผู้ติดตามใหม่</div><div class="kpi-value text-4xl font-black text-slate-800">0</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div></div><!-- Charts Grid --><div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6"><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">แนวโน้มยอดดูรายวัน</h2><div class="relative h-64"><canvas id="instagramLineChart"></canvas></div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">สัดส่วนการมีส่วนร่วม</h2><div class="relative h-64"><canvas id="instagramDoughnutChart"></canvas></div></div></div><!-- Daily Table --><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">ข้อมูลรายวัน</h2><div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="border-b-2 border-slate-200"><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap ">วันที่</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">ยอดดู</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">การมีส่วนร่วม</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">Impressions</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">เข้าชมโปรไฟล์</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">คลิกลิงก์</th></tr></thead><tbody><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">16 May 2026</td><td class="px-4 py-3 text-right tabular-nums">40</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">26</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">15 May 2026</td><td class="px-4 py-3 text-right tabular-nums">219</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">121</td><td class="px-4 py-3 text-right tabular-nums">7</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">14 May 2026</td><td class="px-4 py-3 text-right tabular-nums">277</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">126</td><td class="px-4 py-3 text-right tabular-nums">12</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">13 May 2026</td><td class="px-4 py-3 text-right tabular-nums">55</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">33</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">12 May 2026</td><td class="px-4 py-3 text-right tabular-nums">871</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">576</td><td class="px-4 py-3 text-right tabular-nums">13</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">11 May 2026</td><td class="px-4 py-3 text-right tabular-nums">998</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">534</td><td class="px-4 py-3 text-right tabular-nums">14</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">10 May 2026</td><td class="px-4 py-3 text-right tabular-nums">3,395</td><td class="px-4 py-3 text-right tabular-nums">26</td><td class="px-4 py-3 text-right tabular-nums">2,723</td><td class="px-4 py-3 text-right tabular-nums">27</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">09 May 2026</td><td class="px-4 py-3 text-right tabular-nums font-bold" style="color:#e1306c">6,605</td><td class="px-4 py-3 text-right tabular-nums">43</td><td class="px-4 py-3 text-right tabular-nums">5,134</td><td class="px-4 py-3 text-right tabular-nums">50</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">08 May 2026</td><td class="px-4 py-3 text-right tabular-nums">154</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">22</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">07 May 2026</td><td class="px-4 py-3 text-right tabular-nums">132</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">22</td><td class="px-4 py-3 text-right tabular-nums">12</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">06 May 2026</td><td class="px-4 py-3 text-right tabular-nums">111</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">21</td><td class="px-4 py-3 text-right tabular-nums">5</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">05 May 2026</td><td class="px-4 py-3 text-right tabular-nums">108</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">36</td><td class="px-4 py-3 text-right tabular-nums">10</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">04 May 2026</td><td class="px-4 py-3 text-right tabular-nums">310</td><td class="px-4 py-3 text-right tabular-nums">26</td><td class="px-4 py-3 text-right tabular-nums">139</td><td class="px-4 py-3 text-right tabular-nums">37</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">03 May 2026</td><td class="px-4 py-3 text-right tabular-nums">383</td><td class="px-4 py-3 text-right tabular-nums">9</td><td class="px-4 py-3 text-right tabular-nums">133</td><td class="px-4 py-3 text-right tabular-nums">15</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">02 May 2026</td><td class="px-4 py-3 text-right tabular-nums">211</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">120</td><td class="px-4 py-3 text-right tabular-nums">9</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">01 May 2026</td><td class="px-4 py-3 text-right tabular-nums">30</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">7</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">30 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">45</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">25</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">29 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">112</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">64</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">28 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">1,189</td><td class="px-4 py-3 text-right tabular-nums">49</td><td class="px-4 py-3 text-right tabular-nums">607</td><td class="px-4 py-3 text-right tabular-nums">69</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">27 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">7</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">26 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">25 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">15</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">24 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">5</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">23 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">9</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">22 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">23</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">21 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">20 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">19 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr></tbody></table></div></div></div>
 
-    <!-- ── Intel View ── -->
-    <div id="view-intel" class="view">
-      <div class="flex items-center justify-between mb-6">
-        <div>
-          <h1 class="text-3xl font-black text-slate-800">ข่าวกรองตลาด</h1>
-          <p class="text-sm text-slate-500 mt-1">Intelligence จากการค้นหาตลาดคลินิกทันตกรรม สกลนคร</p>
-        </div>
-        <span id="intelCount" class="text-xs text-slate-400 bg-white rounded-full px-3 py-1 border border-slate-200"></span>
-      </div>
-
-      <!-- Tab bar -->
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-2 mb-6 flex gap-1 flex-wrap">
-        <button onclick="setIntelTab('all',this)" class="intel-tab active-intel-tab text-sm px-4 py-2 rounded-xl font-semibold transition-colors">ทั้งหมด</button>
-        <button onclick="setIntelTab('competitor',this)" class="intel-tab text-sm px-4 py-2 rounded-xl font-semibold transition-colors text-slate-600 hover:bg-slate-50">🏢 คู่แข่ง</button>
-        <button onclick="setIntelTab('knowledge',this)" class="intel-tab text-sm px-4 py-2 rounded-xl font-semibold transition-colors text-slate-600 hover:bg-slate-50">🦷 ข้อมูลทันตกรรม</button>
-        <button onclick="setIntelTab('news',this)" class="intel-tab text-sm px-4 py-2 rounded-xl font-semibold transition-colors text-slate-600 hover:bg-slate-50">📅 ข่าว &amp; Events</button>
-      </div>
-
-      <!-- Card grid -->
-      <div id="intelCardGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
-    </div>
-
     <!-- ── Import View ── -->
     <div id="view-import" class="view">
 
@@ -389,22 +348,6 @@
 const DATA = {"tiktok": {"dates": ["19 Apr", "20 Apr", "21 Apr", "22 Apr", "23 Apr", "24 Apr", "25 Apr", "26 Apr", "27 Apr", "28 Apr", "29 Apr", "30 Apr", "01 May", "02 May", "03 May", "04 May", "05 May", "06 May", "07 May", "08 May", "09 May", "10 May", "11 May", "12 May", "13 May", "14 May", "15 May", "16 May"], "reach": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 133, 151, 35, 140, 112, 407, 851, 840, 25649, 48255, 25263, 21894, 8945, 9703, 4616, 8984, 8721], "columns": ["date", "reach", "profile_visits", "likes", "comments", "shares"], "peak_reach": 48255, "metrics": {"days": 28, "total_reach": 164699, "avg_reach": 5882.1, "avg_er": 5.33, "total_engagement": 10685, "new_followers": 0}, "doughnut": {"labels": ["Likes", "Comments", "Shares"], "data": [8793, 14, 1878], "colors": ["#fd3e81", "#25f4ee", "#010101"]}, "table": [{"date": "2026-05-16", "reach": 8721, "profile_visits": 27, "likes": 442, "comments": 0, "shares": 83}, {"date": "2026-05-15", "reach": 8984, "profile_visits": 36, "likes": 492, "comments": 0, "shares": 98}, {"date": "2026-05-14", "reach": 4616, "profile_visits": 26, "likes": 264, "comments": 2, "shares": 51}, {"date": "2026-05-13", "reach": 9703, "profile_visits": 35, "likes": 554, "comments": 2, "shares": 134}, {"date": "2026-05-12", "reach": 8945, "profile_visits": 32, "likes": 516, "comments": 0, "shares": 81}, {"date": "2026-05-11", "reach": 21894, "profile_visits": 37, "likes": 1305, "comments": 4, "shares": 269}, {"date": "2026-05-10", "reach": 25263, "profile_visits": 80, "likes": 1686, "comments": 0, "shares": 351}, {"date": "2026-05-09", "reach": 48255, "profile_visits": 127, "likes": 2509, "comments": 2, "shares": 528}, {"date": "2026-05-08", "reach": 25649, "profile_visits": 71, "likes": 946, "comments": 2, "shares": 241}, {"date": "2026-05-07", "reach": 840, "profile_visits": 4, "likes": 35, "comments": 0, "shares": 4}, {"date": "2026-05-06", "reach": 851, "profile_visits": 10, "likes": 17, "comments": 0, "shares": 0}, {"date": "2026-05-05", "reach": 407, "profile_visits": 24, "likes": 18, "comments": 0, "shares": 37}, {"date": "2026-05-04", "reach": 112, "profile_visits": 0, "likes": 1, "comments": 0, "shares": 0}, {"date": "2026-05-03", "reach": 140, "profile_visits": 3, "likes": 5, "comments": 1, "shares": 0}, {"date": "2026-05-02", "reach": 35, "profile_visits": 0, "likes": 0, "comments": 1, "shares": 0}, {"date": "2026-05-01", "reach": 151, "profile_visits": 1, "likes": 1, "comments": 0, "shares": 0}, {"date": "2026-04-30", "reach": 133, "profile_visits": 2, "likes": 2, "comments": 0, "shares": 1}, {"date": "2026-04-29", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-28", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-27", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-26", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-25", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-24", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-23", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-22", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-21", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-20", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-19", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}]}, "facebook": {"dates": ["19 Apr", "20 Apr", "21 Apr", "22 Apr", "23 Apr", "24 Apr", "25 Apr", "26 Apr", "27 Apr", "28 Apr", "29 Apr", "30 Apr", "01 May", "02 May", "03 May", "04 May", "05 May", "06 May", "07 May", "08 May", "09 May", "10 May", "11 May", "12 May", "13 May", "14 May", "15 May", "16 May"], "reach": [1526, 454, 920, 370, 320, 1094, 454, 321, 505, 1986, 951, 2241, 869, 1163, 2744, 3676, 2072, 1442, 1602, 1048, 25035, 2741, 2528, 1386, 1744, 1127, 358, 250], "columns": ["date", "reach", "engagement", "new_followers", "profile_visits", "link_clicks", "audience"], "peak_reach": 25035, "metrics": {"days": 28, "total_reach": 60927, "avg_reach": 2176.0, "avg_er": 1.08, "total_engagement": 482, "new_followers": 84}, "doughnut": {"labels": ["การมีส่วนร่วม", "ผู้ติดตามใหม่", "คลิกลิงก์"], "data": [482, 84, 86], "colors": ["#1877f2", "#0d5dbf", "#47b0f5"]}, "table": [{"date": "2026-05-16", "reach": 250, "engagement": 8, "new_followers": 1, "profile_visits": 37, "link_clicks": 0, "audience": 207}, {"date": "2026-05-15", "reach": 358, "engagement": 11, "new_followers": 3, "profile_visits": 129, "link_clicks": 0, "audience": 1108}, {"date": "2026-05-14", "reach": 1127, "engagement": 13, "new_followers": 2, "profile_visits": 268, "link_clicks": 2, "audience": 453}, {"date": "2026-05-13", "reach": 1744, "engagement": 2, "new_followers": 8, "profile_visits": 300, "link_clicks": 4, "audience": 137}, {"date": "2026-05-12", "reach": 1386, "engagement": 13, "new_followers": 3, "profile_visits": 169, "link_clicks": 4, "audience": 226}, {"date": "2026-05-11", "reach": 2528, "engagement": 30, "new_followers": 3, "profile_visits": 249, "link_clicks": 3, "audience": 726}, {"date": "2026-05-10", "reach": 2741, "engagement": 37, "new_followers": 1, "profile_visits": 164, "link_clicks": 2, "audience": 1191}, {"date": "2026-05-09", "reach": 25035, "engagement": 59, "new_followers": 13, "profile_visits": 226, "link_clicks": 2, "audience": 15595}, {"date": "2026-05-08", "reach": 1048, "engagement": 27, "new_followers": 0, "profile_visits": 136, "link_clicks": 1, "audience": 238}, {"date": "2026-05-07", "reach": 1602, "engagement": 23, "new_followers": 1, "profile_visits": 137, "link_clicks": 3, "audience": 262}, {"date": "2026-05-06", "reach": 1442, "engagement": 20, "new_followers": 5, "profile_visits": 114, "link_clicks": 3, "audience": 276}, {"date": "2026-05-05", "reach": 2072, "engagement": 26, "new_followers": 6, "profile_visits": 225, "link_clicks": 3, "audience": 309}, {"date": "2026-05-04", "reach": 3676, "engagement": 37, "new_followers": 2, "profile_visits": 305, "link_clicks": 5, "audience": 687}, {"date": "2026-05-03", "reach": 2744, "engagement": 50, "new_followers": 2, "profile_visits": 197, "link_clicks": 2, "audience": 544}, {"date": "2026-05-02", "reach": 1163, "engagement": 10, "new_followers": 2, "profile_visits": 127, "link_clicks": 3, "audience": 252}, {"date": "2026-05-01", "reach": 869, "engagement": 6, "new_followers": 2, "profile_visits": 124, "link_clicks": 3, "audience": 186}, {"date": "2026-04-30", "reach": 2241, "engagement": 31, "new_followers": 3, "profile_visits": 248, "link_clicks": 5, "audience": 522}, {"date": "2026-04-29", "reach": 951, "engagement": 12, "new_followers": 1, "profile_visits": 102, "link_clicks": 3, "audience": 204}, {"date": "2026-04-28", "reach": 1986, "engagement": 32, "new_followers": 6, "profile_visits": 266, "link_clicks": 4, "audience": 565}, {"date": "2026-04-27", "reach": 505, "engagement": 0, "new_followers": 1, "profile_visits": 86, "link_clicks": 4, "audience": 33}, {"date": "2026-04-26", "reach": 321, "engagement": 1, "new_followers": 3, "profile_visits": 49, "link_clicks": 3, "audience": 38}, {"date": "2026-04-25", "reach": 454, "engagement": 0, "new_followers": 1, "profile_visits": 67, "link_clicks": 5, "audience": 103}, {"date": "2026-04-24", "reach": 1094, "engagement": 16, "new_followers": 2, "profile_visits": 92, "link_clicks": 8, "audience": 269}, {"date": "2026-04-23", "reach": 320, "engagement": 0, "new_followers": 1, "profile_visits": 43, "link_clicks": 1, "audience": 32}, {"date": "2026-04-22", "reach": 370, "engagement": 2, "new_followers": 3, "profile_visits": 59, "link_clicks": 2, "audience": 120}, {"date": "2026-04-21", "reach": 920, "engagement": 7, "new_followers": 4, "profile_visits": 78, "link_clicks": 7, "audience": 295}, {"date": "2026-04-20", "reach": 454, "engagement": 0, "new_followers": 2, "profile_visits": 78, "link_clicks": 4, "audience": 133}, {"date": "2026-04-19", "reach": 1526, "engagement": 9, "new_followers": 3, "profile_visits": 118, "link_clicks": 0, "audience": 634}]}, "instagram": {"dates": ["19 Apr", "20 Apr", "21 Apr", "22 Apr", "23 Apr", "24 Apr", "25 Apr", "26 Apr", "27 Apr", "28 Apr", "29 Apr", "30 Apr", "01 May", "02 May", "03 May", "04 May", "05 May", "06 May", "07 May", "08 May", "09 May", "10 May", "11 May", "12 May", "13 May", "14 May", "15 May", "16 May"], "reach": [0, 0, 0, 23, 9, 8, 15, 0, 7, 1189, 112, 45, 30, 211, 383, 310, 108, 111, 132, 154, 6605, 3395, 998, 871, 55, 277, 219, 40], "columns": ["date", "reach", "engagement", "impressions", "profile_visits", "link_clicks"], "peak_reach": 6605, "metrics": {"days": 28, "total_reach": 15307, "avg_reach": 546.7, "avg_er": 1.72, "total_engagement": 181, "new_followers": 0}, "doughnut": {"labels": ["การมีส่วนร่วม", "Impressions", "เข้าชมโปรไฟล์"], "data": [181, 10477, 333], "colors": ["#e1306c", "#833ab4", "#f56040"]}, "table": [{"date": "2026-05-16", "reach": 40, "engagement": 0, "impressions": 26, "profile_visits": 2, "link_clicks": 0}, {"date": "2026-05-15", "reach": 219, "engagement": 4, "impressions": 121, "profile_visits": 7, "link_clicks": 0}, {"date": "2026-05-14", "reach": 277, "engagement": 0, "impressions": 126, "profile_visits": 12, "link_clicks": 0}, {"date": "2026-05-13", "reach": 55, "engagement": 0, "impressions": 33, "profile_visits": 4, "link_clicks": 0}, {"date": "2026-05-12", "reach": 871, "engagement": 4, "impressions": 576, "profile_visits": 13, "link_clicks": 0}, {"date": "2026-05-11", "reach": 998, "engagement": 8, "impressions": 534, "profile_visits": 14, "link_clicks": 0}, {"date": "2026-05-10", "reach": 3395, "engagement": 26, "impressions": 2723, "profile_visits": 27, "link_clicks": 0}, {"date": "2026-05-09", "reach": 6605, "engagement": 43, "impressions": 5134, "profile_visits": 50, "link_clicks": 0}, {"date": "2026-05-08", "reach": 154, "engagement": 1, "impressions": 22, "profile_visits": 3, "link_clicks": 0}, {"date": "2026-05-07", "reach": 132, "engagement": 2, "impressions": 22, "profile_visits": 12, "link_clicks": 0}, {"date": "2026-05-06", "reach": 111, "engagement": 0, "impressions": 21, "profile_visits": 5, "link_clicks": 0}, {"date": "2026-05-05", "reach": 108, "engagement": 1, "impressions": 36, "profile_visits": 10, "link_clicks": 0}, {"date": "2026-05-04", "reach": 310, "engagement": 26, "impressions": 139, "profile_visits": 37, "link_clicks": 0}, {"date": "2026-05-03", "reach": 383, "engagement": 9, "impressions": 133, "profile_visits": 15, "link_clicks": 0}, {"date": "2026-05-02", "reach": 211, "engagement": 4, "impressions": 120, "profile_visits": 9, "link_clicks": 0}, {"date": "2026-05-01", "reach": 30, "engagement": 0, "impressions": 8, "profile_visits": 7, "link_clicks": 0}, {"date": "2026-04-30", "reach": 45, "engagement": 0, "impressions": 25, "profile_visits": 8, "link_clicks": 0}, {"date": "2026-04-29", "reach": 112, "engagement": 3, "impressions": 64, "profile_visits": 8, "link_clicks": 0}, {"date": "2026-04-28", "reach": 1189, "engagement": 49, "impressions": 607, "profile_visits": 69, "link_clicks": 0}, {"date": "2026-04-27", "reach": 7, "engagement": 1, "impressions": 1, "profile_visits": 2, "link_clicks": 0}, {"date": "2026-04-26", "reach": 0, "engagement": 0, "impressions": 0, "profile_visits": 0, "link_clicks": 0}, {"date": "2026-04-25", "reach": 15, "engagement": 0, "impressions": 2, "profile_visits": 8, "link_clicks": 0}, {"date": "2026-04-24", "reach": 8, "engagement": 0, "impressions": 2, "profile_visits": 5, "link_clicks": 0}, {"date": "2026-04-23", "reach": 9, "engagement": 0, "impressions": 1, "profile_visits": 1, "link_clicks": 0}, {"date": "2026-04-22", "reach": 23, "engagement": 0, "impressions": 1, "profile_visits": 4, "link_clicks": 0}, {"date": "2026-04-21", "reach": 0, "engagement": 0, "impressions": 0, "profile_visits": 1, "link_clicks": 0}, {"date": "2026-04-20", "reach": 0, "engagement": 0, "impressions": 0, "profile_visits": 0, "link_clicks": 0}, {"date": "2026-04-19", "reach": 0, "engagement": 0, "impressions": 0, "profile_visits": 0, "link_clicks": 0}]}};
 const COMP = {"platforms": ["tiktok", "facebook", "instagram"], "labels": ["TikTok", "Facebook", "Instagram"], "avg_reach": [5882.1, 2176.0, 546.7], "avg_er": [5.33, 1.08, 1.72], "total_reach": [164699, 60927, 15307], "total_engagement": [10685, 482, 181], "colors": ["#010101", "#1877f2", "#e1306c"]};
 const PLATFORMS = ["tiktok", "facebook", "instagram"];
-const INTEL = [
-  {id:"comp-junjao",category:"competitor",title:"หมอจั่นเจา — คู่แข่ง Active สูงสุด มีทีม Content Creator",summary:"TikTok @dr.piyawat5 ใช้ทีม content creator มืออาชีพ active มากที่สุดในสกลนคร แต่ handle ไม่ตรงชื่อแบรนด์และไม่มี Instagram — ช่องว่างใหญ่ที่เราเข้าครองได้ทันที",source_url:"https://www.facebook.com/JunjaoDentalClinic/",thumbnail_url:"",tags:["หมอจั่นเจา","TikTok","ไม่มี Instagram","สกลนคร"],relevance:"high",detail:"ที่ตั้ง: จ.สกลนคร + สาขา 2 มุกดาหาร\nTikTok: @dr.piyawat5 (handle ไม่ตรงชื่อแบรนด์ — จุดอ่อนสำคัญ)\nFacebook: JunjaoDentalClinic\nไม่มี Instagram\nราคา: ฟันปลอมโลหะ 8,000 บาทซี่แรก\nอ้างเป็นหนึ่งเดียวด้านทันตกรรมดิจิตอลในสกลนคร\nจุดอ่อน: handle สับสน, ไม่มี IG, ราคาไม่โปร่งใส, website SEO อ่อน, ไม่บอกเวลาเปิดทำการ"},
-  {id:"comp-dentalpark",category:"competitor",title:"Dental Park Clinic — Personal Brand 'Dr. Park' แข็ง แต่ขาด Website + IG",summary:"@dental.park.clinic มี content สม่ำเสมอด้วย tone อีสาน personal brand แข็ง แต่ไม่มี website, Instagram, Google Reviews — 3 ช่องว่างที่เราเข้าครองได้เลย",source_url:"https://www.tiktok.com/@dental.park.clinic",thumbnail_url:"",tags:["Dental Park","Dr. Park","TikTok","ไม่มี Website"],relevance:"high",detail:"ที่ตั้ง: 1446/24 ถนนยุวพัฒนา สกลนคร\nทพญ.พนิตนาฎ คงกระพันธ์ (ThaiOrtho certified)\nเวลาทำการ: จ.-ศ. 16:30–20:00 | ส.-อ. 09:00–16:00\nContent: before/after จัดฟัน, ภาษาอีสาน ('ค้า','โลด','บ่ได้'), ตอบ comment\nจุดอ่อน: ไม่มี IG, ไม่มี website, ไม่มี price transparency, single-doctor brand risk"},
-  {id:"comp-dio",category:"competitor",title:"Dio Dental — เชน 21+ สาขา ราคาชัดเจนที่สุด แต่ขาด Local Touch",summary:"Facebook สาขาสกลนคร ~5,926 likes ราคาชัดสุดในตลาด (จัดฟัน 999/เดือน) แต่ content มาจากส่วนกลาง ลูกค้าไม่รู้จักหมอประจำสาขา — คลินิก local มีข้อได้เปรียบด้าน trust ชัดเจน",source_url:"https://www.facebook.com/diodentalsakhon/",thumbnail_url:"",tags:["Dio Dental","เชน","ราคาชัดเจน","ขาด local"],relevance:"high",detail:"ที่ตั้งสกลนคร: 1754/2 ถนนรัฐพัฒนา\nจัดฟัน: 999 บาท/เดือน\nรากฟันเทียม: 23,999 บาท\nTikTok @diodental (central เท่านั้น — ไม่มีสาขาสกลนคร)\nFacebook: @diodentalsakhon ~5,926 likes\nInstagram @diodentalclinic (central เท่านั้น)\nจุดอ่อน: brand เชนไม่ใช่ local hero, ไม่มีหน้าหมอประจำสาขา, Google Reviews น้อย, content ไม่มี local touch"},
-  {id:"comp-bb",category:"competitor",title:"B&B Dental Clinic — Active ทั้ง TikTok + Facebook โปรฯ รีเทนเนอร์เด่น",summary:"@bb.dental.clinic3 active ล่าสุด พ.ค. 2026 มีโปรโมชันรีเทนเนอร์ 2,499 บาท ทั้ง TikTok + Facebook แต่ไม่พบ Instagram และ content ไม่โดดเด่นพิเศษ",source_url:"https://www.facebook.com/BB-Dental",thumbnail_url:"",tags:["B&B Dental","TikTok","Facebook","รีเทนเนอร์"],relevance:"medium",detail:"TikTok: @bb.dental.clinic3\nFacebook: BB-Dental\nโปรโมชัน: รีเทนเนอร์ 2,499 บาท\nActivity: Active — โพสต์ล่าสุด พ.ค. 2026\nจุดอ่อน: ไม่มี Instagram, content ไม่ differentiating"},
-  {id:"comp-dentafe",category:"competitor",title:"DENTAFe Dental Clinic — มี Instagram แต่ยังไม่ครองตลาด",summary:"@dentafeclinic เป็นหนึ่งในไม่กี่คลินิกสกลนครที่มีทั้ง Facebook + Instagram แต่ engagement ยัง moderate — โอกาสที่เราทำ IG ได้ดีกว่าและครองก่อน",source_url:"",thumbnail_url:"",tags:["DENTAFe","Instagram","Facebook"],relevance:"medium",detail:"Facebook + Instagram @dentafeclinic\nมี content ฟอกสีฟัน + จัดฟัน\nระดับ Moderate activity\nยังไม่ครอง IG สกลนคร — โอกาสเปิดอยู่"},
-  {id:"knowledge-pap",category:"dental_knowledge",title:"PAP+ Technology — มาตรฐานใหม่ฟอกสีฟันไม่เสียว",summary:"PAP+ (Phthalimidoperoxycaproic acid) กำลังแทน Hydrogen Peroxide ในตลาด premium ฟอกสีได้ผลดีโดยไม่มีความเสียว เหมาะเป็น USP 'ฟอกสีฟันไม่เสียวอีกต่อไป' ที่ยังไม่มีคู่แข่งสกลนครรายไหนใช้",source_url:"",thumbnail_url:"",tags:["PAP+","ฟอกสีฟัน","นวัตกรรม","2026"],relevance:"high",detail:"อุปกรณ์แนะนำ:\n- Enlighten Evolve (PAP+ ไม่มี peroxide)\n- GLO Science Pro (PAP formula + heat activation)\n- Philips Zoom WhiteSpeed (LED Dual-Light มาตรฐาน)\n- Beyond Polus Advanced (Plasma Arc ผลเร็ว)\n- Opalescence Boost (40% HP ราคาประหยัด)\n\nแหล่ง source ในไทย:\n- IHG Thailand (ihgthailand.com)\n- Dentsply Sirona Thailand\n- Philips Healthcare Thailand\n\nTake-home: Custom tray + Opalescence PF 10-15% (ต้นทุนต่ำ margin ดี)"},
-  {id:"knowledge-move-case",category:"dental_knowledge",title:"#ย้ายเคสจัดฟัน — Intent ซื้อสูงที่สุด ยังไม่มีใคร Own",summary:"Hashtag #ย้ายเคสจัดฟัน ปรากฏบ่อยในตลาดสกลนคร มีลูกค้าที่ไม่พอใจคลินิกเดิมกำลังมองหาที่ใหม่ content รับย้ายเคสจะดึงลูกค้า high-intent ได้โดยตรง ปัจจุบันยังไม่มีคลินิกสกลนครรายไหน own",source_url:"",thumbnail_url:"",tags:["ย้ายเคสจัดฟัน","จัดฟัน","TikTok","intent สูง"],relevance:"high",detail:"Hashtags ที่ใช้คู่กัน: #ย้ายเคสจัดฟัน #จัดฟันรอบ2\nคู่แข่งที่ใช้แล้ว: หมอจั่นเจา (ประปราย)\nโอกาส: ยังไม่มีคลินิกสกลนครรายไหน own ชัดเจน\n\nContent ideas:\n- 'เราพร้อมรับเคสต่อ ไม่คิดค่าประเมินซ้ำ'\n- FAQ ขั้นตอนการย้ายเคส\n- Testimonial จากลูกค้าที่ย้ายมาจริง\n- Before/After หลังย้ายมา 6 เดือน"},
-  {id:"knowledge-clear-aligner",category:"dental_knowledge",title:"Clear Aligner ตลาดโตต่อเนื่อง — ราคาลงถึง 29,000 บาท",summary:"คลินิก 1,500+ ทั่วไทยเข้าร่วม clear aligner แล้ว ราคาลดชัดเจน D-aligner 29,000 บาท — ผ่อน 0% 10-12 เดือนคือ selling point สำคัญสำหรับตลาดต่างจังหวัด",source_url:"",thumbnail_url:"",tags:["จัดฟันใส","Clear Aligner","D-Aligner","Dr Clear"],relevance:"high",detail:"ราคาในตลาด:\n- D-Aligner: 29,000 บาท (ออกแบบสำหรับคนไทย)\n- Dr Clear Aligners: 34,900 บาท + Gift Voucher 1,500 บน HDmall\n- CA Clear Aligner: ต้นทุนต่ำกว่าแบรนด์นำเข้า 40-60%\n- ClearCorrect / Zenyum: ทางเลือกกลาง เคสไม่ซับซ้อน\n- Invisalign: premium เคสซับซ้อน\n- SPARK Aligners (Ormco): AI Planning 3D Approver™ TruGEN material\n\nSelling point: ผ่อน 0% 10-12 เดือน — สำคัญมากสำหรับลูกค้าต่างจังหวัด"},
-  {id:"knowledge-longevity",category:"dental_knowledge",title:"Longevity Dentistry — Trend ใหม่ปี 2026 Engage กลุ่ม 30-45 ปี",summary:"วงการทันตกรรมไทย pivot สู่ concept 'Eat Well, Sleep Well, Be Well' เชื่อมสุขภาพช่องปากกับการมีชีวิตยืนยาว Messaging นี้ engage ดีกับกลุ่มที่มีกำลังซื้อ 30-45 ปี",source_url:"",thumbnail_url:"",tags:["Longevity Dentistry","trend 2026","content strategy"],relevance:"medium",detail:"แนวคิด: เปลี่ยน framing จาก 'รักษาฟัน' เป็น 'ลงทุนสุขภาพระยะยาว'\nกลุ่มเป้าหมาย: 30-45 ปี มีกำลังซื้อ\nHashtags: #LongevityDentistry #ทันตกรรมยืนยาว\nContent series: 'ดูแลฟัน = ดูแลชีวิต'\nที่มา: Bangkok Biz News 2026"},
-  {id:"event-wellness-expo",category:"news_events",title:"Thailand Wellness & Healthcare Expo — 25-27 มิ.ย. 2026 BITEC Bangna",summary:"งาน expo ที่สำคัญที่สุดครึ่งปีแรก มี supplier PAP+ gel และ LED whitening lamp หลายรายในที่เดียว โอกาสเปรียบเทียบราคาและ demo ก่อนตัดสินใจซื้อ อาจได้ราคา expo พิเศษ",source_url:"https://www.bitec.co.th",thumbnail_url:"",tags:["expo","มิถุนายน 2026","BITEC","ฟอกสีฟัน","อุปกรณ์"],relevance:"high",detail:"วันที่: 25-27 มิถุนายน 2026\nสถานที่: BITEC Bangna กรุงเทพฯ\n\nโอกาส:\n- เปรียบเทียบราคา PAP+ gel และ LED whitening lamp หลายราย\n- Demo อุปกรณ์ก่อนตัดสินใจซื้อ\n- อาจได้ราคา expo พิเศษ\n- Network กับ supplier และคลินิกอื่น\n\nAction: ลงทะเบียนล่วงหน้าที่ BITEC website"},
-  {id:"event-wdc",category:"news_events",title:"World Dental Conference (WDC) 2026 — กลางปี กรุงเทพฯ",summary:"งานประชุมระดับนานาชาติ กลางปี 2026 กรุงเทพฯ มีบูธอุปกรณ์ใหม่ เหมาะดู Digital Scanner และ Clear Aligner รุ่นใหม่ในราคา expo",source_url:"https://wdc.globaldentalconferences.org/",thumbnail_url:"",tags:["conference","WDC","2026","Bangkok"],relevance:"medium",detail:"ยังไม่ประกาศวันที่แน่ชัด\nติดตาม: wdc.globaldentalconferences.org\n\nบูธที่น่าสนใจ:\n- Digital Intraoral Scanner brands\n- Clear Aligner systems\n- AI-assisted diagnosis tools\n- CAD/CAM digital lab equipment"},
-  {id:"news-dental-tourism",category:"news_events",title:"Dental Tourism ไทย 972,000 คน/ปี — Demand US เพิ่ม 10x",summary:"ไทยกลายเป็น hub ทันตกรรมในเอเชีย นักท่องเที่ยวทันตกรรม 972,000 คน/ปี Demand จาก US เพิ่ม 10 เท่า — online presence และ content ภาษาอังกฤษมีผลต่อการตัดสินใจ",source_url:"",thumbnail_url:"",tags:["Dental Tourism","trend 2026","ต่างชาติ"],relevance:"low",detail:"แม้สกลนครไม่ใช่ศูนย์กลาง dental tourism แต่ trend บ่งชี้ว่า:\n- Online presence มีผลต่อการตัดสินใจมาก\n- Content ภาษาอังกฤษเพิ่ม reach\nHashtags: #DentalTourism #ThailandDental\nที่มา: Travel and Tour World 2026"},
-  {id:"equip-whitening",category:"equipment",title:"เปรียบเทียบ 5 อุปกรณ์ฟอกสีฟัน In-Office ปี 2026",summary:"Philips Zoom WhiteSpeed (มาตรฐาน), Beyond Polus (ผลเร็ว), Enlighten Evolve (PAP+ ไม่เสียว), Opalescence Boost (ราคาประหยัด) — เลือกตาม budget และ positioning ของคลินิก",source_url:"https://www.ihgthailand.com/",thumbnail_url:"",tags:["ฟอกสีฟัน","อุปกรณ์","Philips Zoom","PAP+"],relevance:"medium",detail:"Philips Zoom WhiteSpeed\n- เทคโนโลยี: LED Dual-Light\n- จุดเด่น: มาตรฐาน professional ลูกค้าคุ้นชื่อ\n\nBeyond Polus Advanced\n- เทคโนโลยี: Plasma Arc + LED\n- จุดเด่น: ผลเร็ว 1 session ราคาอุปกรณ์กลาง\n\nGLO Science Pro\n- เทคโนโลยี: Heat + Light\n- จุดเด่น: PAP formula ลด sensitivity ดี\n\nEnlighten Evolve\n- เทคโนโลยี: PAP+\n- จุดเด่น: ไม่มี peroxide เหมาะลูกค้าฟันไว\n\nOpalescence Boost\n- เทคโนโลยี: 40% HP in-office\n- จุดเด่น: Classic professional grade ราคาประหยัด\n\nแหล่ง source: IHG Thailand, Philips Healthcare Thailand"},
-  {id:"equip-scanner",category:"equipment",title:"Digital Intraoral Scanner — ราคาลดลงมาก เหมาะลงทุนปี 2026",summary:"Digital Intraoral Scanner แทนพิมพ์ปากแบบเก่า ราคาลดลงมากใน 2-3 ปีล่าสุด เหมาะสำหรับคลินิกที่รับงานจัดฟัน/ครอบฟัน และยังใช้เป็น content marketing ได้ด้วย",source_url:"https://www.ihgthailand.com/",thumbnail_url:"",tags:["Digital Scanner","นวัตกรรม","จัดฟัน","ครอบฟัน"],relevance:"medium",detail:"ประโยชน์:\n- แทนการพิมพ์ปากแบบเก่า แม่นยำกว่า\n- ลดความไม่สบายของผู้ป่วย\n- สร้าง content 'คลินิกเทคโนโลยีใหม่' ได้\n\nอุปกรณ์เสริม:\n- AI X-ray Analysis — วิเคราะห์อัตโนมัติ\n- CAD/CAM Digital Lab — ครอบฟัน วีเนียร์ เร็วและแม่นขึ้น\n- 3D Cone-beam CT — ภาพ 3D ขากรรไกร\n\nแหล่งติดต่อ: IHG Thailand, Dental Vision Thailand\nราคา: ลดลงอย่างมีนัยสำคัญใน 2-3 ปีล่าสุด — คุ้มค่าสำหรับคลินิกรับงานจัดฟัน"}
-];
 
 // ── Chart instances cache ──
 const chartInstances = {};
@@ -444,14 +387,14 @@ function applyStoredTheme() {
 function openSidebar() {
   document.getElementById('sidebar').classList.add('sidebar-open');
   document.getElementById('sidebar-overlay').classList.add('overlay-open');
-  const closeBtn = document.getElementById('sidebar-close-btn');
-  if (closeBtn) closeBtn.style.display = 'block';
+  const btn = document.getElementById('sidebar-close-btn');
+  if (btn) btn.style.display = 'block';
 }
 function closeSidebar() {
   document.getElementById('sidebar').classList.remove('sidebar-open');
   document.getElementById('sidebar-overlay').classList.remove('overlay-open');
-  const closeBtn = document.getElementById('sidebar-close-btn');
-  if (closeBtn) closeBtn.style.display = 'none';
+  const btn = document.getElementById('sidebar-close-btn');
+  if (btn) btn.style.display = 'none';
 }
 
 // ── Navigation ──
@@ -469,159 +412,10 @@ function showView(id) {
   setTimeout(() => initCharts(id), 50);
 }
 
-// ── Intel view ──
-const INTEL_BADGE = {
-  competitor:      {label:'คู่แข่ง',        color:'#ef4444', bg:'#fef2f2', icon:'🏢'},
-  dental_knowledge:{label:'ข้อมูลทันตกรรม', color:'#3b82f6', bg:'#eff6ff', icon:'🦷'},
-  news_events:     {label:'ข่าว & Events',   color:'#10b981', bg:'#f0fdf4', icon:'📅'},
-  equipment:       {label:'อุปกรณ์',         color:'#8b5cf6', bg:'#f5f3ff', icon:'⚙️'}
-};
-const INTEL_FILTER_MAP = {
-  all:['competitor','dental_knowledge','news_events','equipment'],
-  competitor:['competitor'],
-  knowledge:['dental_knowledge'],
-  news:['news_events','equipment']
-};
-
-// ── Intel accordion helpers ──
-function renderFieldRow(icon,label,color,value){
-  return `<div class="flex items-start gap-2 py-1.5">
-    <span class="text-base leading-none flex-shrink-0 mt-0.5">${icon}</span>
-    <span class="text-xs font-semibold px-2 py-0.5 rounded-full text-white flex-shrink-0 whitespace-nowrap" style="background:${color}">${label}</span>
-    <span class="text-xs text-slate-700 leading-relaxed min-w-0">${escHtml(value)}</span>
-  </div>`;}
-function renderBulletList(icon,label,color,bullets){
-  const hdr=icon&&label
-    ?`<div class="flex items-center gap-2 mb-1.5"><span class="text-base leading-none">${icon}</span><span class="text-xs font-semibold px-2 py-0.5 rounded-full text-white" style="background:${color}">${label}</span></div>`:''
-  const items=bullets.map(b=>`<li class="flex items-start gap-1.5 text-xs text-slate-700 leading-relaxed"><span class="flex-shrink-0 text-slate-400 mt-0.5">•</span><span>${escHtml(b)}</span></li>`).join('');
-  return `<div class="py-1">${hdr}<ul class="${hdr?'pl-8':'pl-2'} space-y-1">${items}</ul></div>`;}
-function parseDetailToHTML(detail){
-  if(!detail)return'<p class="text-xs text-slate-400 italic">ไม่มีข้อมูลเพิ่มเติม</p>';
-  const F=[
-    [/^ที่ตั้ง[^:]*:\s*/i,          '📍','ที่ตั้ง',     '#6b7280','text'],
-    [/^เวลาทำการ:\s*/i,             '⏰','เวลา',        '#f97316','text'],
-    [/^จุดอ่อน:\s*/i,               '🪫','จุดอ่อน',    '#ef4444','bullets'],
-    [/^จุดแข็ง:\s*/i,               '⭐','จุดแข็ง',    '#f59e0b','bullets'],
-    [/^TikTok[:\s]/i,               '📲','TikTok',      '#010101','text'],
-    [/^Facebook[:\s]/i,             '📲','Facebook',    '#1877f2','text'],
-    [/^Instagram[:\s]/i,            '📲','Instagram',   '#e1306c','text'],
-    [/^LINE[:\s]/i,                 '📲','LINE',         '#00b900','text'],
-    [/^(?:ราคา|โปรโมชัน)[^:]*:\s*/i,'💵','ราคา',       '#10b981','text'],
-    [/^(?:จัดฟัน|รากฟันเทียม|ฟอกสีฟัน|ฟันปลอม)[^:]*:\s*/i,'💵','ราคา','#10b981','text'],
-    [/^(?:Content|Positioning|Selling\s+point|แนวคิด)[^:]*:\s*/i,'🎙️','Positioning','#8b5cf6','text'],
-    [/^Hashtags[^:]*:\s*/i,         '🏷️','Hashtags',  '#3b82f6','text'],
-    [/^(?:วันที่|สถานที่)[^:]*:\s*/i,'📅','Event',      '#0d9488','text'],
-    [/^Action:\s*/i,                '🎯','Action',      '#6366f1','text'],
-    [/^ที่มา[^:]*:\s*/i,            '🔗','ที่มา',       '#94a3b8','text'],
-    [/^Activity:\s*/i,              '📊','Activity',    '#64748b','text'],
-    [/^กลุ่มเป้าหมาย[^:]*:\s*/i,   '👥','กลุ่มเป้า',  '#8b5cf6','text'],
-    [/^(?:แหล่ง[^:]*|แหล่งติดต่อ):\s*/i,'🏪','แหล่ง','#64748b','text'],
-    [/^คู่แข่ง[^:]*:\s*/i,          '🏢','คู่แข่ง',   '#ef4444','text'],
-    [/^โอกาส[^:]*:\s*/i,            '✨','โอกาส',      '#10b981','text'],
-    [/^(?:Content ideas?|Content series)[^:]*:\s*/i,'💡','Content ideas','#8b5cf6','text'],
-  ];
-  const lines=detail.split('\n');
-  let html='',i=0;
-  while(i<lines.length){
-    const line=lines[i].trim();
-    if(!line){i++;continue;}
-    if(line.startsWith('- ')){
-      const b=[];
-      while(i<lines.length&&lines[i].trim().startsWith('- ')){b.push(lines[i].trim().slice(2));i++;}
-      html+=renderBulletList('','','',b);continue;
-    }
-    let found=false;
-    for(const[re,icon,label,color,type]of F){
-      if(re.test(line)){
-        const val=line.replace(re,'');
-        let j=i+1,nb=[];
-        while(j<lines.length&&lines[j].trim().startsWith('- ')){nb.push(lines[j].trim().slice(2));j++;}
-        if(type==='bullets'||nb.length>0){
-          const main=val?val.split(/,\s*/).filter(b=>b.trim()):[];
-          html+=renderBulletList(icon,label,color,[...main,...nb]);i=j;
-        }else{html+=renderFieldRow(icon,label,color,val||line);i++;}
-        found=true;break;
-      }
-    }
-    if(!found){
-      let j=i+1,nb=[];
-      while(j<lines.length&&lines[j].trim().startsWith('- ')){nb.push(lines[j].trim().slice(2));j++;}
-      if(nb.length>0){
-        html+=renderBulletList('📌',line.replace(/:$/,''),'#64748b',nb);i=j;
-      }else{
-        html+=`<div class="text-xs text-slate-600 leading-relaxed py-0.5 pl-1">${escHtml(line)}</div>`;i++;
-      }
-    }
-  }
-  return html||'<p class="text-xs text-slate-400 italic">ไม่มีข้อมูล</p>';
-}
-
-function renderIntelCards(filter) {
-  const container = document.getElementById('intelCardGrid');
-  const counter   = document.getElementById('intelCount');
-  if (!container) return;
-  const allowed = INTEL_FILTER_MAP[filter] || INTEL_FILTER_MAP.all;
-  const items   = INTEL.filter(x => allowed.includes(x.category));
-  if (counter) counter.textContent = items.length + ' รายการ';
-  const relColors = {high:'#10b981', medium:'#f59e0b', low:'#94a3b8'};
-  const relLabels = {high:'สำคัญสูง', medium:'กลาง', low:'ต่ำ'};
-  container.innerHTML = items.map(item => {
-    const b = INTEL_BADGE[item.category];
-    const imgHtml = item.thumbnail_url
-      ? `<img src="${item.thumbnail_url}" class="w-full h-full object-cover" onerror="this.style.display='none'">`
-      : `<span style="font-size:2.6rem">${b.icon}</span>`;
-    const srcBtn = item.source_url
-      ? `<a href="${item.source_url}" target="_blank" rel="noopener"
-           class="text-xs px-3 py-1.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors whitespace-nowrap">
-           อ่านเพิ่มเติม →</a>` : '';
-    const tagHtml = item.tags.map(t=>`<span class="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">#${t}</span>`).join('');
-    return `<div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
-  <div class="h-32 flex items-center justify-center flex-shrink-0" style="background:${b.bg}">${imgHtml}</div>
-  <div class="p-5 flex flex-col flex-1">
-    <div class="flex items-center justify-between gap-2 mb-3">
-      <span class="text-xs font-bold px-2.5 py-1 rounded-full text-white" style="background:${b.color}">${b.label}</span>
-      <span class="text-xs font-semibold px-2 py-0.5 rounded-full text-white" style="background:${relColors[item.relevance]}">${relLabels[item.relevance]}</span>
-    </div>
-    <h3 class="font-bold text-slate-800 mb-2 leading-snug text-sm">${item.title}</h3>
-    <p class="text-xs text-slate-600 mb-4 leading-relaxed flex-1">${item.summary}</p>
-    <div class="flex gap-2 flex-wrap">
-      ${srcBtn}
-      <button onclick="toggleIntelAccord('${item.id}')"
-        class="text-xs px-3 py-1.5 rounded-xl text-white hover:opacity-80 transition-opacity"
-        style="background:${b.color}">ข้อมูลเชิงลึก ▾</button>
-    </div>
-    <div id="accord-${item.id}" style="display:none" class="mt-4">
-      <div class="rounded-xl p-4" style="background:var(--nav-active)">
-        ${parseDetailToHTML(item.detail)}
-      </div>
-      <div class="flex flex-wrap gap-1 mt-3">${tagHtml}</div>
-    </div>
-  </div>
-</div>`;
-  }).join('\n');
-}
-
-function setIntelTab(filter, el) {
-  window._intelFilter = filter;
-  document.querySelectorAll('.intel-tab').forEach(b => b.classList.remove('active-intel-tab'));
-  el.classList.add('active-intel-tab');
-  renderIntelCards(filter);
-}
-
-function toggleIntelAccord(id) {
-  const el = document.getElementById('accord-' + id);
-  if (!el) return;
-  el.style.display = el.style.display === 'none' ? 'block' : 'none';
-}
-
 // ── Chart initializer ──
 function initCharts(viewId) {
   if (viewId === 'view-home') {
     initHomeBar();
-    return;
-  }
-  if (viewId === 'view-intel') {
-    renderIntelCards(window._intelFilter || 'all');
     return;
   }
   const platform = viewId.replace('view-', '');
@@ -634,70 +428,34 @@ function initHomeBar() {
   const PCOLORS = ['#111111', '#3b82f6', '#ec4899'];
   const labels  = COMP.labels;
   const tc      = getThemeChartCfg();
-
   const metrics = [
-    {
-      id: 'chart-compare-reach', legId: 'legend-compare-reach',
-      data: COMP.total_reach,
-      fmt: v => Number(v).toLocaleString('th-TH')
-    },
-    {
-      id: 'chart-compare-daily', legId: 'legend-compare-daily',
-      data: COMP.avg_reach,
-      fmt: v => Number(v).toLocaleString('th-TH', {minimumFractionDigits:1, maximumFractionDigits:1})
-    },
-    {
-      id: 'chart-compare-engagement-rate', legId: 'legend-compare-engagement-rate',
-      data: COMP.avg_er,
-      fmt: v => v + '%'
-    },
-    {
-      id: 'chart-compare-engagement-total', legId: 'legend-compare-engagement-total',
-      data: COMP.total_engagement,
-      fmt: v => Number(v).toLocaleString('th-TH')
-    },
+    { id:'chart-compare-reach',            legId:'legend-compare-reach',            data:COMP.total_reach,      fmt:v=>Number(v).toLocaleString('th-TH') },
+    { id:'chart-compare-daily',            legId:'legend-compare-daily',            data:COMP.avg_reach,        fmt:v=>Number(v).toLocaleString('th-TH',{minimumFractionDigits:1,maximumFractionDigits:1}) },
+    { id:'chart-compare-engagement-rate',  legId:'legend-compare-engagement-rate',  data:COMP.avg_er,           fmt:v=>v+'%' },
+    { id:'chart-compare-engagement-total', legId:'legend-compare-engagement-total', data:COMP.total_engagement, fmt:v=>Number(v).toLocaleString('th-TH') },
   ];
-
-  metrics.forEach(({id, legId, data, fmt}) => {
+  metrics.forEach(({id,legId,data,fmt}) => {
     if (chartInstances[id]) { chartInstances[id].destroy(); delete chartInstances[id]; }
     const el = document.getElementById(id);
     if (!el) return;
-    const total = data.reduce((a, b) => a + b, 0);
+    const total = data.reduce((a,b)=>a+b,0);
     chartInstances[id] = new Chart(el.getContext('2d'), {
       type: 'doughnut',
-      data: {
-        labels,
-        datasets: [{
-          data,
-          backgroundColor: PCOLORS.map(c => c + 'cc'),
-          borderColor: PCOLORS,
-          borderWidth: 2,
-          hoverOffset: 5,
-        }]
-      },
+      data: { labels, datasets: [{ data, backgroundColor:PCOLORS.map(c=>c+'cc'), borderColor:PCOLORS, borderWidth:2, hoverOffset:5 }] },
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: '68%',
+        responsive:true, maintainAspectRatio:false, cutout:'68%',
         plugins: {
-          legend: { display: false },
+          legend: { display:false },
           tooltip: {
-            backgroundColor: tc.tooltipBg, titleColor: tc.tooltipText, bodyColor: tc.tooltipText,
-            callbacks: {
-              label: ctx => {
-                const val = ctx.parsed;
-                const pct = total > 0 ? ((val / total) * 100).toFixed(1) : '0.0';
-                return ' ' + ctx.label + ': ' + fmt(data[ctx.dataIndex]) + '  (' + pct + '%)';
-              }
-            }
+            backgroundColor:tc.tooltipBg, titleColor:tc.tooltipText, bodyColor:tc.tooltipText,
+            callbacks: { label: ctx => ' '+ctx.label+': '+fmt(data[ctx.dataIndex])+'  ('+(total>0?((ctx.parsed/total)*100).toFixed(1):'0.0')+'%)' }
           }
         }
       }
     });
-
     const legEl = document.getElementById(legId);
     if (legEl) {
-      legEl.innerHTML = labels.map((lbl, i) =>
+      legEl.innerHTML = labels.map((lbl,i)=>
         `<div class="flex items-center justify-between gap-2 text-xs">
           <span class="flex items-center gap-1.5 min-w-0">
             <span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:${PCOLORS[i]}"></span>
