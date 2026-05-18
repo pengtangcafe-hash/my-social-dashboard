@@ -752,9 +752,63 @@ function deriveOpportunity(item) {
   if (w.includes('Social media อ่อนแอ')) ops.push('Social media อ่อนแอโดยรวม — ช่องว่างขนาดใหญ่ที่เราสามารถเข้าครองได้');
   return ops.length ? ops : ['ติดตามและวิเคราะห์เพิ่มเติมจากข้อมูลจริง'];
 }
+function renderCompetitorCards() {
+  const items = INTEL.filter(x => x.category === 'competitor');
+  if (!items.length) return '<div class="text-center py-12" style="color:var(--text-muted)">ไม่พบข้อมูลคู่แข่ง</div>';
+  const palette = ['#6366f1','#0ea5e9','#10b981','#f59e0b','#ef4444','#8b5cf6','#ec4899','#14b8a6'];
+  return `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+${items.map((item, idx) => {
+  const badge = INTEL_BADGE[item.category] || { label: item.category, cls: 'bg-slate-100 text-slate-600' };
+  const relCls = RELEVANCE_CLS[item.relevance] || RELEVANCE_CLS.low;
+  const st = item.social_trend || {};
+  const color = palette[idx % palette.length];
+  const initial = (item.title.match(/[฀-๿]/)||[item.title[0]||'?'])[0];
+  const socialParts = [
+    st.primary_platform || null,
+    st.posting_frequency ? 'ความถี่: ' + st.posting_frequency : null,
+    st.content_style ? 'สไตล์: ' + st.content_style : null,
+    st.engagement_level ? 'engagement: ' + ({high:'สูง',medium:'ปานกลาง',low:'ต่ำ'}[st.engagement_level]||st.engagement_level) : null,
+  ].filter(Boolean);
+  const ops = deriveOpportunity(item);
+  const mkList = arr => arr.map(x=>`<li class="text-xs leading-relaxed" style="color:var(--text-muted)">• ${x}</li>`).join('');
+  const mkSection = (emoji, title, arr) => arr && arr.length
+    ? `<div><div class="text-xs font-semibold mb-1" style="color:var(--text)">${emoji} ${title}</div><ul class="space-y-0.5">${mkList(arr)}</ul></div>`
+    : '';
+  return `<div class="rounded-xl shadow-sm border flex flex-col" style="background:var(--card);border-color:var(--card-border)">
+    <div class="p-5 border-b" style="border-color:var(--card-border)">
+      <div class="flex items-start gap-3 mb-3">
+        <div class="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-base text-white" style="background:${color}">${initial}</div>
+        <div class="min-w-0 flex-1">
+          <div class="font-bold text-sm leading-snug mb-1.5" style="color:var(--text)">${item.title}</div>
+          <div class="flex flex-wrap gap-1">
+            <span class="text-xs px-2 py-0.5 rounded-full font-semibold ${badge.cls}">${badge.label}</span>
+            <span class="text-xs px-2 py-0.5 rounded-full font-semibold ${relCls}">${item.relevance}</span>
+          </div>
+        </div>
+      </div>
+      <p class="text-xs leading-relaxed" style="color:var(--text-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${item.summary}</p>
+    </div>
+    <div class="p-5 flex-1 space-y-4">
+      ${mkSection('🗿','จุดแข็ง', item.strengths)}
+      ${mkSection('🪫','จุดอ่อน', item.weaknesses)}
+      ${mkSection('📱','การใช้ Social Media', socialParts)}
+      ${mkSection('💎','โอกาสที่เราแข่งได้', ops)}
+      ${item.promotions && item.promotions.length ? mkSection('🎯','โปรโมชัน', item.promotions) : ''}
+      ${item.location ? `<div><div class="text-xs font-semibold mb-1" style="color:var(--text)">📍 ที่ตั้ง</div><p class="text-xs leading-relaxed" style="color:var(--text-muted)">${item.location}</p></div>` : ''}
+      ${item.hours ? `<div><div class="text-xs font-semibold mb-1" style="color:var(--text)">⏰ เวลาทำการ</div><p class="text-xs" style="color:var(--text-muted)">${item.hours}</p></div>` : ''}
+    </div>
+  </div>`;
+}).join('
+')}
+  </div>`;
+}
 function renderIntelCards() {
   const container = document.getElementById('intel-cards');
   if (!container) return;
+  if (currentIntelTab === 'competitor') {
+    container.innerHTML = renderCompetitorCards();
+    return;
+  }
   const items = currentIntelTab === 'all' ? INTEL : INTEL.filter(x => x.category === currentIntelTab);
   if (!items.length) {
     container.innerHTML = '<div class="text-center py-12" style="color:var(--text-muted)">ไม่พบข้อมูลในหมวดนี้</div>';
