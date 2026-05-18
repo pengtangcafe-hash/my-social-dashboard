@@ -1544,7 +1544,7 @@ ${{items.map((item, idx) => {{
       ${{item.hours ? `<div><div class="text-xs font-semibold mb-1" style="color:var(--text)">⏰ เวลาทำการ</div><p class="text-xs" style="color:var(--text-muted)">${{item.hours}}</p></div>` : ''}}
     </div>
   </div>`;
-}}).join('\n')}}
+}}).join('')}}
   </div>`;
 }}
 function renderIntelCards() {{
