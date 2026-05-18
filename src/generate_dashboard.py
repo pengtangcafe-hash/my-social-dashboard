@@ -218,6 +218,81 @@ INTEL_DATA_FALLBACK = [
         "strengths": [], "promotions": [],
         "social_trend": {"primary_platform":"","posting_frequency":"","content_style":"","engagement_level":""}
     },
+    {
+        "id": "competitor-smile-club",
+        "category": "competitor",
+        "title": "คลินิกทันตกรรมสไมล์คลับ สกลนคร",
+        "summary": "Facebook Page (617/2 ถนนนิตโย ธาตุเชิงชุม) เปิดวันหยุด ส-อา รับประกันสังคม Rating 4.43/5 ไม่พบ TikTok",
+        "source_url": "https://www.facebook.com/p/คลินิกทันตกรรมสไมล์คลับ-สกลนคร-100057161032829/",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "ประกันสังคม", "Facebook", "สไมล์คลับ"],
+        "relevance": "high",
+        "detail": "คลินิกทันตกรรมสไมล์คลับ สกลนคร 617/2 ถนนนิตโย ธาตุเชิงชุม โทร +66 91 865 1625 จ-ศ 16:30-20:00 / ส-อา 09:00-18:00 รับประกันสังคม ฟรี: อุดฟัน ถอนฟัน ขูดหินปูน ผ่าฟันคุด Rating 4.43/5 (7 รีวิว) ไม่พบ TikTok account ไม่พบราคาสาธารณะ Social Media อ่อนแอ — ช่องว่างที่เราสามารถ dominate ได้",
+        "pricing": {
+            "implant":{"price":"","note":"สอบถาม"},"braces_metal":{"price":"","note":"สอบถาม"},"braces_clear":{"price":"","note":"สอบถาม"},
+            "whitening":{"price":"","note":"สอบถาม"},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},
+            "veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},
+            "extraction":{"price":"","note":"ฟรีประกันสังคม"},"filling":{"price":"","note":"ฟรีประกันสังคม"},"scaling":{"price":"","note":"ฟรีประกันสังคม"},
+            "other": []
+        },
+        "strengths": ["รับประกันสังคม ใช้บัตรประชาชนอย่างเดียว", "Rating 4.43/5", "เปิดวันหยุด ส-อา"],
+        "promotions": ["บริการฟรีสำหรับผู้ถือประกันสังคม"],
+        "social_trend": {"primary_platform":"Facebook","posting_frequency":"ต่ำ","content_style":"promotional","engagement_level":"low"}
+    },
+    {
+        "id": "competitor-supawadee-dental",
+        "category": "competitor",
+        "title": "คลินิกทันตกรรมสุภาวดี สกลนคร",
+        "summary": "ทพญ.สุภาวดี กรีพละ มี Facebook + Instagram active จัดฟัน 35,000–40,000 บาท มีผ่อนรายเดือน",
+        "source_url": "https://zeekdoc.com/clinic/supawadee-dental-clinic-561",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "จัดฟัน", "Facebook", "Instagram"],
+        "relevance": "high",
+        "detail": "คลินิกทันตกรรมสุภาวดี 1433/6 ถนนยุวพัฒนา ธาตุเชิงชุม อำเภอเมืองสกลนคร ทันตแพทย์: ทพญ.สุภาวดี กรีพละ มี Facebook + Instagram active (พบโพสต์ พ.ค. 2026) ราคาจัดฟัน 35,000-40,000 บาท ขึ้นกับลักษณะฟัน มีบริการผ่อนรายเดือน เป็นคู่แข่งใหม่ที่ไม่เคยพบในรายงานก่อนหน้า Instagram active = คู่แข่งที่น่าจับตาสูงสุด",
+        "pricing": {
+            "implant":{"price":"","note":"สอบถาม"},"braces_metal":{"price":"35000","note":"ขึ้นกับลักษณะฟัน ผ่อนได้"},"braces_clear":{"price":"40000","note":"ขึ้นกับลักษณะฟัน ผ่อนได้"},
+            "whitening":{"price":"","note":""},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},
+            "veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},"extraction":{"price":"","note":""},"filling":{"price":"","note":""},"scaling":{"price":"","note":""},
+            "other": []
+        },
+        "strengths": ["ทพญ.เฉพาะทาง", "Instagram active", "ผ่อนรายเดือนได้", "Facebook + Instagram dual platform"],
+        "promotions": [],
+        "social_trend": {"primary_platform":"Instagram","posting_frequency":"สม่ำเสมอ","content_style":"before/after","engagement_level":"medium"}
+    },
+    {
+        "id": "competitor-t-smile-dental",
+        "category": "competitor",
+        "title": "T Smile Dental Clinic สกลนคร",
+        "summary": "Facebook active ราคาสาธารณะชัดเจน: รีเทนเนอร์ 2,990 บาท ฟอกสีฟัน 3,990 บาท จัดฟัน Damon/ใส/โลหะผ่อนได้",
+        "source_url": "https://www.facebook.com/p/คลินิกทันตกรรมทีสมายล์-สกลนคร-100091255752847/",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "จัดฟัน", "ฟอกสีฟัน", "Facebook"],
+        "relevance": "high",
+        "detail": "T Smile Dental Clinic Sakon Nakhon 1730/5 ถนนเพริมพริดา ธาตุเชิงชุม Facebook active ราคาสาธารณะ: รีเทนเนอร์ 2,990 บาท ฟอกสีฟัน 3,990 บาท จัดฟัน (โลหะ/ใส/Damon) ผ่อนได้ เป็นคู่แข่งที่มีราคาโปร่งใสมากที่สุด ใช้เป็น benchmark ราคาตลาดได้",
+        "pricing": {
+            "implant":{"price":"","note":"สอบถาม"},"braces_metal":{"price":"","note":"ผ่อนได้ สอบถาม"},"braces_clear":{"price":"","note":"ผ่อนได้ สอบถาม"},
+            "whitening":{"price":"3990","note":"ต่อครั้ง"},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},
+            "veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},"extraction":{"price":"","note":""},"filling":{"price":"","note":""},"scaling":{"price":"","note":""},
+            "other": [{"name": "รีเทนเนอร์", "price": "2990", "note": "ต่อชุด"}]
+        },
+        "strengths": ["ราคาโปร่งใส ประกาศสาธารณะ", "ฟอกสีฟัน 3,990 แข่งได้", "Damon braces"],
+        "promotions": ["จัดฟันบน-ล่าง จ่าย 0 บาท (ผ่อนชำระ)"],
+        "social_trend": {"primary_platform":"Facebook","posting_frequency":"สม่ำเสมอ","content_style":"promotional","engagement_level":"medium"}
+    },
+    {
+        "id": "knowledge-clear-aligner-ai-2026",
+        "category": "dental_knowledge",
+        "title": "AI Clear Aligner Boom ปี 2026 — โอกาสเป็น First Mover ใน สกลนคร",
+        "summary": "Align Technology เปิดตัว mandibular advancement ใน Asia-Pacific Dr Clear Aligners ขยายสู่ไทย มี.ค. 2026 ราคาเริ่มต้นในสกลนคร 27,500 บาท",
+        "source_url": "https://emag.medicalexpo.com/orthodontics-2026-ai-driven-treatment-the-expanding-aligner-market-and-the-rise-of-intelligent-practice-infrastructure/",
+        "thumbnail_url": "",
+        "tags": ["จัดฟันใส", "AI", "Invisalign", "2026", "Thailand", "first-mover"],
+        "relevance": "high",
+        "detail": "2026 เป็นปีที่ AI-driven clear aligner เข้าสู่ mainstream ในไทย Align Technology เปิดตัว Invisalign mandibular advancement ใน Asia-Pacific Dr Clear Aligners จัดงาน Asia expansion ในไทย 31 มี.ค. 2026 SPARK Aligners ใช้ AI 3D Approver™ ราคาเริ่มต้นใน สกลนคร 27,500 บาท คลินิกที่นำเสนอ clear aligner + before/after content จะ dominate TikTok ได้ก่อนคู่แข่ง",
+        "pricing": {"implant":{"price":"","note":""},"braces_metal":{"price":"","note":""},"braces_clear":{"price":"27500","note":"ราคาเริ่มต้นในสกลนคร ปี 2026"},"whitening":{"price":"","note":""},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},"veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},"extraction":{"price":"","note":""},"filling":{"price":"","note":""},"scaling":{"price":"","note":""},"other":[]},
+        "strengths": [], "promotions": [],
+        "social_trend": {"primary_platform":"TikTok","posting_frequency":"","content_style":"before/after","engagement_level":"high"}
+    },
 ]
 
 
