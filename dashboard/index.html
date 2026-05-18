@@ -357,16 +357,17 @@
     <div id="view-pricing" class="view">
       <h1 class="text-3xl font-black text-slate-800 mb-6">ราคาทำฟัน — เปรียบเทียบคู่แข่ง</h1>
 
-      <!-- KPI cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6" id="pricing-kpi-cards"></div>
+      <!-- KPI cards (4) -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6" id="pricing-kpi-cards"></div>
 
-      <!-- Service tabs -->
+      <!-- Service tabs (6) -->
       <div class="flex flex-wrap gap-2 mb-4">
         <button class="pricing-tab active" id="pricing-tab-braces"    onclick="setPricingTab('braces')">🦷 จัดฟัน</button>
-        <button class="pricing-tab"        id="pricing-tab-implant"   onclick="setPricingTab('implant')">🔩 รากฟัน</button>
+        <button class="pricing-tab"        id="pricing-tab-implant"   onclick="setPricingTab('implant')">🔩 รากเทียม</button>
         <button class="pricing-tab"        id="pricing-tab-whitening" onclick="setPricingTab('whitening')">✨ ฟอกสีฟัน</button>
         <button class="pricing-tab"        id="pricing-tab-denture"   onclick="setPricingTab('denture')">😁 ฟันปลอม</button>
-        <button class="pricing-tab"        id="pricing-tab-other"     onclick="setPricingTab('other')">📋 อื่นๆ</button>
+        <button class="pricing-tab"        id="pricing-tab-rootcanal" onclick="setPricingTab('rootcanal')">🔬 รักษารากฟัน</button>
+        <button class="pricing-tab"        id="pricing-tab-filling"   onclick="setPricingTab('filling')">🔧 อุดฟัน/ขูดหินปูน</button>
       </div>
 
       <!-- Pricing table -->
@@ -376,9 +377,9 @@
             <thead>
               <tr class="border-b-2 border-slate-200">
                 <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">คลินิก</th>
-                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">บริการ</th>
                 <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">ราคา (บาท)</th>
                 <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">หมายเหตุ</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">โปรโมชัน</th>
               </tr>
             </thead>
             <tbody id="pricing-table-body"></tbody>
@@ -388,15 +389,14 @@
 
       <!-- Social trend table -->
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <h2 class="text-sm font-bold text-slate-700 mb-4">📊 Social Media Trend — คู่แข่ง</h2>
+        <h2 class="text-sm font-bold text-slate-700 mb-4">📊 Social Trend — คู่แข่ง</h2>
         <div class="overflow-x-auto">
           <table class="w-full text-sm">
             <thead>
               <tr class="border-b-2 border-slate-200">
                 <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">คลินิก</th>
                 <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Platform หลัก</th>
-                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">ความถี่โพสต์</th>
-                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Style</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">สไตล์ Content</th>
                 <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Engagement</th>
               </tr>
             </thead>
@@ -674,11 +674,12 @@ const PRICE_LABELS = {
   filling:'อุดฟัน', scaling:'ขูดหินปูน',
 };
 const PRICING_TABS = {
-  braces:    { keys: ['braces_metal','braces_clear'] },
+  braces:    { keys: ['braces_metal','braces_clear'], includeOther: true },
   implant:   { keys: ['implant'] },
   whitening: { keys: ['whitening'] },
   denture:   { keys: ['denture_full','denture_partial'] },
-  other:     { keys: ['veneer','root_canal','extraction','filling','scaling'] },
+  rootcanal: { keys: ['root_canal'] },
+  filling:   { keys: ['filling','scaling','extraction'] },
 };
 let currentIntelTab = 'all';
 let currentPricingTab = 'braces';
@@ -810,34 +811,46 @@ function renderPricingView() {
   // KPI cards
   const kpiEl = document.getElementById('pricing-kpi-cards');
   if (kpiEl) {
-    const withPrice = competitors.filter(c => {
-      if (!c.pricing) return false;
-      return Object.entries(c.pricing).some(([k,v]) => k !== 'other' && v && v.price) ||
-             (c.pricing.other && c.pricing.other.some(o => o.price));
-    });
-    const allSvcs = new Set();
+    const bracePrices = [];
     competitors.forEach(c => {
       if (!c.pricing) return;
-      Object.entries(c.pricing).forEach(([k,v]) => {
-        if (k !== 'other' && v && v.price) allSvcs.add(PRICE_LABELS[k] || k);
-        if (k === 'other' && Array.isArray(v)) v.forEach(o => { if (o.price) allSvcs.add(o.name); });
+      ['braces_metal','braces_clear'].forEach(k => {
+        const v = c.pricing[k];
+        if (v && v.price) { const n = parseFloat(String(v.price).replace(/,/g,'')); if (!isNaN(n)) bracePrices.push(n); }
       });
     });
+    const avgBraces = bracePrices.length ? Math.round(bracePrices.reduce((a,b)=>a+b,0)/bracePrices.length) : 0;
+
+    const implantPrices = [];
+    competitors.forEach(c => {
+      if (!c.pricing) return;
+      const v = c.pricing['implant'];
+      if (v && v.price) { const n = parseFloat(String(v.price).replace(/,/g,'')); if (!isNaN(n)) implantPrices.push(n); }
+    });
+    const avgImplant = implantPrices.length ? Math.round(implantPrices.reduce((a,b)=>a+b,0)/implantPrices.length) : 0;
+
+    const withPromo = competitors.filter(c => c.promotions && c.promotions.length > 0).length;
+
     kpiEl.innerHTML = `
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">คู่แข่งที่พบราคา</div>
-        <div class="kpi-value text-4xl font-black text-slate-800">${withPrice.length}/${competitors.length}</div>
-        <div class="text-xs text-slate-400 mt-1">คลินิก</div>
-      </div>
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">บริการที่พบราคา</div>
-        <div class="kpi-value text-4xl font-black text-slate-800">${allSvcs.size}</div>
-        <div class="text-xs text-slate-400 mt-1">ประเภทบริการ</div>
-      </div>
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">คู่แข่งทั้งหมด</div>
+        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">จำนวนคลินิก</div>
         <div class="kpi-value text-4xl font-black text-slate-800">${competitors.length}</div>
-        <div class="text-xs text-slate-400 mt-1">คลินิก ที่พบ</div>
+        <div class="text-xs text-slate-400 mt-1">คู่แข่งที่พบ</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ราคาเฉลี่ยจัดฟัน</div>
+        <div class="kpi-value text-4xl font-black text-emerald-500">${avgBraces ? avgBraces.toLocaleString('th-TH') : '—'}</div>
+        <div class="text-xs text-slate-400 mt-1">บาท (เฉลี่ยตลาด)</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ราคาเฉลี่ยรากเทียม</div>
+        <div class="kpi-value text-4xl font-black text-blue-500">${avgImplant ? avgImplant.toLocaleString('th-TH') : '—'}</div>
+        <div class="text-xs text-slate-400 mt-1">บาท (เฉลี่ยตลาด)</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">คลินิกที่มีโปร</div>
+        <div class="kpi-value text-4xl font-black text-purple-500">${withPromo}</div>
+        <div class="text-xs text-slate-400 mt-1">จาก ${competitors.length} คลินิก</div>
       </div>
     `;
   }
@@ -849,26 +862,31 @@ function renderPricingView() {
     const rows = [];
     competitors.forEach(c => {
       if (!c.pricing) return;
+      const promo = (c.promotions && c.promotions.length) ? c.promotions.join(' / ') : '—';
       tab.keys.forEach(key => {
         const p = c.pricing[key];
-        if (p && p.price) rows.push({ clinic: c.title, svc: PRICE_LABELS[key]||key, price: p.price, note: p.note||'' });
+        if (p && p.price) rows.push({ clinic: c.title, price: p.price, note: p.note||'', promo });
       });
-      if (currentPricingTab === 'other' && c.pricing.other) {
+      if (tab.includeOther && c.pricing.other) {
         c.pricing.other.forEach(o => {
-          if (o.price) rows.push({ clinic: c.title, svc: o.name, price: o.price, note: o.note||'' });
+          if (o.price) rows.push({ clinic: c.title, price: o.price, note: (o.note||'') + (o.name ? ' (' + o.name + ')' : ''), promo });
         });
       }
     });
-    rows.sort((a,b) => parseFloat(String(a.price).replace(/,/g,''))||0 - parseFloat(String(b.price).replace(/,/g,''))||0);
+    rows.sort((a,b) => (parseFloat(String(a.price).replace(/,/g,''))||Infinity) - (parseFloat(String(b.price).replace(/,/g,''))||Infinity));
+    const minPrice = rows.length ? parseFloat(String(rows[0].price).replace(/,/g,'')) : null;
     tbody.innerHTML = rows.length
-      ? rows.map(r => `<tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0">
-          <td class="px-4 py-3 font-semibold text-sm" style="color:var(--text)">${r.clinic}</td>
-          <td class="px-4 py-3 text-sm" style="color:var(--text)">${r.svc}</td>
-          <td class="px-4 py-3 text-right font-bold text-emerald-500 tabular-nums">
-            ${Number(String(r.price).replace(/,/g,'')).toLocaleString('th-TH')}
-          </td>
-          <td class="px-4 py-3 text-xs" style="color:var(--text-muted)">${r.note}</td>
-        </tr>`).join('')
+      ? rows.map(r => {
+          const rPrice = parseFloat(String(r.price).replace(/,/g,''));
+          const isMin = minPrice !== null && rPrice === minPrice;
+          const rowCls = isMin ? 'bg-green-50' : 'hover:bg-slate-50';
+          return `<tr class="${rowCls} border-b border-slate-100 last:border-0">
+            <td class="px-4 py-3 font-semibold text-sm" style="color:var(--text)">${r.clinic}${isMin ? ' <span class=\"ml-1 text-xs text-green-600 font-bold\">ถูกสุด</span>' : ''}</td>
+            <td class="px-4 py-3 text-right font-bold text-emerald-500 tabular-nums">${Number(String(r.price).replace(/,/g,'')).toLocaleString('th-TH')}</td>
+            <td class="px-4 py-3 text-xs" style="color:var(--text-muted)">${r.note||'—'}</td>
+            <td class="px-4 py-3 text-xs" style="color:var(--text-muted)">${r.promo}</td>
+          </tr>`;
+        }).join('')
       : `<tr><td colspan="4" class="px-4 py-8 text-center text-sm" style="color:var(--text-muted)">ไม่พบข้อมูลราคาในหมวดนี้</td></tr>`;
   }
 
@@ -877,17 +895,14 @@ function renderPricingView() {
   if (stbody) {
     stbody.innerHTML = competitors.map(c => {
       const st = c.social_trend || {};
-      const engCls = st.engagement_level === 'high'   ? 'bg-green-100 text-green-700'
-                   : st.engagement_level === 'medium' ? 'bg-yellow-100 text-yellow-700'
-                   : 'bg-slate-100 text-slate-500';
+      const engEmoji = st.engagement_level === 'high'   ? '🟢'
+                     : st.engagement_level === 'medium' ? '🟡'
+                     : '🔴';
       return `<tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0">
         <td class="px-4 py-3 font-semibold text-sm" style="color:var(--text)">${c.title}</td>
         <td class="px-4 py-3 text-sm" style="color:var(--text)">${st.primary_platform||'—'}</td>
-        <td class="px-4 py-3 text-sm" style="color:var(--text)">${st.posting_frequency||'—'}</td>
-        <td class="px-4 py-3 text-xs" style="color:var(--text-muted)">${st.content_style||'—'}</td>
-        <td class="px-4 py-3">
-          <span class="px-2 py-0.5 rounded-full text-xs font-semibold ${engCls}">${st.engagement_level||'—'}</span>
-        </td>
+        <td class="px-4 py-3 text-sm" style="color:var(--text)">${st.content_style||'—'}</td>
+        <td class="px-4 py-3 text-center">${engEmoji} <span class="text-xs" style="color:var(--text-muted)">${st.engagement_level||'—'}</span></td>
       </tr>`;
     }).join('');
   }
