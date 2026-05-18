@@ -379,7 +379,6 @@
                 <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">คลินิก</th>
                 <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">ราคา (บาท)</th>
                 <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">หมายเหตุ</th>
-                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">โปรโมชัน</th>
               </tr>
             </thead>
             <tbody id="pricing-table-body"></tbody>
@@ -731,25 +730,27 @@ function renderBulletList(items) {
   ).join('');
 }
 
-function renderFieldRow(icon, label, labelCls, valueHtml) {
-  return `<div class="flex items-start gap-3 py-2.5 border-b last:border-0" style="border-color:rgba(0,0,0,0.06)">
-    <span class="text-sm flex-shrink-0 w-5 text-center leading-5">${icon}</span>
-    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold flex-shrink-0 min-w-[3.5rem] justify-center ${labelCls}">${label}</span>
-    <div class="flex-1 text-xs leading-relaxed">${valueHtml}</div>
-  </div>`;
+function buildSocialSentence(st) {
+  if (!st || !st.primary_platform) return 'ไม่พบข้อมูล Social Media';
+  let s = 'ใช้ ' + st.primary_platform + ' เป็นหลัก';
+  if (st.posting_frequency) s += ' โพสต์' + st.posting_frequency;
+  if (st.content_style) s += ' เน้น content แนว ' + st.content_style;
+  if (st.engagement_level) {
+    const lvl = {high:'สูง',medium:'ปานกลาง',low:'ต่ำ'}[st.engagement_level] || st.engagement_level;
+    s += ' การมีส่วนร่วมระดับ' + lvl;
+  }
+  return s;
 }
-function renderBulletItems(arr) {
-  if (!arr || !arr.length) return '';
-  return `<ul class="space-y-0.5">${arr.map(s=>`<li class="flex gap-1.5 items-start"><span class="flex-shrink-0 text-slate-400">•</span><span style="color:var(--text)">${s}</span></li>`).join('')}</ul>`;
-}
-function renderSocialRows(st) {
-  if (!st || !st.primary_platform) return '';
-  const platSty = { TikTok:'background:#000;color:#fff', Facebook:'background:#1877f2;color:#fff', Instagram:'background:#e1306c;color:#fff' };
-  const engEmoji = st.engagement_level==='high'?'🟢':st.engagement_level==='medium'?'🟡':'🔴';
-  const plats = String(st.primary_platform).split(/[,\/]/).map(p=>p.trim()).filter(Boolean);
-  const badges = plats.map(p=>`<span class="px-1.5 py-0.5 rounded text-xs font-bold" style="${platSty[p]||'background:#e2e8f0;color:#475569'}">${p}</span>`).join('');
-  const meta = [st.content_style, st.posting_frequency, st.engagement_level?engEmoji+' '+st.engagement_level:null].filter(Boolean).join(' · ');
-  return `<div class="space-y-1.5"><div class="flex flex-wrap gap-1">${badges}</div>${meta?`<div class="text-xs" style="color:var(--text-muted)">${meta}</div>`:''}</div>`;
+function deriveOpportunity(item) {
+  const ops = [];
+  const w = (item.weaknesses||[]).join(' ');
+  const st = item.social_trend || {};
+  if (w.includes('TikTok')) ops.push('ไม่มี TikTok — เปิดพื้นที่ให้เราครอง TikTok สกลนคร ก่อนคู่แข่งรายนี้');
+  if (w.includes('Instagram') && !String(st.primary_platform||'').includes('Instagram')) ops.push('ไม่มี Instagram — สร้าง presence ก่อนได้');
+  if (w.includes('ราคาสาธารณะ')) ops.push('ไม่มีราคาสาธารณะ — ประกาศราคาชัดเจนสร้างความน่าเชื่อถือและได้เปรียบทันที');
+  if (st.engagement_level === 'low') ops.push('Engagement ต่ำ — content คุณภาพดีกว่าจะ outperform ได้ง่าย');
+  if (w.includes('Social media อ่อนแอ')) ops.push('Social media อ่อนแอโดยรวม — ช่องว่างขนาดใหญ่ที่เราสามารถเข้าครองได้');
+  return ops.length ? ops : ['ติดตามและวิเคราะห์เพิ่มเติมจากข้อมูลจริง'];
 }
 function renderIntelCards() {
   const container = document.getElementById('intel-cards');
@@ -779,30 +780,31 @@ function renderIntelCards() {
         </div>
       </div>
       <div id="accord-body-${item.id}" class="intel-accord-body">
-        <p class="text-sm mb-3 leading-relaxed" style="color:var(--text-muted)">${item.summary}</p>
-        ${item.tags && item.tags.length
-          ? `<div class="mb-4 flex flex-wrap gap-1">${item.tags.map(t=>`<span class="inline-block text-xs px-2 py-0.5 rounded-full" style="background:var(--nav-active);color:var(--text-muted)">#${t}</span>`).join('')}</div>` : ''}
-        <div class="rounded-xl overflow-hidden" style="background:var(--nav-active)">
-          ${(()=>{
-            const fRows = [];
-            if (item.location) fRows.push(renderFieldRow('📍','ที่ตั้ง','bg-slate-200 text-slate-700',`<span style="color:var(--text)">${item.location}</span>`));
-            const socialHtml = renderSocialRows(item.social_trend);
-            if (socialHtml) fRows.push(renderFieldRow('📲','Social','bg-blue-100 text-blue-700', socialHtml));
-            const prLines = [];
-            if (item.pricing) Object.entries(item.pricing).forEach(([k,v])=>{
-              if (k==='other'&&Array.isArray(v)) v.forEach(o=>{ if(o.price) prLines.push(`${PRICE_LABELS[o.name]||o.name||''} : <strong>${Number(String(o.price).replace(/,/g,'')).toLocaleString('th-TH')}</strong> บาท${o.note?' ('+o.note+')':''}`); });
-              else if(v&&v.price) prLines.push(`${PRICE_LABELS[k]||k} : <strong>${Number(String(v.price).replace(/,/g,'')).toLocaleString('th-TH')}</strong> บาท${v.note?' ('+v.note+')':''}`);
-            });
-            if (prLines.length) fRows.push(renderFieldRow('💵','ราคา','bg-emerald-100 text-emerald-700',
-              `<ul class="space-y-0.5">${prLines.map(l=>`<li style="color:var(--text)">• ${l}</li>`).join('')}</ul>`));
-            if (item.promotions&&item.promotions.length) fRows.push(renderFieldRow('🎙️','Positioning','bg-purple-100 text-purple-700', renderBulletItems(item.promotions)));
-            if (item.weaknesses&&item.weaknesses.length) fRows.push(renderFieldRow('🪫','จุดอ่อน','bg-red-100 text-red-600', renderBulletItems(item.weaknesses)));
-            if (item.hours) fRows.push(renderFieldRow('⏰','เวลา','bg-orange-100 text-orange-600',`<span style="color:var(--text)">${item.hours}</span>`));
-            if (item.strengths&&item.strengths.length) fRows.push(renderFieldRow('⭐','จุดแข็ง','bg-yellow-100 text-yellow-700', renderBulletItems(item.strengths)));
-            if (!fRows.length) return `<div class="px-4 py-3 text-xs" style="color:var(--text-muted)">${item.detail||'ไม่มีข้อมูลเพิ่มเติม'}</div>`;
-            return fRows.join('');
-          })()}
-        </div>
+        ${isComp ? `
+          <p class="text-sm mb-5 leading-relaxed" style="color:var(--text-muted)">${item.summary}</p>
+          ${item.strengths && item.strengths.length ? `
+            <div class="mb-4">
+              <div class="text-sm font-semibold mb-1.5" style="color:var(--text)">จุดแข็ง</div>
+              <ul class="space-y-1">${item.strengths.map(s=>`<li class="text-sm" style="color:var(--text-muted)">${s}</li>`).join('')}</ul>
+            </div>` : ''}
+          ${item.weaknesses && item.weaknesses.length ? `
+            <div class="mb-4">
+              <div class="text-sm font-semibold mb-1.5" style="color:var(--text)">จุดอ่อน</div>
+              <ul class="space-y-1">${item.weaknesses.map(w=>`<li class="text-sm" style="color:var(--text-muted)">${w}</li>`).join('')}</ul>
+            </div>` : ''}
+          <div class="mb-4">
+            <div class="text-sm font-semibold mb-1.5" style="color:var(--text)">การใช้ Social Media</div>
+            <p class="text-sm" style="color:var(--text-muted)">${buildSocialSentence(item.social_trend)}</p>
+          </div>
+          <div>
+            <div class="text-sm font-semibold mb-1.5" style="color:var(--text)">โอกาสที่เราแข่งได้</div>
+            <ul class="space-y-1">${deriveOpportunity(item).map(o=>`<li class="text-sm" style="color:var(--text-muted)">${o}</li>`).join('')}</ul>
+          </div>
+        ` : `
+          <p class="text-sm mb-3 leading-relaxed" style="color:var(--text-muted)">${item.summary}</p>
+          ${item.tags && item.tags.length ? `<div class="mb-4 flex flex-wrap gap-1">${item.tags.map(t=>`<span class="inline-block text-xs px-2 py-0.5 rounded-full" style="background:var(--nav-active);color:var(--text-muted)">#${t}</span>`).join('')}</div>` : ''}
+          ${item.detail ? `<p class="text-xs leading-relaxed" style="color:var(--text-muted)">${item.detail}</p>` : ''}
+        `}
       </div>
     </div>`;
   }).join('');
@@ -874,14 +876,13 @@ function renderPricingView() {
     const rows = [];
     competitors.forEach(c => {
       if (!c.pricing) return;
-      const promo = (c.promotions && c.promotions.length) ? c.promotions.join(' / ') : '—';
       tab.keys.forEach(key => {
         const p = c.pricing[key];
-        if (p && p.price) rows.push({ clinic: c.title, price: p.price, note: p.note||'', promo });
+        if (p && p.price) rows.push({ clinic: c.title, price: p.price, note: p.note||'' });
       });
       if (tab.includeOther && c.pricing.other) {
         c.pricing.other.forEach(o => {
-          if (o.price) rows.push({ clinic: c.title, price: o.price, note: (o.note||'') + (o.name ? ' (' + o.name + ')' : ''), promo });
+          if (o.price) rows.push({ clinic: c.title, price: o.price, note: (o.note||'') + (o.name ? ' (' + o.name + ')' : '') });
         });
       }
     });
@@ -896,10 +897,9 @@ function renderPricingView() {
             <td class="px-4 py-3 font-semibold text-sm" style="color:var(--text)">${r.clinic}${isMin ? ' <span class=\"ml-1 text-xs text-green-600 font-bold\">ถูกสุด</span>' : ''}</td>
             <td class="px-4 py-3 text-right font-bold text-emerald-500 tabular-nums">${Number(String(r.price).replace(/,/g,'')).toLocaleString('th-TH')}</td>
             <td class="px-4 py-3 text-xs" style="color:var(--text-muted)">${r.note||'—'}</td>
-            <td class="px-4 py-3 text-xs" style="color:var(--text-muted)">${r.promo}</td>
           </tr>`;
         }).join('')
-      : `<tr><td colspan="4" class="px-4 py-8 text-center text-sm" style="color:var(--text-muted)">ไม่พบข้อมูลราคาในหมวดนี้</td></tr>`;
+      : `<tr><td colspan="3" class="px-4 py-8 text-center text-sm" style="color:var(--text-muted)">ไม่พบข้อมูลราคาในหมวดนี้</td></tr>`;
   }
 
   // Social trend table
