@@ -123,6 +123,34 @@
       #main-content { padding: 4.5rem 1rem 1.5rem; }
       .compare-chart-wrap { height: 120px !important; }
     }
+
+    /* ── Intel / Pricing view tabs ── */
+    .intel-tab, .pricing-tab {
+      cursor: pointer; padding: 5px 14px; border-radius: 9999px;
+      font-size: .78rem; font-weight: 600;
+      border: 2px solid transparent; transition: all .18s;
+      color: var(--text-muted); background: transparent;
+    }
+    .intel-tab.active, .pricing-tab.active {
+      background: var(--nav-active); color: var(--text);
+      border-color: var(--card-border);
+    }
+    .intel-tab:hover:not(.active), .pricing-tab:hover:not(.active) {
+      background: var(--nav-active);
+    }
+
+    /* ── Intel accordion ── */
+    .intel-accord {
+      border: 1px solid var(--card-border); border-radius: 14px;
+      overflow: hidden; margin-bottom: 8px; background: var(--card);
+    }
+    .intel-accord-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 18px; cursor: pointer; user-select: none;
+    }
+    .intel-accord-hdr:hover { background: var(--nav-active); }
+    .intel-accord-body { display: none; padding: 0 18px 16px; }
+    .intel-accord-body.open { display: block; }
   </style>
 </head>
 <body style="font-family: 'Prompt', system-ui, sans-serif" class="text-slate-800">
@@ -184,6 +212,30 @@
       <button onclick="showView('view-tiktok')" id="nav-tiktok" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors text-sm"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#010101"></span>TikTok</button>
 <button onclick="showView('view-facebook')" id="nav-facebook" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors text-sm"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#1877f2"></span>Facebook</button>
 <button onclick="showView('view-instagram')" id="nav-instagram" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors text-sm"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#e1306c"></span>Instagram</button>
+
+      <div class="pt-2 pb-1">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Intelligence</p>
+      </div>
+
+      <button onclick="showView('view-intel')" id="nav-intel"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        ข่าวกรอง
+      </button>
+
+      <button onclick="showView('view-pricing')" id="nav-pricing"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        ราคาทำฟัน
+      </button>
 
       <div class="pt-2 pb-1">
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Tools</p>
@@ -284,6 +336,76 @@
 
 <div id="view-instagram" class="view"><div class="flex items-center gap-3 mb-6"><span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full text-white" style="background:#e1306c">Instagram</span><h1 class="text-3xl font-black text-slate-800">Dashboard</h1></div><!-- KPI Cards --><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ยอดดูรวม</div><div class="kpi-value text-4xl font-black text-slate-800">15,307</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ยอดดูเฉลี่ย/วัน</div><div class="kpi-value text-4xl font-black text-slate-800">546.7</div><div class="text-xs text-slate-400 mt-1">เฉลี่ย 28 วัน</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">อัตราการมีส่วนร่วม</div><div class="kpi-value text-4xl font-black" style="color:#e1306c">1.72%</div><div class="text-xs text-slate-400 mt-1">เฉลี่ยวันที่ active</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ผู้ติดตามใหม่</div><div class="kpi-value text-4xl font-black text-slate-800">0</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div></div><!-- Charts Grid --><div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6"><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">แนวโน้มยอดดูรายวัน</h2><div class="relative h-64"><canvas id="instagramLineChart"></canvas></div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">สัดส่วนการมีส่วนร่วม</h2><div class="relative h-64"><canvas id="instagramDoughnutChart"></canvas></div></div></div><!-- Daily Table --><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">ข้อมูลรายวัน</h2><div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="border-b-2 border-slate-200"><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap ">วันที่</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">ยอดดู</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">การมีส่วนร่วม</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">Impressions</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">เข้าชมโปรไฟล์</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">คลิกลิงก์</th></tr></thead><tbody><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">16 May 2026</td><td class="px-4 py-3 text-right tabular-nums">40</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">26</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">15 May 2026</td><td class="px-4 py-3 text-right tabular-nums">219</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">121</td><td class="px-4 py-3 text-right tabular-nums">7</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">14 May 2026</td><td class="px-4 py-3 text-right tabular-nums">277</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">126</td><td class="px-4 py-3 text-right tabular-nums">12</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">13 May 2026</td><td class="px-4 py-3 text-right tabular-nums">55</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">33</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">12 May 2026</td><td class="px-4 py-3 text-right tabular-nums">871</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">576</td><td class="px-4 py-3 text-right tabular-nums">13</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">11 May 2026</td><td class="px-4 py-3 text-right tabular-nums">998</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">534</td><td class="px-4 py-3 text-right tabular-nums">14</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">10 May 2026</td><td class="px-4 py-3 text-right tabular-nums">3,395</td><td class="px-4 py-3 text-right tabular-nums">26</td><td class="px-4 py-3 text-right tabular-nums">2,723</td><td class="px-4 py-3 text-right tabular-nums">27</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">09 May 2026</td><td class="px-4 py-3 text-right tabular-nums font-bold" style="color:#e1306c">6,605</td><td class="px-4 py-3 text-right tabular-nums">43</td><td class="px-4 py-3 text-right tabular-nums">5,134</td><td class="px-4 py-3 text-right tabular-nums">50</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">08 May 2026</td><td class="px-4 py-3 text-right tabular-nums">154</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">22</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">07 May 2026</td><td class="px-4 py-3 text-right tabular-nums">132</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">22</td><td class="px-4 py-3 text-right tabular-nums">12</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">06 May 2026</td><td class="px-4 py-3 text-right tabular-nums">111</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">21</td><td class="px-4 py-3 text-right tabular-nums">5</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">05 May 2026</td><td class="px-4 py-3 text-right tabular-nums">108</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">36</td><td class="px-4 py-3 text-right tabular-nums">10</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">04 May 2026</td><td class="px-4 py-3 text-right tabular-nums">310</td><td class="px-4 py-3 text-right tabular-nums">26</td><td class="px-4 py-3 text-right tabular-nums">139</td><td class="px-4 py-3 text-right tabular-nums">37</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">03 May 2026</td><td class="px-4 py-3 text-right tabular-nums">383</td><td class="px-4 py-3 text-right tabular-nums">9</td><td class="px-4 py-3 text-right tabular-nums">133</td><td class="px-4 py-3 text-right tabular-nums">15</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">02 May 2026</td><td class="px-4 py-3 text-right tabular-nums">211</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">120</td><td class="px-4 py-3 text-right tabular-nums">9</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">01 May 2026</td><td class="px-4 py-3 text-right tabular-nums">30</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">7</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">30 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">45</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">25</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">29 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">112</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">64</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">28 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">1,189</td><td class="px-4 py-3 text-right tabular-nums">49</td><td class="px-4 py-3 text-right tabular-nums">607</td><td class="px-4 py-3 text-right tabular-nums">69</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">27 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">7</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">26 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">25 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">15</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">24 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">5</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">23 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">9</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">22 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">23</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">21 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">20 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">19 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr></tbody></table></div></div></div>
 
+    <!-- ── Intel View ── -->
+    <div id="view-intel" class="view">
+      <h1 class="text-3xl font-black text-slate-800 mb-6">ข่าวกรองตลาด</h1>
+
+      <!-- Filter tabs -->
+      <div class="flex flex-wrap gap-2 mb-5">
+        <button class="intel-tab active" id="intel-tab-all"       onclick="setIntelTab('all')">ทั้งหมด</button>
+        <button class="intel-tab"        id="intel-tab-competitor" onclick="setIntelTab('competitor')">🏥 คู่แข่ง</button>
+        <button class="intel-tab"        id="intel-tab-dental_knowledge" onclick="setIntelTab('dental_knowledge')">💡 ความรู้</button>
+        <button class="intel-tab"        id="intel-tab-news_events" onclick="setIntelTab('news_events')">📅 Events</button>
+        <button class="intel-tab"        id="intel-tab-equipment"  onclick="setIntelTab('equipment')">🦷 อุปกรณ์</button>
+      </div>
+
+      <!-- Accordion card grid -->
+      <div id="intel-cards" class="space-y-2"></div>
+    </div>
+
+    <!-- ── Pricing View ── -->
+    <div id="view-pricing" class="view">
+      <h1 class="text-3xl font-black text-slate-800 mb-6">ราคาทำฟัน — เปรียบเทียบคู่แข่ง</h1>
+
+      <!-- KPI cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6" id="pricing-kpi-cards"></div>
+
+      <!-- Service tabs -->
+      <div class="flex flex-wrap gap-2 mb-4">
+        <button class="pricing-tab active" id="pricing-tab-braces"    onclick="setPricingTab('braces')">🦷 จัดฟัน</button>
+        <button class="pricing-tab"        id="pricing-tab-implant"   onclick="setPricingTab('implant')">🔩 รากฟัน</button>
+        <button class="pricing-tab"        id="pricing-tab-whitening" onclick="setPricingTab('whitening')">✨ ฟอกสีฟัน</button>
+        <button class="pricing-tab"        id="pricing-tab-denture"   onclick="setPricingTab('denture')">😁 ฟันปลอม</button>
+        <button class="pricing-tab"        id="pricing-tab-other"     onclick="setPricingTab('other')">📋 อื่นๆ</button>
+      </div>
+
+      <!-- Pricing table -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b-2 border-slate-200">
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">คลินิก</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">บริการ</th>
+                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">ราคา (บาท)</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">หมายเหตุ</th>
+              </tr>
+            </thead>
+            <tbody id="pricing-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Social trend table -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <h2 class="text-sm font-bold text-slate-700 mb-4">📊 Social Media Trend — คู่แข่ง</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b-2 border-slate-200">
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">คลินิก</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Platform หลัก</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">ความถี่โพสต์</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Style</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Engagement</th>
+              </tr>
+            </thead>
+            <tbody id="social-trend-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
     <!-- ── Import View ── -->
     <div id="view-import" class="view">
 
@@ -348,6 +470,7 @@
 const DATA = {"tiktok": {"dates": ["19 Apr", "20 Apr", "21 Apr", "22 Apr", "23 Apr", "24 Apr", "25 Apr", "26 Apr", "27 Apr", "28 Apr", "29 Apr", "30 Apr", "01 May", "02 May", "03 May", "04 May", "05 May", "06 May", "07 May", "08 May", "09 May", "10 May", "11 May", "12 May", "13 May", "14 May", "15 May", "16 May"], "reach": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 133, 151, 35, 140, 112, 407, 851, 840, 25649, 48255, 25263, 21894, 8945, 9703, 4616, 8984, 8721], "columns": ["date", "reach", "profile_visits", "likes", "comments", "shares"], "peak_reach": 48255, "metrics": {"days": 28, "total_reach": 164699, "avg_reach": 5882.1, "avg_er": 5.33, "total_engagement": 10685, "new_followers": 0}, "doughnut": {"labels": ["Likes", "Comments", "Shares"], "data": [8793, 14, 1878], "colors": ["#fd3e81", "#25f4ee", "#010101"]}, "table": [{"date": "2026-05-16", "reach": 8721, "profile_visits": 27, "likes": 442, "comments": 0, "shares": 83}, {"date": "2026-05-15", "reach": 8984, "profile_visits": 36, "likes": 492, "comments": 0, "shares": 98}, {"date": "2026-05-14", "reach": 4616, "profile_visits": 26, "likes": 264, "comments": 2, "shares": 51}, {"date": "2026-05-13", "reach": 9703, "profile_visits": 35, "likes": 554, "comments": 2, "shares": 134}, {"date": "2026-05-12", "reach": 8945, "profile_visits": 32, "likes": 516, "comments": 0, "shares": 81}, {"date": "2026-05-11", "reach": 21894, "profile_visits": 37, "likes": 1305, "comments": 4, "shares": 269}, {"date": "2026-05-10", "reach": 25263, "profile_visits": 80, "likes": 1686, "comments": 0, "shares": 351}, {"date": "2026-05-09", "reach": 48255, "profile_visits": 127, "likes": 2509, "comments": 2, "shares": 528}, {"date": "2026-05-08", "reach": 25649, "profile_visits": 71, "likes": 946, "comments": 2, "shares": 241}, {"date": "2026-05-07", "reach": 840, "profile_visits": 4, "likes": 35, "comments": 0, "shares": 4}, {"date": "2026-05-06", "reach": 851, "profile_visits": 10, "likes": 17, "comments": 0, "shares": 0}, {"date": "2026-05-05", "reach": 407, "profile_visits": 24, "likes": 18, "comments": 0, "shares": 37}, {"date": "2026-05-04", "reach": 112, "profile_visits": 0, "likes": 1, "comments": 0, "shares": 0}, {"date": "2026-05-03", "reach": 140, "profile_visits": 3, "likes": 5, "comments": 1, "shares": 0}, {"date": "2026-05-02", "reach": 35, "profile_visits": 0, "likes": 0, "comments": 1, "shares": 0}, {"date": "2026-05-01", "reach": 151, "profile_visits": 1, "likes": 1, "comments": 0, "shares": 0}, {"date": "2026-04-30", "reach": 133, "profile_visits": 2, "likes": 2, "comments": 0, "shares": 1}, {"date": "2026-04-29", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-28", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-27", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-26", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-25", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-24", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-23", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-22", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-21", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-20", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-19", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}]}, "facebook": {"dates": ["19 Apr", "20 Apr", "21 Apr", "22 Apr", "23 Apr", "24 Apr", "25 Apr", "26 Apr", "27 Apr", "28 Apr", "29 Apr", "30 Apr", "01 May", "02 May", "03 May", "04 May", "05 May", "06 May", "07 May", "08 May", "09 May", "10 May", "11 May", "12 May", "13 May", "14 May", "15 May", "16 May"], "reach": [1526, 454, 920, 370, 320, 1094, 454, 321, 505, 1986, 951, 2241, 869, 1163, 2744, 3676, 2072, 1442, 1602, 1048, 25035, 2741, 2528, 1386, 1744, 1127, 358, 250], "columns": ["date", "reach", "engagement", "new_followers", "profile_visits", "link_clicks", "audience"], "peak_reach": 25035, "metrics": {"days": 28, "total_reach": 60927, "avg_reach": 2176.0, "avg_er": 1.08, "total_engagement": 482, "new_followers": 84}, "doughnut": {"labels": ["การมีส่วนร่วม", "ผู้ติดตามใหม่", "คลิกลิงก์"], "data": [482, 84, 86], "colors": ["#1877f2", "#0d5dbf", "#47b0f5"]}, "table": [{"date": "2026-05-16", "reach": 250, "engagement": 8, "new_followers": 1, "profile_visits": 37, "link_clicks": 0, "audience": 207}, {"date": "2026-05-15", "reach": 358, "engagement": 11, "new_followers": 3, "profile_visits": 129, "link_clicks": 0, "audience": 1108}, {"date": "2026-05-14", "reach": 1127, "engagement": 13, "new_followers": 2, "profile_visits": 268, "link_clicks": 2, "audience": 453}, {"date": "2026-05-13", "reach": 1744, "engagement": 2, "new_followers": 8, "profile_visits": 300, "link_clicks": 4, "audience": 137}, {"date": "2026-05-12", "reach": 1386, "engagement": 13, "new_followers": 3, "profile_visits": 169, "link_clicks": 4, "audience": 226}, {"date": "2026-05-11", "reach": 2528, "engagement": 30, "new_followers": 3, "profile_visits": 249, "link_clicks": 3, "audience": 726}, {"date": "2026-05-10", "reach": 2741, "engagement": 37, "new_followers": 1, "profile_visits": 164, "link_clicks": 2, "audience": 1191}, {"date": "2026-05-09", "reach": 25035, "engagement": 59, "new_followers": 13, "profile_visits": 226, "link_clicks": 2, "audience": 15595}, {"date": "2026-05-08", "reach": 1048, "engagement": 27, "new_followers": 0, "profile_visits": 136, "link_clicks": 1, "audience": 238}, {"date": "2026-05-07", "reach": 1602, "engagement": 23, "new_followers": 1, "profile_visits": 137, "link_clicks": 3, "audience": 262}, {"date": "2026-05-06", "reach": 1442, "engagement": 20, "new_followers": 5, "profile_visits": 114, "link_clicks": 3, "audience": 276}, {"date": "2026-05-05", "reach": 2072, "engagement": 26, "new_followers": 6, "profile_visits": 225, "link_clicks": 3, "audience": 309}, {"date": "2026-05-04", "reach": 3676, "engagement": 37, "new_followers": 2, "profile_visits": 305, "link_clicks": 5, "audience": 687}, {"date": "2026-05-03", "reach": 2744, "engagement": 50, "new_followers": 2, "profile_visits": 197, "link_clicks": 2, "audience": 544}, {"date": "2026-05-02", "reach": 1163, "engagement": 10, "new_followers": 2, "profile_visits": 127, "link_clicks": 3, "audience": 252}, {"date": "2026-05-01", "reach": 869, "engagement": 6, "new_followers": 2, "profile_visits": 124, "link_clicks": 3, "audience": 186}, {"date": "2026-04-30", "reach": 2241, "engagement": 31, "new_followers": 3, "profile_visits": 248, "link_clicks": 5, "audience": 522}, {"date": "2026-04-29", "reach": 951, "engagement": 12, "new_followers": 1, "profile_visits": 102, "link_clicks": 3, "audience": 204}, {"date": "2026-04-28", "reach": 1986, "engagement": 32, "new_followers": 6, "profile_visits": 266, "link_clicks": 4, "audience": 565}, {"date": "2026-04-27", "reach": 505, "engagement": 0, "new_followers": 1, "profile_visits": 86, "link_clicks": 4, "audience": 33}, {"date": "2026-04-26", "reach": 321, "engagement": 1, "new_followers": 3, "profile_visits": 49, "link_clicks": 3, "audience": 38}, {"date": "2026-04-25", "reach": 454, "engagement": 0, "new_followers": 1, "profile_visits": 67, "link_clicks": 5, "audience": 103}, {"date": "2026-04-24", "reach": 1094, "engagement": 16, "new_followers": 2, "profile_visits": 92, "link_clicks": 8, "audience": 269}, {"date": "2026-04-23", "reach": 320, "engagement": 0, "new_followers": 1, "profile_visits": 43, "link_clicks": 1, "audience": 32}, {"date": "2026-04-22", "reach": 370, "engagement": 2, "new_followers": 3, "profile_visits": 59, "link_clicks": 2, "audience": 120}, {"date": "2026-04-21", "reach": 920, "engagement": 7, "new_followers": 4, "profile_visits": 78, "link_clicks": 7, "audience": 295}, {"date": "2026-04-20", "reach": 454, "engagement": 0, "new_followers": 2, "profile_visits": 78, "link_clicks": 4, "audience": 133}, {"date": "2026-04-19", "reach": 1526, "engagement": 9, "new_followers": 3, "profile_visits": 118, "link_clicks": 0, "audience": 634}]}, "instagram": {"dates": ["19 Apr", "20 Apr", "21 Apr", "22 Apr", "23 Apr", "24 Apr", "25 Apr", "26 Apr", "27 Apr", "28 Apr", "29 Apr", "30 Apr", "01 May", "02 May", "03 May", "04 May", "05 May", "06 May", "07 May", "08 May", "09 May", "10 May", "11 May", "12 May", "13 May", "14 May", "15 May", "16 May"], "reach": [0, 0, 0, 23, 9, 8, 15, 0, 7, 1189, 112, 45, 30, 211, 383, 310, 108, 111, 132, 154, 6605, 3395, 998, 871, 55, 277, 219, 40], "columns": ["date", "reach", "engagement", "impressions", "profile_visits", "link_clicks"], "peak_reach": 6605, "metrics": {"days": 28, "total_reach": 15307, "avg_reach": 546.7, "avg_er": 1.72, "total_engagement": 181, "new_followers": 0}, "doughnut": {"labels": ["การมีส่วนร่วม", "Impressions", "เข้าชมโปรไฟล์"], "data": [181, 10477, 333], "colors": ["#e1306c", "#833ab4", "#f56040"]}, "table": [{"date": "2026-05-16", "reach": 40, "engagement": 0, "impressions": 26, "profile_visits": 2, "link_clicks": 0}, {"date": "2026-05-15", "reach": 219, "engagement": 4, "impressions": 121, "profile_visits": 7, "link_clicks": 0}, {"date": "2026-05-14", "reach": 277, "engagement": 0, "impressions": 126, "profile_visits": 12, "link_clicks": 0}, {"date": "2026-05-13", "reach": 55, "engagement": 0, "impressions": 33, "profile_visits": 4, "link_clicks": 0}, {"date": "2026-05-12", "reach": 871, "engagement": 4, "impressions": 576, "profile_visits": 13, "link_clicks": 0}, {"date": "2026-05-11", "reach": 998, "engagement": 8, "impressions": 534, "profile_visits": 14, "link_clicks": 0}, {"date": "2026-05-10", "reach": 3395, "engagement": 26, "impressions": 2723, "profile_visits": 27, "link_clicks": 0}, {"date": "2026-05-09", "reach": 6605, "engagement": 43, "impressions": 5134, "profile_visits": 50, "link_clicks": 0}, {"date": "2026-05-08", "reach": 154, "engagement": 1, "impressions": 22, "profile_visits": 3, "link_clicks": 0}, {"date": "2026-05-07", "reach": 132, "engagement": 2, "impressions": 22, "profile_visits": 12, "link_clicks": 0}, {"date": "2026-05-06", "reach": 111, "engagement": 0, "impressions": 21, "profile_visits": 5, "link_clicks": 0}, {"date": "2026-05-05", "reach": 108, "engagement": 1, "impressions": 36, "profile_visits": 10, "link_clicks": 0}, {"date": "2026-05-04", "reach": 310, "engagement": 26, "impressions": 139, "profile_visits": 37, "link_clicks": 0}, {"date": "2026-05-03", "reach": 383, "engagement": 9, "impressions": 133, "profile_visits": 15, "link_clicks": 0}, {"date": "2026-05-02", "reach": 211, "engagement": 4, "impressions": 120, "profile_visits": 9, "link_clicks": 0}, {"date": "2026-05-01", "reach": 30, "engagement": 0, "impressions": 8, "profile_visits": 7, "link_clicks": 0}, {"date": "2026-04-30", "reach": 45, "engagement": 0, "impressions": 25, "profile_visits": 8, "link_clicks": 0}, {"date": "2026-04-29", "reach": 112, "engagement": 3, "impressions": 64, "profile_visits": 8, "link_clicks": 0}, {"date": "2026-04-28", "reach": 1189, "engagement": 49, "impressions": 607, "profile_visits": 69, "link_clicks": 0}, {"date": "2026-04-27", "reach": 7, "engagement": 1, "impressions": 1, "profile_visits": 2, "link_clicks": 0}, {"date": "2026-04-26", "reach": 0, "engagement": 0, "impressions": 0, "profile_visits": 0, "link_clicks": 0}, {"date": "2026-04-25", "reach": 15, "engagement": 0, "impressions": 2, "profile_visits": 8, "link_clicks": 0}, {"date": "2026-04-24", "reach": 8, "engagement": 0, "impressions": 2, "profile_visits": 5, "link_clicks": 0}, {"date": "2026-04-23", "reach": 9, "engagement": 0, "impressions": 1, "profile_visits": 1, "link_clicks": 0}, {"date": "2026-04-22", "reach": 23, "engagement": 0, "impressions": 1, "profile_visits": 4, "link_clicks": 0}, {"date": "2026-04-21", "reach": 0, "engagement": 0, "impressions": 0, "profile_visits": 1, "link_clicks": 0}, {"date": "2026-04-20", "reach": 0, "engagement": 0, "impressions": 0, "profile_visits": 0, "link_clicks": 0}, {"date": "2026-04-19", "reach": 0, "engagement": 0, "impressions": 0, "profile_visits": 0, "link_clicks": 0}]}};
 const COMP = {"platforms": ["tiktok", "facebook", "instagram"], "labels": ["TikTok", "Facebook", "Instagram"], "avg_reach": [5882.1, 2176.0, 546.7], "avg_er": [5.33, 1.08, 1.72], "total_reach": [164699, 60927, 15307], "total_engagement": [10685, 482, 181], "colors": ["#010101", "#1877f2", "#e1306c"]};
 const PLATFORMS = ["tiktok", "facebook", "instagram"];
+const INTEL = [{"id": "competitor-bb-dental", "category": "competitor", "title": "B&B Dental Clinic", "summary": "คลินิกทันตกรรมใน สกลนคร รับบัตรทอง-ประกันสังคม มี TikTok @bb.dental.clinic3 และ Facebook", "source_url": "", "thumbnail_url": "", "tags": ["สกลนคร", "บัตรทอง", "ประกันสังคม", "TikTok"], "relevance": "high", "detail": "พบใน TikTok (@bb.dental.clinic3) และ Facebook รีเทนเนอร์ 2,499 บาท รับบัตรทอง/ประกันสังคม active สม่ำเสมอ", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": [{"name": "รีเทนเนอร์", "price": "2499", "note": "ต่อชุด"}]}, "strengths": ["รับบัตรทอง/ประกันสังคม", "ราคาประหยัด", "TikTok active"], "promotions": [], "social_trend": {"primary_platform": "TikTok", "posting_frequency": "สม่ำเสมอ", "content_style": "promotional", "engagement_level": "medium"}}, {"id": "competitor-mor-jan-jao", "category": "competitor", "title": "คลินิกทันตกรรมหมอจั่นเจา", "summary": "Facebook 11,883+ likes มี TikTok @dr.piyawat5 และ website ฟันปลอมโลหะเยอรมัน 8,000 บาท", "source_url": "", "thumbnail_url": "", "tags": ["สกลนคร", "ฟันปลอม", "Facebook"], "relevance": "high", "detail": "Facebook 11,883+ likes, TikTok @dr.piyawat5 มีเว็บไซต์ ฟันปลอมโลหะเยอรมัน 8,000 บาท Facebook fans สูงมาก", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": [{"name": "ฟันปลอมโลหะเยอรมัน", "price": "8000", "note": "ต่อชุด"}]}, "strengths": ["Facebook fans 11,883+", "มีเว็บไซต์", "ชื่อแบรนด์จดจำง่าย"], "promotions": [], "social_trend": {"primary_platform": "Facebook", "posting_frequency": "สม่ำเสมอ", "content_style": "promotional", "engagement_level": "medium"}}, {"id": "competitor-dental-park", "category": "competitor", "title": "Dental Park Clinic — คลินิกทันตกรรมเดนทัลปาร์ค", "summary": "คลินิกทันตกรรม สกลนคร บริการจัดฟัน ทำฟัน ครบวงจร ยังไม่พบราคาสาธารณะ", "source_url": "", "thumbnail_url": "", "tags": ["สกลนคร", "จัดฟัน", "ทำฟัน"], "relevance": "high", "detail": "Dental Park Clinic สกลนคร บริการจัดฟัน ถอนฟัน อุดฟัน รักษารากฟัน ยังไม่พบข้อมูลราคาสาธารณะ", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": "สอบถาม"}, "braces_clear": {"price": "", "note": "สอบถาม"}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": ["ชื่อแบรนด์ชัดเจน", "บริการครบวงจร"], "promotions": [], "social_trend": {"primary_platform": "Facebook", "posting_frequency": "ต่ำ", "content_style": "promotional", "engagement_level": "low"}}, {"id": "competitor-toothmate", "category": "competitor", "title": "ToothMate Dental Clinic", "summary": "Facebook + Instagram @toothmate_dc คู่แข่งเดียวที่ active ใน Instagram ทีมหมอเฉพาะทาง", "source_url": "", "thumbnail_url": "", "tags": ["สกลนคร", "Instagram", "เฉพาะทาง"], "relevance": "high", "detail": "Facebook และ Instagram @toothmate_dc ทีมหมอเฉพาะทาง ครอบคลุมทุกวัย คู่แข่งเดียวที่มี Instagram active", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": ["Instagram active", "ทีมหมอเฉพาะทาง", "ครอบคลุมทุกวัย"], "promotions": [], "social_trend": {"primary_platform": "Instagram", "posting_frequency": "ปานกลาง", "content_style": "educational", "engagement_level": "medium"}}, {"id": "competitor-yim-wan", "category": "competitor", "title": "คลินิกยิ้มหวาน", "summary": "Facebook 11,153+ likes ชื่อแบรนด์จดจำง่าย เน้น Facebook เป็นหลัก", "source_url": "", "thumbnail_url": "", "tags": ["สกลนคร", "Facebook"], "relevance": "medium", "detail": "Facebook 11,153+ likes ชื่อแบรนด์ที่จดจำง่าย เน้นกลุ่มครอบครัว", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": ["Facebook fans 11,153+", "ชื่อแบรนด์จดจำง่าย"], "promotions": [], "social_trend": {"primary_platform": "Facebook", "posting_frequency": "ปานกลาง", "content_style": "promotional", "engagement_level": "medium"}}, {"id": "knowledge-longevity", "category": "dental_knowledge", "title": "เทรนด์ Longevity Dentistry 2026", "summary": "Eat Well + Sleep Well + Be Well เปลี่ยนวิธีมองการดูแลฟัน กลุ่ม 30-45 ปีมีกำลังซื้อสูง", "source_url": "", "thumbnail_url": "", "tags": ["longevity", "เทรนด์2026", "สุขภาพ"], "relevance": "high", "detail": "COSDENT คาดรายได้โต 20%+ ปี 2026 นวัตกรรม: Lip Juice Laser (ลดนอนกรน), Flash Whitening ไม่เสียว Content series 'ฟันดี ชีวิตดี' engage กลุ่ม 30-45 ปีได้ดี", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": [], "promotions": [], "social_trend": {"primary_platform": "TikTok", "posting_frequency": "", "content_style": "educational", "engagement_level": "high"}}, {"id": "knowledge-hashtags", "category": "dental_knowledge", "title": "Hashtags ยืนยันจากโพสต์จริง", "summary": "#ทำฟันสกลนคร #จัดฟันสกลนคร #รีเทนเนอร์สกลนคร #บัตรทองทำฟันฟรี #ประกันสังคมทำฟันฟรี900บาท", "source_url": "", "thumbnail_url": "", "tags": ["hashtag", "TikTok", "Facebook", "สกลนคร"], "relevance": "high", "detail": "Hashtags verified จากโพสต์จริงใน TikTok/Facebook สกลนคร พบในโพสต์คู่แข่ง ควรใช้เป็น primary hashtags ทุกโพสต์", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": [], "promotions": [], "social_trend": {"primary_platform": "TikTok", "posting_frequency": "", "content_style": "educational", "engagement_level": "high"}}, {"id": "event-wellness-expo", "category": "news_events", "title": "Thailand Wellness & Healthcare Expo 2026", "summary": "25–27 มิ.ย. 2026 ที่ BITEC มี PAP+ suppliers และ Digital Scanner หลายรายในที่เดียว", "source_url": "", "thumbnail_url": "", "tags": ["expo", "BITEC", "มิถุนายน2026", "dental"], "relevance": "high", "detail": "Thailand Wellness & Healthcare Expo 25-27 มิถุนายน 2026 BITEC กรุงเทพฯ โอกาสเดียวครึ่งปีแรกที่มี PAP+ suppliers Digital Scanner หลายราย ควรลงทะเบียนล่วงหน้า", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": [], "promotions": [], "social_trend": {"primary_platform": "", "posting_frequency": "", "content_style": "", "engagement_level": ""}}, {"id": "equipment-scanner", "category": "equipment", "title": "Digital Intraoral Scanner + AI X-ray", "summary": "ราคาลดลงมากปี 2026 แทนการพิมพ์ฟัน ใช้เป็น content ดึงดูดลูกค้าได้ดี ตลาดโลกโตสู่ $12.34B ปี 2031", "source_url": "", "thumbnail_url": "", "tags": ["อุปกรณ์", "เทคโนโลยี", "นวัตกรรม", "CAD/CAM"], "relevance": "high", "detail": "Digital Intraoral Scanner + AI X-ray Analysis + CAD/CAM ครอบฟันวันเดียว เพิ่ม patient experience ตลาดโลกเติบโตสู่ $12.34 พันล้าน USD ภายในปี 2031", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": [], "promotions": [], "social_trend": {"primary_platform": "", "posting_frequency": "", "content_style": "", "engagement_level": ""}}];
 
 // ── Chart instances cache ──
 const chartInstances = {};
@@ -414,10 +537,9 @@ function showView(id) {
 
 // ── Chart initializer ──
 function initCharts(viewId) {
-  if (viewId === 'view-home') {
-    initHomeBar();
-    return;
-  }
+  if (viewId === 'view-home')    { initHomeBar(); return; }
+  if (viewId === 'view-intel')   { renderIntelCards(); return; }
+  if (viewId === 'view-pricing') { renderPricingView(); return; }
   const platform = viewId.replace('view-', '');
   if (!DATA[platform]) return;
   initLineChart(platform);
@@ -531,6 +653,244 @@ function initDoughnutChart(platform) {
       }
     }
   });
+}
+
+// ── Intel view ──
+const INTEL_BADGE = {
+  competitor:       { label: '🏥 คู่แข่ง',   cls: 'bg-red-100 text-red-700' },
+  dental_knowledge: { label: '💡 ความรู้',   cls: 'bg-blue-100 text-blue-700' },
+  news_events:      { label: '📅 Events',    cls: 'bg-green-100 text-green-700' },
+  equipment:        { label: '🦷 อุปกรณ์',  cls: 'bg-purple-100 text-purple-700' },
+};
+const RELEVANCE_CLS = {
+  high:   'bg-red-50 text-red-600',
+  medium: 'bg-yellow-100 text-yellow-700',
+  low:    'bg-slate-100 text-slate-500',
+};
+const PRICE_LABELS = {
+  implant:'รากเทียม', braces_metal:'จัดฟันโลหะ', braces_clear:'จัดฟันใส',
+  whitening:'ฟอกสีฟัน', denture_full:'ฟันปลอมทั้งปาก', denture_partial:'ฟันปลอมบางส่วน',
+  veneer:'วีเนียร์', root_canal:'รักษารากฟัน', extraction:'ถอนฟัน',
+  filling:'อุดฟัน', scaling:'ขูดหินปูน',
+};
+const PRICING_TABS = {
+  braces:    { keys: ['braces_metal','braces_clear'] },
+  implant:   { keys: ['implant'] },
+  whitening: { keys: ['whitening'] },
+  denture:   { keys: ['denture_full','denture_partial'] },
+  other:     { keys: ['veneer','root_canal','extraction','filling','scaling'] },
+};
+let currentIntelTab = 'all';
+let currentPricingTab = 'braces';
+
+function setIntelTab(tab) {
+  currentIntelTab = tab;
+  document.querySelectorAll('.intel-tab').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('intel-tab-' + tab);
+  if (btn) btn.classList.add('active');
+  renderIntelCards();
+}
+
+function toggleIntelAccord(id) {
+  const body = document.getElementById('accord-body-' + id);
+  if (!body) return;
+  body.classList.toggle('open');
+  const chev = document.getElementById('accord-chev-' + id);
+  if (chev) chev.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+
+function renderPricingRows(pricing) {
+  if (!pricing) return '<span class="text-xs" style="color:var(--text-muted)">ไม่มีข้อมูลราคา</span>';
+  let rows = '';
+  Object.entries(PRICE_LABELS).forEach(([key, lbl]) => {
+    const p = pricing[key];
+    if (p && p.price) rows += `<div class="flex gap-2 text-xs py-1 border-b" style="border-color:var(--card-border)">
+      <span style="color:var(--text-muted)" class="w-28 flex-shrink-0">${lbl}</span>
+      <span class="font-bold text-emerald-500">${Number(p.price).toLocaleString('th-TH')} บาท</span>
+      ${p.note ? `<span style="color:var(--text-muted)">${p.note}</span>` : ''}
+    </div>`;
+  });
+  if (pricing.other && pricing.other.length) {
+    pricing.other.forEach(o => {
+      if (o.price) rows += `<div class="flex gap-2 text-xs py-1 border-b" style="border-color:var(--card-border)">
+        <span style="color:var(--text-muted)" class="w-28 flex-shrink-0">${o.name}</span>
+        <span class="font-bold text-emerald-500">${Number(o.price).toLocaleString('th-TH')} บาท</span>
+        ${o.note ? `<span style="color:var(--text-muted)">${o.note}</span>` : ''}
+      </div>`;
+    });
+  }
+  return rows || '<span class="text-xs" style="color:var(--text-muted)">ไม่พบข้อมูลราคา</span>';
+}
+
+function renderBulletList(items) {
+  if (!items || !items.length) return '<span class="text-xs" style="color:var(--text-muted)">—</span>';
+  return items.map(i =>
+    `<span class="inline-block text-xs px-2 py-0.5 rounded-full mr-1 mb-1"
+      style="background:var(--nav-active);color:var(--text)">${i}</span>`
+  ).join('');
+}
+
+function renderIntelCards() {
+  const container = document.getElementById('intel-cards');
+  if (!container) return;
+  const items = currentIntelTab === 'all' ? INTEL : INTEL.filter(x => x.category === currentIntelTab);
+  if (!items.length) {
+    container.innerHTML = '<div class="text-center py-12" style="color:var(--text-muted)">ไม่พบข้อมูลในหมวดนี้</div>';
+    return;
+  }
+  container.innerHTML = items.map(item => {
+    const badge   = INTEL_BADGE[item.category] || { label: item.category, cls: 'bg-slate-100 text-slate-600' };
+    const relCls  = RELEVANCE_CLS[item.relevance] || RELEVANCE_CLS.low;
+    const isComp  = item.category === 'competitor';
+    const stTrend = item.social_trend || {};
+    return `<div class="intel-accord">
+      <div class="intel-accord-hdr" onclick="toggleIntelAccord('${item.id}')">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold ${badge.cls} flex-shrink-0">${badge.label}</span>
+          <span class="font-semibold text-sm truncate" style="color:var(--text)">${item.title}</span>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0 ml-3">
+          <span class="text-xs px-2 py-0.5 rounded-full font-semibold ${relCls}">${item.relevance}</span>
+          <svg id="accord-chev-${item.id}" class="w-4 h-4 flex-shrink-0 transition-transform"
+            style="color:var(--text-muted)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+      <div id="accord-body-${item.id}" class="intel-accord-body">
+        <p class="text-sm mb-3" style="color:var(--text-muted)">${item.summary}</p>
+        ${item.tags && item.tags.length
+          ? `<div class="mb-3">${item.tags.map(t=>`<span class="inline-block text-xs px-2 py-0.5 rounded-full mr-1"
+              style="background:var(--nav-active);color:var(--text-muted)">#${t}</span>`).join('')}</div>` : ''}
+        ${item.detail
+          ? `<p class="text-xs mb-3 p-3 rounded-xl" style="background:var(--nav-active);color:var(--text-muted)">${item.detail}</p>` : ''}
+        ${isComp ? `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+            <div>
+              <div class="text-xs font-bold mb-2" style="color:var(--text-muted)">💰 ราคาบริการ</div>
+              ${renderPricingRows(item.pricing)}
+            </div>
+            <div>
+              <div class="text-xs font-bold mb-2" style="color:var(--text-muted)">🏆 จุดแข็ง</div>
+              <div class="mb-3">${renderBulletList(item.strengths)}</div>
+              <div class="text-xs font-bold mb-2" style="color:var(--text-muted)">🎯 โปรโมชัน</div>
+              <div class="mb-3">${renderBulletList(item.promotions)}</div>
+              ${stTrend.primary_platform ? `
+                <div class="text-xs font-bold mb-2" style="color:var(--text-muted)">📊 Social Trend</div>
+                <div class="text-xs space-y-1">
+                  ${[['primary_platform','Platform'],['posting_frequency','ความถี่'],['content_style','Style'],['engagement_level','Engagement']].map(([k,lbl])=>{
+                    const v = stTrend[k];
+                    return v ? `<div class="flex gap-2 py-0.5">
+                      <span style="color:var(--text-muted)" class="w-24 flex-shrink-0">${lbl}</span>
+                      <span style="color:var(--text)" class="font-medium">${v}</span>
+                    </div>` : '';
+                  }).join('')}
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        ` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Pricing view ──
+function setPricingTab(tab) {
+  currentPricingTab = tab;
+  document.querySelectorAll('.pricing-tab').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('pricing-tab-' + tab);
+  if (btn) btn.classList.add('active');
+  renderPricingView();
+}
+
+function renderPricingView() {
+  const competitors = INTEL.filter(x => x.category === 'competitor');
+
+  // KPI cards
+  const kpiEl = document.getElementById('pricing-kpi-cards');
+  if (kpiEl) {
+    const withPrice = competitors.filter(c => {
+      if (!c.pricing) return false;
+      return Object.entries(c.pricing).some(([k,v]) => k !== 'other' && v && v.price) ||
+             (c.pricing.other && c.pricing.other.some(o => o.price));
+    });
+    const allSvcs = new Set();
+    competitors.forEach(c => {
+      if (!c.pricing) return;
+      Object.entries(c.pricing).forEach(([k,v]) => {
+        if (k !== 'other' && v && v.price) allSvcs.add(PRICE_LABELS[k] || k);
+        if (k === 'other' && Array.isArray(v)) v.forEach(o => { if (o.price) allSvcs.add(o.name); });
+      });
+    });
+    kpiEl.innerHTML = `
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">คู่แข่งที่พบราคา</div>
+        <div class="kpi-value text-4xl font-black text-slate-800">${withPrice.length}/${competitors.length}</div>
+        <div class="text-xs text-slate-400 mt-1">คลินิก</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">บริการที่พบราคา</div>
+        <div class="kpi-value text-4xl font-black text-slate-800">${allSvcs.size}</div>
+        <div class="text-xs text-slate-400 mt-1">ประเภทบริการ</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">คู่แข่งทั้งหมด</div>
+        <div class="kpi-value text-4xl font-black text-slate-800">${competitors.length}</div>
+        <div class="text-xs text-slate-400 mt-1">คลินิก ที่พบ</div>
+      </div>
+    `;
+  }
+
+  // Pricing table
+  const tbody = document.getElementById('pricing-table-body');
+  if (tbody) {
+    const tab = PRICING_TABS[currentPricingTab];
+    const rows = [];
+    competitors.forEach(c => {
+      if (!c.pricing) return;
+      tab.keys.forEach(key => {
+        const p = c.pricing[key];
+        if (p && p.price) rows.push({ clinic: c.title, svc: PRICE_LABELS[key]||key, price: p.price, note: p.note||'' });
+      });
+      if (currentPricingTab === 'other' && c.pricing.other) {
+        c.pricing.other.forEach(o => {
+          if (o.price) rows.push({ clinic: c.title, svc: o.name, price: o.price, note: o.note||'' });
+        });
+      }
+    });
+    rows.sort((a,b) => parseFloat(String(a.price).replace(/,/g,''))||0 - parseFloat(String(b.price).replace(/,/g,''))||0);
+    tbody.innerHTML = rows.length
+      ? rows.map(r => `<tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0">
+          <td class="px-4 py-3 font-semibold text-sm" style="color:var(--text)">${r.clinic}</td>
+          <td class="px-4 py-3 text-sm" style="color:var(--text)">${r.svc}</td>
+          <td class="px-4 py-3 text-right font-bold text-emerald-500 tabular-nums">
+            ${Number(String(r.price).replace(/,/g,'')).toLocaleString('th-TH')}
+          </td>
+          <td class="px-4 py-3 text-xs" style="color:var(--text-muted)">${r.note}</td>
+        </tr>`).join('')
+      : `<tr><td colspan="4" class="px-4 py-8 text-center text-sm" style="color:var(--text-muted)">ไม่พบข้อมูลราคาในหมวดนี้</td></tr>`;
+  }
+
+  // Social trend table
+  const stbody = document.getElementById('social-trend-body');
+  if (stbody) {
+    stbody.innerHTML = competitors.map(c => {
+      const st = c.social_trend || {};
+      const engCls = st.engagement_level === 'high'   ? 'bg-green-100 text-green-700'
+                   : st.engagement_level === 'medium' ? 'bg-yellow-100 text-yellow-700'
+                   : 'bg-slate-100 text-slate-500';
+      return `<tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0">
+        <td class="px-4 py-3 font-semibold text-sm" style="color:var(--text)">${c.title}</td>
+        <td class="px-4 py-3 text-sm" style="color:var(--text)">${st.primary_platform||'—'}</td>
+        <td class="px-4 py-3 text-sm" style="color:var(--text)">${st.posting_frequency||'—'}</td>
+        <td class="px-4 py-3 text-xs" style="color:var(--text-muted)">${st.content_style||'—'}</td>
+        <td class="px-4 py-3">
+          <span class="px-2 py-0.5 rounded-full text-xs font-semibold ${engCls}">${st.engagement_level||'—'}</span>
+        </td>
+      </tr>`;
+    }).join('');
+  }
 }
 
 // ── Import view ──

@@ -67,6 +67,174 @@ DOUGHNUT_DEF = {
 }
 
 
+# ── Intel / Market Intelligence fallback data ──
+INTEL_DATA_FALLBACK = [
+    {
+        "id": "competitor-bb-dental",
+        "category": "competitor",
+        "title": "B&B Dental Clinic",
+        "summary": "คลินิกทันตกรรมใน สกลนคร รับบัตรทอง-ประกันสังคม มี TikTok @bb.dental.clinic3 และ Facebook",
+        "source_url": "", "thumbnail_url": "",
+        "tags": ["สกลนคร", "บัตรทอง", "ประกันสังคม", "TikTok"],
+        "relevance": "high",
+        "detail": "พบใน TikTok (@bb.dental.clinic3) และ Facebook รีเทนเนอร์ 2,499 บาท รับบัตรทอง/ประกันสังคม active สม่ำเสมอ",
+        "pricing": {
+            "implant":{"price":"","note":""},"braces_metal":{"price":"","note":""},"braces_clear":{"price":"","note":""},
+            "whitening":{"price":"","note":""},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},
+            "veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},"extraction":{"price":"","note":""},
+            "filling":{"price":"","note":""},"scaling":{"price":"","note":""},
+            "other": [{"name": "รีเทนเนอร์", "price": "2499", "note": "ต่อชุด"}]
+        },
+        "strengths": ["รับบัตรทอง/ประกันสังคม", "ราคาประหยัด", "TikTok active"],
+        "promotions": [],
+        "social_trend": {"primary_platform":"TikTok","posting_frequency":"สม่ำเสมอ","content_style":"promotional","engagement_level":"medium"}
+    },
+    {
+        "id": "competitor-mor-jan-jao",
+        "category": "competitor",
+        "title": "คลินิกทันตกรรมหมอจั่นเจา",
+        "summary": "Facebook 11,883+ likes มี TikTok @dr.piyawat5 และ website ฟันปลอมโลหะเยอรมัน 8,000 บาท",
+        "source_url": "", "thumbnail_url": "",
+        "tags": ["สกลนคร", "ฟันปลอม", "Facebook"],
+        "relevance": "high",
+        "detail": "Facebook 11,883+ likes, TikTok @dr.piyawat5 มีเว็บไซต์ ฟันปลอมโลหะเยอรมัน 8,000 บาท Facebook fans สูงมาก",
+        "pricing": {
+            "implant":{"price":"","note":""},"braces_metal":{"price":"","note":""},"braces_clear":{"price":"","note":""},
+            "whitening":{"price":"","note":""},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},
+            "veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},"extraction":{"price":"","note":""},
+            "filling":{"price":"","note":""},"scaling":{"price":"","note":""},
+            "other": [{"name": "ฟันปลอมโลหะเยอรมัน", "price": "8000", "note": "ต่อชุด"}]
+        },
+        "strengths": ["Facebook fans 11,883+", "มีเว็บไซต์", "ชื่อแบรนด์จดจำง่าย"],
+        "promotions": [],
+        "social_trend": {"primary_platform":"Facebook","posting_frequency":"สม่ำเสมอ","content_style":"promotional","engagement_level":"medium"}
+    },
+    {
+        "id": "competitor-dental-park",
+        "category": "competitor",
+        "title": "Dental Park Clinic — คลินิกทันตกรรมเดนทัลปาร์ค",
+        "summary": "คลินิกทันตกรรม สกลนคร บริการจัดฟัน ทำฟัน ครบวงจร ยังไม่พบราคาสาธารณะ",
+        "source_url": "", "thumbnail_url": "",
+        "tags": ["สกลนคร", "จัดฟัน", "ทำฟัน"],
+        "relevance": "high",
+        "detail": "Dental Park Clinic สกลนคร บริการจัดฟัน ถอนฟัน อุดฟัน รักษารากฟัน ยังไม่พบข้อมูลราคาสาธารณะ",
+        "pricing": {
+            "implant":{"price":"","note":""},"braces_metal":{"price":"","note":"สอบถาม"},"braces_clear":{"price":"","note":"สอบถาม"},
+            "whitening":{"price":"","note":""},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},
+            "veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},"extraction":{"price":"","note":""},
+            "filling":{"price":"","note":""},"scaling":{"price":"","note":""},"other": []
+        },
+        "strengths": ["ชื่อแบรนด์ชัดเจน", "บริการครบวงจร"],
+        "promotions": [],
+        "social_trend": {"primary_platform":"Facebook","posting_frequency":"ต่ำ","content_style":"promotional","engagement_level":"low"}
+    },
+    {
+        "id": "competitor-toothmate",
+        "category": "competitor",
+        "title": "ToothMate Dental Clinic",
+        "summary": "Facebook + Instagram @toothmate_dc คู่แข่งเดียวที่ active ใน Instagram ทีมหมอเฉพาะทาง",
+        "source_url": "", "thumbnail_url": "",
+        "tags": ["สกลนคร", "Instagram", "เฉพาะทาง"],
+        "relevance": "high",
+        "detail": "Facebook และ Instagram @toothmate_dc ทีมหมอเฉพาะทาง ครอบคลุมทุกวัย คู่แข่งเดียวที่มี Instagram active",
+        "pricing": {
+            "implant":{"price":"","note":""},"braces_metal":{"price":"","note":""},"braces_clear":{"price":"","note":""},
+            "whitening":{"price":"","note":""},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},
+            "veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},"extraction":{"price":"","note":""},
+            "filling":{"price":"","note":""},"scaling":{"price":"","note":""},"other": []
+        },
+        "strengths": ["Instagram active", "ทีมหมอเฉพาะทาง", "ครอบคลุมทุกวัย"],
+        "promotions": [],
+        "social_trend": {"primary_platform":"Instagram","posting_frequency":"ปานกลาง","content_style":"educational","engagement_level":"medium"}
+    },
+    {
+        "id": "competitor-yim-wan",
+        "category": "competitor",
+        "title": "คลินิกยิ้มหวาน",
+        "summary": "Facebook 11,153+ likes ชื่อแบรนด์จดจำง่าย เน้น Facebook เป็นหลัก",
+        "source_url": "", "thumbnail_url": "",
+        "tags": ["สกลนคร", "Facebook"],
+        "relevance": "medium",
+        "detail": "Facebook 11,153+ likes ชื่อแบรนด์ที่จดจำง่าย เน้นกลุ่มครอบครัว",
+        "pricing": {
+            "implant":{"price":"","note":""},"braces_metal":{"price":"","note":""},"braces_clear":{"price":"","note":""},
+            "whitening":{"price":"","note":""},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},
+            "veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},"extraction":{"price":"","note":""},
+            "filling":{"price":"","note":""},"scaling":{"price":"","note":""},"other": []
+        },
+        "strengths": ["Facebook fans 11,153+", "ชื่อแบรนด์จดจำง่าย"],
+        "promotions": [],
+        "social_trend": {"primary_platform":"Facebook","posting_frequency":"ปานกลาง","content_style":"promotional","engagement_level":"medium"}
+    },
+    {
+        "id": "knowledge-longevity",
+        "category": "dental_knowledge",
+        "title": "เทรนด์ Longevity Dentistry 2026",
+        "summary": "Eat Well + Sleep Well + Be Well เปลี่ยนวิธีมองการดูแลฟัน กลุ่ม 30-45 ปีมีกำลังซื้อสูง",
+        "source_url": "", "thumbnail_url": "",
+        "tags": ["longevity", "เทรนด์2026", "สุขภาพ"],
+        "relevance": "high",
+        "detail": "COSDENT คาดรายได้โต 20%+ ปี 2026 นวัตกรรม: Lip Juice Laser (ลดนอนกรน), Flash Whitening ไม่เสียว Content series 'ฟันดี ชีวิตดี' engage กลุ่ม 30-45 ปีได้ดี",
+        "pricing": {"implant":{"price":"","note":""},"braces_metal":{"price":"","note":""},"braces_clear":{"price":"","note":""},"whitening":{"price":"","note":""},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},"veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},"extraction":{"price":"","note":""},"filling":{"price":"","note":""},"scaling":{"price":"","note":""},"other":[]},
+        "strengths": [], "promotions": [],
+        "social_trend": {"primary_platform":"TikTok","posting_frequency":"","content_style":"educational","engagement_level":"high"}
+    },
+    {
+        "id": "knowledge-hashtags",
+        "category": "dental_knowledge",
+        "title": "Hashtags ยืนยันจากโพสต์จริง",
+        "summary": "#ทำฟันสกลนคร #จัดฟันสกลนคร #รีเทนเนอร์สกลนคร #บัตรทองทำฟันฟรี #ประกันสังคมทำฟันฟรี900บาท",
+        "source_url": "", "thumbnail_url": "",
+        "tags": ["hashtag", "TikTok", "Facebook", "สกลนคร"],
+        "relevance": "high",
+        "detail": "Hashtags verified จากโพสต์จริงใน TikTok/Facebook สกลนคร พบในโพสต์คู่แข่ง ควรใช้เป็น primary hashtags ทุกโพสต์",
+        "pricing": {"implant":{"price":"","note":""},"braces_metal":{"price":"","note":""},"braces_clear":{"price":"","note":""},"whitening":{"price":"","note":""},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},"veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},"extraction":{"price":"","note":""},"filling":{"price":"","note":""},"scaling":{"price":"","note":""},"other":[]},
+        "strengths": [], "promotions": [],
+        "social_trend": {"primary_platform":"TikTok","posting_frequency":"","content_style":"educational","engagement_level":"high"}
+    },
+    {
+        "id": "event-wellness-expo",
+        "category": "news_events",
+        "title": "Thailand Wellness & Healthcare Expo 2026",
+        "summary": "25–27 มิ.ย. 2026 ที่ BITEC มี PAP+ suppliers และ Digital Scanner หลายรายในที่เดียว",
+        "source_url": "", "thumbnail_url": "",
+        "tags": ["expo", "BITEC", "มิถุนายน2026", "dental"],
+        "relevance": "high",
+        "detail": "Thailand Wellness & Healthcare Expo 25-27 มิถุนายน 2026 BITEC กรุงเทพฯ โอกาสเดียวครึ่งปีแรกที่มี PAP+ suppliers Digital Scanner หลายราย ควรลงทะเบียนล่วงหน้า",
+        "pricing": {"implant":{"price":"","note":""},"braces_metal":{"price":"","note":""},"braces_clear":{"price":"","note":""},"whitening":{"price":"","note":""},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},"veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},"extraction":{"price":"","note":""},"filling":{"price":"","note":""},"scaling":{"price":"","note":""},"other":[]},
+        "strengths": [], "promotions": [],
+        "social_trend": {"primary_platform":"","posting_frequency":"","content_style":"","engagement_level":""}
+    },
+    {
+        "id": "equipment-scanner",
+        "category": "equipment",
+        "title": "Digital Intraoral Scanner + AI X-ray",
+        "summary": "ราคาลดลงมากปี 2026 แทนการพิมพ์ฟัน ใช้เป็น content ดึงดูดลูกค้าได้ดี ตลาดโลกโตสู่ $12.34B ปี 2031",
+        "source_url": "", "thumbnail_url": "",
+        "tags": ["อุปกรณ์", "เทคโนโลยี", "นวัตกรรม", "CAD/CAM"],
+        "relevance": "high",
+        "detail": "Digital Intraoral Scanner + AI X-ray Analysis + CAD/CAM ครอบฟันวันเดียว เพิ่ม patient experience ตลาดโลกเติบโตสู่ $12.34 พันล้าน USD ภายในปี 2031",
+        "pricing": {"implant":{"price":"","note":""},"braces_metal":{"price":"","note":""},"braces_clear":{"price":"","note":""},"whitening":{"price":"","note":""},"denture_full":{"price":"","note":""},"denture_partial":{"price":"","note":""},"veneer":{"price":"","note":""},"root_canal":{"price":"","note":""},"extraction":{"price":"","note":""},"filling":{"price":"","note":""},"scaling":{"price":"","note":""},"other":[]},
+        "strengths": [], "promotions": [],
+        "social_trend": {"primary_platform":"","posting_frequency":"","content_style":"","engagement_level":""}
+    },
+]
+
+
+def load_intel_json() -> list:
+    """Load intel data from latest reports/intel-*.json; fall back to hardcoded data."""
+    reports_dir = PROJECT_ROOT / "reports"
+    if reports_dir.exists():
+        json_files = sorted(reports_dir.glob("intel-*.json"), reverse=True)
+        if json_files:
+            try:
+                with open(json_files[0], encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                pass
+    return INTEL_DATA_FALLBACK
+
+
 # ─────────────────────────────────────────────────────────────
 # Step 1: Run normalize.py for each detected platform path
 # ─────────────────────────────────────────────────────────────
@@ -617,6 +785,34 @@ HTML_TEMPLATE = """\
       #main-content {{ padding: 4.5rem 1rem 1.5rem; }}
       .compare-chart-wrap {{ height: 120px !important; }}
     }}
+
+    /* ── Intel / Pricing view tabs ── */
+    .intel-tab, .pricing-tab {{
+      cursor: pointer; padding: 5px 14px; border-radius: 9999px;
+      font-size: .78rem; font-weight: 600;
+      border: 2px solid transparent; transition: all .18s;
+      color: var(--text-muted); background: transparent;
+    }}
+    .intel-tab.active, .pricing-tab.active {{
+      background: var(--nav-active); color: var(--text);
+      border-color: var(--card-border);
+    }}
+    .intel-tab:hover:not(.active), .pricing-tab:hover:not(.active) {{
+      background: var(--nav-active);
+    }}
+
+    /* ── Intel accordion ── */
+    .intel-accord {{
+      border: 1px solid var(--card-border); border-radius: 14px;
+      overflow: hidden; margin-bottom: 8px; background: var(--card);
+    }}
+    .intel-accord-hdr {{
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 18px; cursor: pointer; user-select: none;
+    }}
+    .intel-accord-hdr:hover {{ background: var(--nav-active); }}
+    .intel-accord-body {{ display: none; padding: 0 18px 16px; }}
+    .intel-accord-body.open {{ display: block; }}
   </style>
 </head>
 <body style="font-family: 'Prompt', system-ui, sans-serif" class="text-slate-800">
@@ -676,6 +872,30 @@ HTML_TEMPLATE = """\
       </div>
 
       {SIDEBAR_NAV_ITEMS}
+
+      <div class="pt-2 pb-1">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Intelligence</p>
+      </div>
+
+      <button onclick="showView('view-intel')" id="nav-intel"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        ข่าวกรอง
+      </button>
+
+      <button onclick="showView('view-pricing')" id="nav-pricing"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        ราคาทำฟัน
+      </button>
 
       <div class="pt-2 pb-1">
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Tools</p>
@@ -768,6 +988,76 @@ HTML_TEMPLATE = """\
     <!-- ── Platform Views (injected) ── -->
     {PLATFORM_VIEWS}
 
+    <!-- ── Intel View ── -->
+    <div id="view-intel" class="view">
+      <h1 class="text-3xl font-black text-slate-800 mb-6">ข่าวกรองตลาด</h1>
+
+      <!-- Filter tabs -->
+      <div class="flex flex-wrap gap-2 mb-5">
+        <button class="intel-tab active" id="intel-tab-all"       onclick="setIntelTab('all')">ทั้งหมด</button>
+        <button class="intel-tab"        id="intel-tab-competitor" onclick="setIntelTab('competitor')">🏥 คู่แข่ง</button>
+        <button class="intel-tab"        id="intel-tab-dental_knowledge" onclick="setIntelTab('dental_knowledge')">💡 ความรู้</button>
+        <button class="intel-tab"        id="intel-tab-news_events" onclick="setIntelTab('news_events')">📅 Events</button>
+        <button class="intel-tab"        id="intel-tab-equipment"  onclick="setIntelTab('equipment')">🦷 อุปกรณ์</button>
+      </div>
+
+      <!-- Accordion card grid -->
+      <div id="intel-cards" class="space-y-2"></div>
+    </div>
+
+    <!-- ── Pricing View ── -->
+    <div id="view-pricing" class="view">
+      <h1 class="text-3xl font-black text-slate-800 mb-6">ราคาทำฟัน — เปรียบเทียบคู่แข่ง</h1>
+
+      <!-- KPI cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6" id="pricing-kpi-cards"></div>
+
+      <!-- Service tabs -->
+      <div class="flex flex-wrap gap-2 mb-4">
+        <button class="pricing-tab active" id="pricing-tab-braces"    onclick="setPricingTab('braces')">🦷 จัดฟัน</button>
+        <button class="pricing-tab"        id="pricing-tab-implant"   onclick="setPricingTab('implant')">🔩 รากฟัน</button>
+        <button class="pricing-tab"        id="pricing-tab-whitening" onclick="setPricingTab('whitening')">✨ ฟอกสีฟัน</button>
+        <button class="pricing-tab"        id="pricing-tab-denture"   onclick="setPricingTab('denture')">😁 ฟันปลอม</button>
+        <button class="pricing-tab"        id="pricing-tab-other"     onclick="setPricingTab('other')">📋 อื่นๆ</button>
+      </div>
+
+      <!-- Pricing table -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b-2 border-slate-200">
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">คลินิก</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">บริการ</th>
+                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">ราคา (บาท)</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">หมายเหตุ</th>
+              </tr>
+            </thead>
+            <tbody id="pricing-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Social trend table -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <h2 class="text-sm font-bold text-slate-700 mb-4">📊 Social Media Trend — คู่แข่ง</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b-2 border-slate-200">
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">คลินิก</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Platform หลัก</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">ความถี่โพสต์</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Style</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Engagement</th>
+              </tr>
+            </thead>
+            <tbody id="social-trend-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
     <!-- ── Import View ── -->
     <div id="view-import" class="view">
 
@@ -832,6 +1122,7 @@ HTML_TEMPLATE = """\
 const DATA = {DATA_JSON};
 const COMP = {COMP_JSON};
 const PLATFORMS = {PLATFORMS_JSON};
+const INTEL = {INTEL_JSON};
 
 // ── Chart instances cache ──
 const chartInstances = {{}};
@@ -898,10 +1189,9 @@ function showView(id) {{
 
 // ── Chart initializer ──
 function initCharts(viewId) {{
-  if (viewId === 'view-home') {{
-    initHomeBar();
-    return;
-  }}
+  if (viewId === 'view-home')    {{ initHomeBar(); return; }}
+  if (viewId === 'view-intel')   {{ renderIntelCards(); return; }}
+  if (viewId === 'view-pricing') {{ renderPricingView(); return; }}
   const platform = viewId.replace('view-', '');
   if (!DATA[platform]) return;
   initLineChart(platform);
@@ -1015,6 +1305,244 @@ function initDoughnutChart(platform) {{
       }}
     }}
   }});
+}}
+
+// ── Intel view ──
+const INTEL_BADGE = {{
+  competitor:       {{ label: '🏥 คู่แข่ง',   cls: 'bg-red-100 text-red-700' }},
+  dental_knowledge: {{ label: '💡 ความรู้',   cls: 'bg-blue-100 text-blue-700' }},
+  news_events:      {{ label: '📅 Events',    cls: 'bg-green-100 text-green-700' }},
+  equipment:        {{ label: '🦷 อุปกรณ์',  cls: 'bg-purple-100 text-purple-700' }},
+}};
+const RELEVANCE_CLS = {{
+  high:   'bg-red-50 text-red-600',
+  medium: 'bg-yellow-100 text-yellow-700',
+  low:    'bg-slate-100 text-slate-500',
+}};
+const PRICE_LABELS = {{
+  implant:'รากเทียม', braces_metal:'จัดฟันโลหะ', braces_clear:'จัดฟันใส',
+  whitening:'ฟอกสีฟัน', denture_full:'ฟันปลอมทั้งปาก', denture_partial:'ฟันปลอมบางส่วน',
+  veneer:'วีเนียร์', root_canal:'รักษารากฟัน', extraction:'ถอนฟัน',
+  filling:'อุดฟัน', scaling:'ขูดหินปูน',
+}};
+const PRICING_TABS = {{
+  braces:    {{ keys: ['braces_metal','braces_clear'] }},
+  implant:   {{ keys: ['implant'] }},
+  whitening: {{ keys: ['whitening'] }},
+  denture:   {{ keys: ['denture_full','denture_partial'] }},
+  other:     {{ keys: ['veneer','root_canal','extraction','filling','scaling'] }},
+}};
+let currentIntelTab = 'all';
+let currentPricingTab = 'braces';
+
+function setIntelTab(tab) {{
+  currentIntelTab = tab;
+  document.querySelectorAll('.intel-tab').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('intel-tab-' + tab);
+  if (btn) btn.classList.add('active');
+  renderIntelCards();
+}}
+
+function toggleIntelAccord(id) {{
+  const body = document.getElementById('accord-body-' + id);
+  if (!body) return;
+  body.classList.toggle('open');
+  const chev = document.getElementById('accord-chev-' + id);
+  if (chev) chev.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : '';
+}}
+
+function renderPricingRows(pricing) {{
+  if (!pricing) return '<span class="text-xs" style="color:var(--text-muted)">ไม่มีข้อมูลราคา</span>';
+  let rows = '';
+  Object.entries(PRICE_LABELS).forEach(([key, lbl]) => {{
+    const p = pricing[key];
+    if (p && p.price) rows += `<div class="flex gap-2 text-xs py-1 border-b" style="border-color:var(--card-border)">
+      <span style="color:var(--text-muted)" class="w-28 flex-shrink-0">${{lbl}}</span>
+      <span class="font-bold text-emerald-500">${{Number(p.price).toLocaleString('th-TH')}} บาท</span>
+      ${{p.note ? `<span style="color:var(--text-muted)">${{p.note}}</span>` : ''}}
+    </div>`;
+  }});
+  if (pricing.other && pricing.other.length) {{
+    pricing.other.forEach(o => {{
+      if (o.price) rows += `<div class="flex gap-2 text-xs py-1 border-b" style="border-color:var(--card-border)">
+        <span style="color:var(--text-muted)" class="w-28 flex-shrink-0">${{o.name}}</span>
+        <span class="font-bold text-emerald-500">${{Number(o.price).toLocaleString('th-TH')}} บาท</span>
+        ${{o.note ? `<span style="color:var(--text-muted)">${{o.note}}</span>` : ''}}
+      </div>`;
+    }});
+  }}
+  return rows || '<span class="text-xs" style="color:var(--text-muted)">ไม่พบข้อมูลราคา</span>';
+}}
+
+function renderBulletList(items) {{
+  if (!items || !items.length) return '<span class="text-xs" style="color:var(--text-muted)">—</span>';
+  return items.map(i =>
+    `<span class="inline-block text-xs px-2 py-0.5 rounded-full mr-1 mb-1"
+      style="background:var(--nav-active);color:var(--text)">${{i}}</span>`
+  ).join('');
+}}
+
+function renderIntelCards() {{
+  const container = document.getElementById('intel-cards');
+  if (!container) return;
+  const items = currentIntelTab === 'all' ? INTEL : INTEL.filter(x => x.category === currentIntelTab);
+  if (!items.length) {{
+    container.innerHTML = '<div class="text-center py-12" style="color:var(--text-muted)">ไม่พบข้อมูลในหมวดนี้</div>';
+    return;
+  }}
+  container.innerHTML = items.map(item => {{
+    const badge   = INTEL_BADGE[item.category] || {{ label: item.category, cls: 'bg-slate-100 text-slate-600' }};
+    const relCls  = RELEVANCE_CLS[item.relevance] || RELEVANCE_CLS.low;
+    const isComp  = item.category === 'competitor';
+    const stTrend = item.social_trend || {{}};
+    return `<div class="intel-accord">
+      <div class="intel-accord-hdr" onclick="toggleIntelAccord('${{item.id}}')">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold ${{badge.cls}} flex-shrink-0">${{badge.label}}</span>
+          <span class="font-semibold text-sm truncate" style="color:var(--text)">${{item.title}}</span>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0 ml-3">
+          <span class="text-xs px-2 py-0.5 rounded-full font-semibold ${{relCls}}">${{item.relevance}}</span>
+          <svg id="accord-chev-${{item.id}}" class="w-4 h-4 flex-shrink-0 transition-transform"
+            style="color:var(--text-muted)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+      <div id="accord-body-${{item.id}}" class="intel-accord-body">
+        <p class="text-sm mb-3" style="color:var(--text-muted)">${{item.summary}}</p>
+        ${{item.tags && item.tags.length
+          ? `<div class="mb-3">${{item.tags.map(t=>`<span class="inline-block text-xs px-2 py-0.5 rounded-full mr-1"
+              style="background:var(--nav-active);color:var(--text-muted)">#${{t}}</span>`).join('')}}</div>` : ''}}
+        ${{item.detail
+          ? `<p class="text-xs mb-3 p-3 rounded-xl" style="background:var(--nav-active);color:var(--text-muted)">${{item.detail}}</p>` : ''}}
+        ${{isComp ? `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+            <div>
+              <div class="text-xs font-bold mb-2" style="color:var(--text-muted)">💰 ราคาบริการ</div>
+              ${{renderPricingRows(item.pricing)}}
+            </div>
+            <div>
+              <div class="text-xs font-bold mb-2" style="color:var(--text-muted)">🏆 จุดแข็ง</div>
+              <div class="mb-3">${{renderBulletList(item.strengths)}}</div>
+              <div class="text-xs font-bold mb-2" style="color:var(--text-muted)">🎯 โปรโมชัน</div>
+              <div class="mb-3">${{renderBulletList(item.promotions)}}</div>
+              ${{stTrend.primary_platform ? `
+                <div class="text-xs font-bold mb-2" style="color:var(--text-muted)">📊 Social Trend</div>
+                <div class="text-xs space-y-1">
+                  ${{[['primary_platform','Platform'],['posting_frequency','ความถี่'],['content_style','Style'],['engagement_level','Engagement']].map(([k,lbl])=>{{
+                    const v = stTrend[k];
+                    return v ? `<div class="flex gap-2 py-0.5">
+                      <span style="color:var(--text-muted)" class="w-24 flex-shrink-0">${{lbl}}</span>
+                      <span style="color:var(--text)" class="font-medium">${{v}}</span>
+                    </div>` : '';
+                  }}).join('')}}
+                </div>
+              ` : ''}}
+            </div>
+          </div>
+        ` : ''}}
+      </div>
+    </div>`;
+  }}).join('');
+}}
+
+// ── Pricing view ──
+function setPricingTab(tab) {{
+  currentPricingTab = tab;
+  document.querySelectorAll('.pricing-tab').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('pricing-tab-' + tab);
+  if (btn) btn.classList.add('active');
+  renderPricingView();
+}}
+
+function renderPricingView() {{
+  const competitors = INTEL.filter(x => x.category === 'competitor');
+
+  // KPI cards
+  const kpiEl = document.getElementById('pricing-kpi-cards');
+  if (kpiEl) {{
+    const withPrice = competitors.filter(c => {{
+      if (!c.pricing) return false;
+      return Object.entries(c.pricing).some(([k,v]) => k !== 'other' && v && v.price) ||
+             (c.pricing.other && c.pricing.other.some(o => o.price));
+    }});
+    const allSvcs = new Set();
+    competitors.forEach(c => {{
+      if (!c.pricing) return;
+      Object.entries(c.pricing).forEach(([k,v]) => {{
+        if (k !== 'other' && v && v.price) allSvcs.add(PRICE_LABELS[k] || k);
+        if (k === 'other' && Array.isArray(v)) v.forEach(o => {{ if (o.price) allSvcs.add(o.name); }});
+      }});
+    }});
+    kpiEl.innerHTML = `
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">คู่แข่งที่พบราคา</div>
+        <div class="kpi-value text-4xl font-black text-slate-800">${{withPrice.length}}/${{competitors.length}}</div>
+        <div class="text-xs text-slate-400 mt-1">คลินิก</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">บริการที่พบราคา</div>
+        <div class="kpi-value text-4xl font-black text-slate-800">${{allSvcs.size}}</div>
+        <div class="text-xs text-slate-400 mt-1">ประเภทบริการ</div>
+      </div>
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">คู่แข่งทั้งหมด</div>
+        <div class="kpi-value text-4xl font-black text-slate-800">${{competitors.length}}</div>
+        <div class="text-xs text-slate-400 mt-1">คลินิก ที่พบ</div>
+      </div>
+    `;
+  }}
+
+  // Pricing table
+  const tbody = document.getElementById('pricing-table-body');
+  if (tbody) {{
+    const tab = PRICING_TABS[currentPricingTab];
+    const rows = [];
+    competitors.forEach(c => {{
+      if (!c.pricing) return;
+      tab.keys.forEach(key => {{
+        const p = c.pricing[key];
+        if (p && p.price) rows.push({{ clinic: c.title, svc: PRICE_LABELS[key]||key, price: p.price, note: p.note||'' }});
+      }});
+      if (currentPricingTab === 'other' && c.pricing.other) {{
+        c.pricing.other.forEach(o => {{
+          if (o.price) rows.push({{ clinic: c.title, svc: o.name, price: o.price, note: o.note||'' }});
+        }});
+      }}
+    }});
+    rows.sort((a,b) => parseFloat(String(a.price).replace(/,/g,''))||0 - parseFloat(String(b.price).replace(/,/g,''))||0);
+    tbody.innerHTML = rows.length
+      ? rows.map(r => `<tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0">
+          <td class="px-4 py-3 font-semibold text-sm" style="color:var(--text)">${{r.clinic}}</td>
+          <td class="px-4 py-3 text-sm" style="color:var(--text)">${{r.svc}}</td>
+          <td class="px-4 py-3 text-right font-bold text-emerald-500 tabular-nums">
+            ${{Number(String(r.price).replace(/,/g,'')).toLocaleString('th-TH')}}
+          </td>
+          <td class="px-4 py-3 text-xs" style="color:var(--text-muted)">${{r.note}}</td>
+        </tr>`).join('')
+      : `<tr><td colspan="4" class="px-4 py-8 text-center text-sm" style="color:var(--text-muted)">ไม่พบข้อมูลราคาในหมวดนี้</td></tr>`;
+  }}
+
+  // Social trend table
+  const stbody = document.getElementById('social-trend-body');
+  if (stbody) {{
+    stbody.innerHTML = competitors.map(c => {{
+      const st = c.social_trend || {{}};
+      const engCls = st.engagement_level === 'high'   ? 'bg-green-100 text-green-700'
+                   : st.engagement_level === 'medium' ? 'bg-yellow-100 text-yellow-700'
+                   : 'bg-slate-100 text-slate-500';
+      return `<tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0">
+        <td class="px-4 py-3 font-semibold text-sm" style="color:var(--text)">${{c.title}}</td>
+        <td class="px-4 py-3 text-sm" style="color:var(--text)">${{st.primary_platform||'—'}}</td>
+        <td class="px-4 py-3 text-sm" style="color:var(--text)">${{st.posting_frequency||'—'}}</td>
+        <td class="px-4 py-3 text-xs" style="color:var(--text-muted)">${{st.content_style||'—'}}</td>
+        <td class="px-4 py-3">
+          <span class="px-2 py-0.5 rounded-full text-xs font-semibold ${{engCls}}">${{st.engagement_level||'—'}}</span>
+        </td>
+      </tr>`;
+    }}).join('');
+  }}
 }}
 
 // ── Import view ──
@@ -1149,6 +1677,7 @@ showView('view-home');
 def build_html(all_history: dict[str, dict], generated_at: str) -> str:
     data_json, comp_json = build_data_json(all_history)
     platforms_json = json.dumps(list(all_history.keys()), ensure_ascii=False)
+    intel_json = json.dumps(load_intel_json(), ensure_ascii=False)
 
     sidebar_nav = build_sidebar_nav(all_history)
     home_cards = build_home_cards(all_history)
@@ -1163,6 +1692,7 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
         DATA_JSON=data_json,
         COMP_JSON=comp_json,
         PLATFORMS_JSON=platforms_json,
+        INTEL_JSON=intel_json,
         GENERATED_AT=generated_at,
         SIDEBAR_NAV_ITEMS=sidebar_nav,
         HOME_CARDS=home_cards,
