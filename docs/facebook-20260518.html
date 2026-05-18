@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook Dashboard — คลินิกทันตกรรม สกลนคร</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(135deg, #1877f2 0%, #0d5dbf 100%);
+      color: #fff;
+      padding: 24px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      box-shadow: 0 4px 16px #1877f255;
+    }
+    header h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; }
+    header .sub { font-size: 0.82rem; opacity: .75; margin-top: 3px; }
+    header .meta { font-size: 0.82rem; opacity: .8; text-align: right; }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px 72px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #94a3b8;
+      margin-bottom: -12px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 16px;
+    }
+    .metric-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 22px 20px 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.05);
+      border-top: 4px solid var(--accent);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,.12);
+    }
+    .metric-card .label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 10px;
+    }
+    .metric-card .value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: -.03em;
+    }
+    .metric-card .subtitle {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      margin-top: 6px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 24px 24px 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.05);
+    }
+    .card h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 1em;
+      background: #1877f2;
+      border-radius: 2px;
+    }
+    .chart-wrap { position: relative; height: 290px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    thead tr { background: linear-gradient(90deg, #1877f212, transparent); }
+    th {
+      color: #475569;
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      padding: 11px 14px;
+      white-space: nowrap;
+      border-bottom: 2px solid #1877f230;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f8fafc; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .highlight { color: #1877f2; font-weight: 700; }
+    footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      padding: 28px;
+    }
+    @media (max-width: 600px) {
+      header { padding: 18px; }
+      .chart-wrap { height: 230px; }
+      .metric-card .value { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>📊 Facebook Dashboard</h1>
+    <div class="sub">คลินิกทันตกรรม สกลนคร</div>
+  </div>
+  <div class="meta">
+    สร้างเมื่อ 18 May 2026<br>
+    ข้อมูล 28 วัน
+  </div>
+</header>
+
+<main>
+
+  <div class="section-title">ภาพรวม</div>
+  <div class="cards">
+    <div class="metric-card" style="--accent:#1877f2">
+      <div class="label">ยอดดูรวม</div>
+      <div class="value">60,927</div>
+      <div class="subtitle">28 วันล่าสุด</div>
+    </div>
+    <div class="metric-card" style="--accent:#2563eb">
+      <div class="label">ยอดดูเฉลี่ยต่อวัน</div>
+      <div class="value">2,176.0</div>
+      <div class="subtitle">28 วันล่าสุด</div>
+    </div>
+    <div class="metric-card" style="--accent:#16a34a">
+      <div class="label">อัตราการมีส่วนร่วม</div>
+      <div class="value">1.08%</div>
+      <div class="subtitle">เฉลี่ยวันที่มี activity</div>
+    </div>
+    <div class="metric-card" style="--accent:#9333ea">
+      <div class="label">ผู้ติดตามใหม่</div>
+      <div class="value">84</div>
+      <div class="subtitle">28 วันล่าสุด</div>
+    </div>
+    
+    <div class="metric-card" style="--accent:#d97706">
+      <div class="label">คลิกลิงก์</div>
+      <div class="value">86</div>
+      <div class="subtitle">28 วันล่าสุด</div>
+    </div>
+    <div class="metric-card" style="--accent:#0891b2">
+      <div class="label">การเข้าชมโปรไฟล์</div>
+      <div class="value">4,193</div>
+      <div class="subtitle">28 วันล่าสุด</div>
+    </div>
+  </div>
+
+  <div class="section-title">แนวโน้ม</div>
+
+  <div class="card">
+    <h2>ยอดดูรายวัน</h2>
+    <div class="chart-wrap"><canvas id="reachChart"></canvas></div>
+  </div>
+
+  
+  <div class="card">
+    <h2>การมีส่วนร่วมรายวัน</h2>
+    <div class="chart-wrap"><canvas id="engChart"></canvas></div>
+  </div>
+
+  <div class="section-title">ตารางข้อมูล</div>
+  <div class="card">
+    <h2>ข้อมูลรายวัน</h2>
+    <div class="table-wrap">
+      <table><thead><tr><th class="">วันที่</th><th class="num">ยอดดู</th><th class="num">การมีส่วนร่วม</th><th class="num">Followers ใหม่</th><th class="num">เข้าชมโปรไฟล์</th><th class="num">คลิกลิงก์</th><th class="num">ผู้ชม</th></tr></thead><tbody><tr><td>16 May 2026</td><td class="num">250</td><td class="num">8</td><td class="num">1</td><td class="num">37</td><td class="num">0</td><td class="num">207</td></tr><tr><td>15 May 2026</td><td class="num">358</td><td class="num">11</td><td class="num">3</td><td class="num">129</td><td class="num">0</td><td class="num">1,108</td></tr><tr><td>14 May 2026</td><td class="num">1,127</td><td class="num">13</td><td class="num">2</td><td class="num">268</td><td class="num">2</td><td class="num">453</td></tr><tr><td>13 May 2026</td><td class="num">1,744</td><td class="num">2</td><td class="num">8</td><td class="num">300</td><td class="num">4</td><td class="num">137</td></tr><tr><td>12 May 2026</td><td class="num">1,386</td><td class="num">13</td><td class="num">3</td><td class="num">169</td><td class="num">4</td><td class="num">226</td></tr><tr><td>11 May 2026</td><td class="num">2,528</td><td class="num">30</td><td class="num">3</td><td class="num">249</td><td class="num">3</td><td class="num">726</td></tr><tr><td>10 May 2026</td><td class="num">2,741</td><td class="num">37</td><td class="num">1</td><td class="num">164</td><td class="num">2</td><td class="num">1,191</td></tr><tr><td>09 May 2026</td><td class="num highlight">25,035</td><td class="num">59</td><td class="num">13</td><td class="num">226</td><td class="num">2</td><td class="num">15,595</td></tr><tr><td>08 May 2026</td><td class="num">1,048</td><td class="num">27</td><td class="num">0</td><td class="num">136</td><td class="num">1</td><td class="num">238</td></tr><tr><td>07 May 2026</td><td class="num">1,602</td><td class="num">23</td><td class="num">1</td><td class="num">137</td><td class="num">3</td><td class="num">262</td></tr><tr><td>06 May 2026</td><td class="num">1,442</td><td class="num">20</td><td class="num">5</td><td class="num">114</td><td class="num">3</td><td class="num">276</td></tr><tr><td>05 May 2026</td><td class="num">2,072</td><td class="num">26</td><td class="num">6</td><td class="num">225</td><td class="num">3</td><td class="num">309</td></tr><tr><td>04 May 2026</td><td class="num">3,676</td><td class="num">37</td><td class="num">2</td><td class="num">305</td><td class="num">5</td><td class="num">687</td></tr><tr><td>03 May 2026</td><td class="num">2,744</td><td class="num">50</td><td class="num">2</td><td class="num">197</td><td class="num">2</td><td class="num">544</td></tr><tr><td>02 May 2026</td><td class="num">1,163</td><td class="num">10</td><td class="num">2</td><td class="num">127</td><td class="num">3</td><td class="num">252</td></tr><tr><td>01 May 2026</td><td class="num">869</td><td class="num">6</td><td class="num">2</td><td class="num">124</td><td class="num">3</td><td class="num">186</td></tr><tr><td>30 Apr 2026</td><td class="num">2,241</td><td class="num">31</td><td class="num">3</td><td class="num">248</td><td class="num">5</td><td class="num">522</td></tr><tr><td>29 Apr 2026</td><td class="num">951</td><td class="num">12</td><td class="num">1</td><td class="num">102</td><td class="num">3</td><td class="num">204</td></tr><tr><td>28 Apr 2026</td><td class="num">1,986</td><td class="num">32</td><td class="num">6</td><td class="num">266</td><td class="num">4</td><td class="num">565</td></tr><tr><td>27 Apr 2026</td><td class="num">505</td><td class="num">0</td><td class="num">1</td><td class="num">86</td><td class="num">4</td><td class="num">33</td></tr><tr><td>26 Apr 2026</td><td class="num">321</td><td class="num">1</td><td class="num">3</td><td class="num">49</td><td class="num">3</td><td class="num">38</td></tr><tr><td>25 Apr 2026</td><td class="num">454</td><td class="num">0</td><td class="num">1</td><td class="num">67</td><td class="num">5</td><td class="num">103</td></tr><tr><td>24 Apr 2026</td><td class="num">1,094</td><td class="num">16</td><td class="num">2</td><td class="num">92</td><td class="num">8</td><td class="num">269</td></tr><tr><td>23 Apr 2026</td><td class="num">320</td><td class="num">0</td><td class="num">1</td><td class="num">43</td><td class="num">1</td><td class="num">32</td></tr><tr><td>22 Apr 2026</td><td class="num">370</td><td class="num">2</td><td class="num">3</td><td class="num">59</td><td class="num">2</td><td class="num">120</td></tr><tr><td>21 Apr 2026</td><td class="num">920</td><td class="num">7</td><td class="num">4</td><td class="num">78</td><td class="num">7</td><td class="num">295</td></tr><tr><td>20 Apr 2026</td><td class="num">454</td><td class="num">0</td><td class="num">2</td><td class="num">78</td><td class="num">4</td><td class="num">133</td></tr><tr><td>19 Apr 2026</td><td class="num">1,526</td><td class="num">9</td><td class="num">3</td><td class="num">118</td><td class="num">0</td><td class="num">634</td></tr></tbody></table>
+    </div>
+  </div>
+
+</main>
+
+<footer>Social Analytics App · คลินิกทันตกรรม สกลนคร · สร้างโดย Claude Code</footer>
+
+<script>
+  new Chart(document.getElementById('reachChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: ["19 Apr", "20 Apr", "21 Apr", "22 Apr", "23 Apr", "24 Apr", "25 Apr", "26 Apr", "27 Apr", "28 Apr", "29 Apr", "30 Apr", "01 May", "02 May", "03 May", "04 May", "05 May", "06 May", "07 May", "08 May", "09 May", "10 May", "11 May", "12 May", "13 May", "14 May", "15 May", "16 May"],
+      datasets: [{
+        label: 'ยอดดู',
+        data: [1526, 454, 920, 370, 320, 1094, 454, 321, 505, 1986, 951, 2241, 869, 1163, 2744, 3676, 2072, 1442, 1602, 1048, 25035, 2741, 2528, 1386, 1744, 1127, 358, 250],
+        borderColor: '#1877f2',
+        backgroundColor: '#1877f218',
+        borderWidth: 2.5,
+        pointRadius: 3,
+        pointHoverRadius: 7,
+        fill: true,
+        tension: 0.35,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => 'ยอดดู: ' + ctx.parsed.y.toLocaleString('th-TH')
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxRotation: 45 } },
+        y: { beginAtZero: true, grid: { color: '#f1f5f9' },
+              ticks: { callback: v => v.toLocaleString('th-TH') } }
+      }
+    }
+  });
+  
+  new Chart(document.getElementById('engChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ["19 Apr", "20 Apr", "21 Apr", "22 Apr", "23 Apr", "24 Apr", "25 Apr", "26 Apr", "27 Apr", "28 Apr", "29 Apr", "30 Apr", "01 May", "02 May", "03 May", "04 May", "05 May", "06 May", "07 May", "08 May", "09 May", "10 May", "11 May", "12 May", "13 May", "14 May", "15 May", "16 May"],
+      datasets: [{
+        label: 'การมีส่วนร่วม',
+        data: [9, 0, 7, 2, 0, 16, 0, 1, 0, 32, 12, 31, 6, 10, 50, 37, 26, 20, 23, 27, 59, 37, 30, 13, 2, 13, 11, 8],
+        backgroundColor: '#1877f2cc',
+        borderColor: '#1877f2',
+        borderWidth: 1,
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => 'การมีส่วนร่วม: ' + ctx.parsed.y.toLocaleString('th-TH')
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxRotation: 45 } },
+        y: { beginAtZero: true, grid: { color: '#f1f5f9' } }
+      }
+    }
+  });
+</script>
+</body>
+</html>

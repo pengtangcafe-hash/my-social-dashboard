@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Analytics Dashboard — คลินิกทันตกรรม สกลนคร</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: {} } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    .view { display: none; }
+    .view.active { display: block; }
+    .nav-btn.active { background: #f1f5f9; font-weight: 600; color: #0f172a; }
+    .drop-zone { transition: border-color .2s, background .2s; }
+    .drop-zone.drag-over { border-color: #3b82f6; background: #eff6ff; }
+    .toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: #10b981; color: #fff; padding: 14px 22px;
+      border-radius: 12px; font-weight: 600; font-size: 0.875rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,.18);
+      transform: translateY(80px); opacity: 0;
+      transition: transform .3s, opacity .3s;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body style="font-family: 'Prompt', system-ui, sans-serif" class="text-slate-800">
+
+<div class="flex h-screen overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside class="w-64 flex-shrink-0 bg-white border-r border-slate-200 flex flex-col">
+
+    <!-- Logo -->
+    <div class="p-6 border-b border-slate-100">
+      <div class="text-lg font-black text-slate-800 leading-tight">📊 Social Analytics</div>
+      <div class="text-xs text-slate-400 mt-0.5">คลินิกทันตกรรม สกลนคร</div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+
+      <button onclick="showView('view-home')" id="nav-home"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        ภาพรวม
+      </button>
+
+      <div class="pt-2 pb-1">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Platforms</p>
+      </div>
+
+      <button onclick="showView('view-tiktok')" id="nav-tiktok" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors text-sm"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#010101"></span>TikTok</button>
+<button onclick="showView('view-facebook')" id="nav-facebook" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors text-sm"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#1877f2"></span>Facebook</button>
+<button onclick="showView('view-instagram')" id="nav-instagram" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors text-sm"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#e1306c"></span>Instagram</button>
+
+      <div class="pt-2 pb-1">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Tools</p>
+      </div>
+
+      <button onclick="showView('view-import')" id="nav-import"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+        </svg>
+        นำเข้าข้อมูล
+      </button>
+
+    </nav>
+
+    <!-- Footer -->
+    <div class="p-4 border-t border-slate-100 text-[10px] text-slate-400 uppercase tracking-widest text-center">
+      สร้างเมื่อ 18 May 2026
+    </div>
+
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 overflow-y-auto bg-slate-100 p-8">
+
+    <!-- ── Home View ── -->
+    <div id="view-home" class="view">
+
+      <h1 class="text-3xl font-black text-slate-800 mb-6">ภาพรวม Social Media</h1>
+
+      <!-- Platform reach cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-2">TikTok</div><div class="text-4xl font-black" style="color:#010101">164,699</div><div class="text-xs text-slate-400 mt-1">ยอดดูรวม</div></div>
+<div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-2">Facebook</div><div class="text-4xl font-black" style="color:#1877f2">60,927</div><div class="text-xs text-slate-400 mt-1">ยอดดูรวม</div></div>
+<div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-2">Instagram</div><div class="text-4xl font-black" style="color:#e1306c">15,307</div><div class="text-xs text-slate-400 mt-1">ยอดดูรวม</div></div>
+      </div>
+
+      <!-- Comparison table -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+        <h2 class="text-sm font-bold text-slate-700 mb-4">Platform Comparison</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b-2 border-slate-200">
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Platform</th>
+                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">ยอดดูรวม</th>
+                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">ยอดดูเฉลี่ย/วัน</th>
+                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">อัตราการมีส่วนร่วม</th>
+                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">การมีส่วนร่วมรวม</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-semibold flex items-center gap-2"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#010101"></span>TikTok</td><td class="px-4 py-3 text-right tabular-nums">164,699</td><td class="px-4 py-3 text-right tabular-nums">5,882.1</td><td class="px-4 py-3 text-right tabular-nums">5.33%</td><td class="px-4 py-3 text-right tabular-nums">10,685</td></tr>
+<tr class="hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-semibold flex items-center gap-2"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#1877f2"></span>Facebook</td><td class="px-4 py-3 text-right tabular-nums">60,927</td><td class="px-4 py-3 text-right tabular-nums">2,176.0</td><td class="px-4 py-3 text-right tabular-nums">1.08%</td><td class="px-4 py-3 text-right tabular-nums">482</td></tr>
+<tr class="hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-semibold flex items-center gap-2"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#e1306c"></span>Instagram</td><td class="px-4 py-3 text-right tabular-nums">15,307</td><td class="px-4 py-3 text-right tabular-nums">546.7</td><td class="px-4 py-3 text-right tabular-nums">1.72%</td><td class="px-4 py-3 text-right tabular-nums">181</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Bar chart: avg reach comparison -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <h2 class="text-sm font-bold text-slate-700 mb-4">ยอดดูเฉลี่ยต่อวัน เปรียบเทียบ Platform</h2>
+        <div class="relative h-64">
+          <canvas id="homeBarChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Platform Views (injected) ── -->
+    <div id="view-tiktok" class="view hidden"><div class="flex items-center gap-3 mb-6"><span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full text-white" style="background:#010101">TikTok</span><h1 class="text-3xl font-black text-slate-800">Dashboard</h1></div><!-- KPI Cards --><div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6"><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ยอดดูรวม</div><div class="text-4xl font-black text-slate-800">164,699</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">อัตราการมีส่วนร่วม</div><div class="text-4xl font-black" style="color:#010101">5.33%</div><div class="text-xs text-slate-400 mt-1">เฉลี่ยวันที่ active</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">การมีส่วนร่วมรวม</div><div class="text-4xl font-black text-slate-800">10,685</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ผู้ติดตามใหม่</div><div class="text-4xl font-black text-slate-800">0</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div></div><!-- Charts Grid --><div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6"><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">แนวโน้มยอดดูรายวัน</h2><div class="relative h-64"><canvas id="tiktokLineChart"></canvas></div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">สัดส่วนการมีส่วนร่วม</h2><div class="relative h-64"><canvas id="tiktokDoughnutChart"></canvas></div></div></div><!-- Daily Table --><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">ข้อมูลรายวัน</h2><div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="border-b-2 border-slate-200"><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap ">วันที่</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">ยอดดู</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">เข้าชมโปรไฟล์</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">Likes</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">Comments</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">Shares</th></tr></thead><tbody><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">16 May 2026</td><td class="px-4 py-3 text-right tabular-nums">8,721</td><td class="px-4 py-3 text-right tabular-nums">27</td><td class="px-4 py-3 text-right tabular-nums">442</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">83</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">15 May 2026</td><td class="px-4 py-3 text-right tabular-nums">8,984</td><td class="px-4 py-3 text-right tabular-nums">36</td><td class="px-4 py-3 text-right tabular-nums">492</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">98</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">14 May 2026</td><td class="px-4 py-3 text-right tabular-nums">4,616</td><td class="px-4 py-3 text-right tabular-nums">26</td><td class="px-4 py-3 text-right tabular-nums">264</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">51</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">13 May 2026</td><td class="px-4 py-3 text-right tabular-nums">9,703</td><td class="px-4 py-3 text-right tabular-nums">35</td><td class="px-4 py-3 text-right tabular-nums">554</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">134</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">12 May 2026</td><td class="px-4 py-3 text-right tabular-nums">8,945</td><td class="px-4 py-3 text-right tabular-nums">32</td><td class="px-4 py-3 text-right tabular-nums">516</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">81</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">11 May 2026</td><td class="px-4 py-3 text-right tabular-nums">21,894</td><td class="px-4 py-3 text-right tabular-nums">37</td><td class="px-4 py-3 text-right tabular-nums">1,305</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">269</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">10 May 2026</td><td class="px-4 py-3 text-right tabular-nums">25,263</td><td class="px-4 py-3 text-right tabular-nums">80</td><td class="px-4 py-3 text-right tabular-nums">1,686</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">351</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">09 May 2026</td><td class="px-4 py-3 text-right tabular-nums font-bold" style="color:#010101">48,255</td><td class="px-4 py-3 text-right tabular-nums">127</td><td class="px-4 py-3 text-right tabular-nums">2,509</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">528</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">08 May 2026</td><td class="px-4 py-3 text-right tabular-nums">25,649</td><td class="px-4 py-3 text-right tabular-nums">71</td><td class="px-4 py-3 text-right tabular-nums">946</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">241</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">07 May 2026</td><td class="px-4 py-3 text-right tabular-nums">840</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">35</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">4</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">06 May 2026</td><td class="px-4 py-3 text-right tabular-nums">851</td><td class="px-4 py-3 text-right tabular-nums">10</td><td class="px-4 py-3 text-right tabular-nums">17</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">05 May 2026</td><td class="px-4 py-3 text-right tabular-nums">407</td><td class="px-4 py-3 text-right tabular-nums">24</td><td class="px-4 py-3 text-right tabular-nums">18</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">37</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">04 May 2026</td><td class="px-4 py-3 text-right tabular-nums">112</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">03 May 2026</td><td class="px-4 py-3 text-right tabular-nums">140</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">5</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">02 May 2026</td><td class="px-4 py-3 text-right tabular-nums">35</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">01 May 2026</td><td class="px-4 py-3 text-right tabular-nums">151</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">30 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">133</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">29 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">28 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">27 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">26 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">25 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">24 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">23 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">22 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">21 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">20 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">19 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr></tbody></table></div></div></div>
+
+<div id="view-facebook" class="view hidden"><div class="flex items-center gap-3 mb-6"><span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full text-white" style="background:#1877f2">Facebook</span><h1 class="text-3xl font-black text-slate-800">Dashboard</h1></div><!-- KPI Cards --><div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6"><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ยอดดูรวม</div><div class="text-4xl font-black text-slate-800">60,927</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">อัตราการมีส่วนร่วม</div><div class="text-4xl font-black" style="color:#1877f2">1.08%</div><div class="text-xs text-slate-400 mt-1">เฉลี่ยวันที่ active</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">การมีส่วนร่วมรวม</div><div class="text-4xl font-black text-slate-800">482</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ผู้ติดตามใหม่</div><div class="text-4xl font-black text-slate-800">84</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div></div><!-- Charts Grid --><div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6"><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">แนวโน้มยอดดูรายวัน</h2><div class="relative h-64"><canvas id="facebookLineChart"></canvas></div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">สัดส่วนการมีส่วนร่วม</h2><div class="relative h-64"><canvas id="facebookDoughnutChart"></canvas></div></div></div><!-- Daily Table --><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">ข้อมูลรายวัน</h2><div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="border-b-2 border-slate-200"><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap ">วันที่</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">ยอดดู</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">การมีส่วนร่วม</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">Followers ใหม่</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">เข้าชมโปรไฟล์</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">คลิกลิงก์</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">ผู้ชม</th></tr></thead><tbody><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">16 May 2026</td><td class="px-4 py-3 text-right tabular-nums">250</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">37</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">207</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">15 May 2026</td><td class="px-4 py-3 text-right tabular-nums">358</td><td class="px-4 py-3 text-right tabular-nums">11</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">129</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1,108</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">14 May 2026</td><td class="px-4 py-3 text-right tabular-nums">1,127</td><td class="px-4 py-3 text-right tabular-nums">13</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">268</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">453</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">13 May 2026</td><td class="px-4 py-3 text-right tabular-nums">1,744</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">300</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">137</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">12 May 2026</td><td class="px-4 py-3 text-right tabular-nums">1,386</td><td class="px-4 py-3 text-right tabular-nums">13</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">169</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">226</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">11 May 2026</td><td class="px-4 py-3 text-right tabular-nums">2,528</td><td class="px-4 py-3 text-right tabular-nums">30</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">249</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">726</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">10 May 2026</td><td class="px-4 py-3 text-right tabular-nums">2,741</td><td class="px-4 py-3 text-right tabular-nums">37</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">164</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">1,191</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">09 May 2026</td><td class="px-4 py-3 text-right tabular-nums font-bold" style="color:#1877f2">25,035</td><td class="px-4 py-3 text-right tabular-nums">59</td><td class="px-4 py-3 text-right tabular-nums">13</td><td class="px-4 py-3 text-right tabular-nums">226</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">15,595</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">08 May 2026</td><td class="px-4 py-3 text-right tabular-nums">1,048</td><td class="px-4 py-3 text-right tabular-nums">27</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">136</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">238</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">07 May 2026</td><td class="px-4 py-3 text-right tabular-nums">1,602</td><td class="px-4 py-3 text-right tabular-nums">23</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">137</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">262</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">06 May 2026</td><td class="px-4 py-3 text-right tabular-nums">1,442</td><td class="px-4 py-3 text-right tabular-nums">20</td><td class="px-4 py-3 text-right tabular-nums">5</td><td class="px-4 py-3 text-right tabular-nums">114</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">276</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">05 May 2026</td><td class="px-4 py-3 text-right tabular-nums">2,072</td><td class="px-4 py-3 text-right tabular-nums">26</td><td class="px-4 py-3 text-right tabular-nums">6</td><td class="px-4 py-3 text-right tabular-nums">225</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">309</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">04 May 2026</td><td class="px-4 py-3 text-right tabular-nums">3,676</td><td class="px-4 py-3 text-right tabular-nums">37</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">305</td><td class="px-4 py-3 text-right tabular-nums">5</td><td class="px-4 py-3 text-right tabular-nums">687</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">03 May 2026</td><td class="px-4 py-3 text-right tabular-nums">2,744</td><td class="px-4 py-3 text-right tabular-nums">50</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">197</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">544</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">02 May 2026</td><td class="px-4 py-3 text-right tabular-nums">1,163</td><td class="px-4 py-3 text-right tabular-nums">10</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">127</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">252</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">01 May 2026</td><td class="px-4 py-3 text-right tabular-nums">869</td><td class="px-4 py-3 text-right tabular-nums">6</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">124</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">186</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">30 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">2,241</td><td class="px-4 py-3 text-right tabular-nums">31</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">248</td><td class="px-4 py-3 text-right tabular-nums">5</td><td class="px-4 py-3 text-right tabular-nums">522</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">29 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">951</td><td class="px-4 py-3 text-right tabular-nums">12</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">102</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">204</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">28 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">1,986</td><td class="px-4 py-3 text-right tabular-nums">32</td><td class="px-4 py-3 text-right tabular-nums">6</td><td class="px-4 py-3 text-right tabular-nums">266</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">565</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">27 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">505</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">86</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">33</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">26 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">321</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">49</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">38</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">25 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">454</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">67</td><td class="px-4 py-3 text-right tabular-nums">5</td><td class="px-4 py-3 text-right tabular-nums">103</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">24 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">1,094</td><td class="px-4 py-3 text-right tabular-nums">16</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">92</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">269</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">23 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">320</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">43</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">32</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">22 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">370</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">59</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">120</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">21 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">920</td><td class="px-4 py-3 text-right tabular-nums">7</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">78</td><td class="px-4 py-3 text-right tabular-nums">7</td><td class="px-4 py-3 text-right tabular-nums">295</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">20 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">454</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">78</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">133</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">19 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">1,526</td><td class="px-4 py-3 text-right tabular-nums">9</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">118</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">634</td></tr></tbody></table></div></div></div>
+
+<div id="view-instagram" class="view hidden"><div class="flex items-center gap-3 mb-6"><span class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full text-white" style="background:#e1306c">Instagram</span><h1 class="text-3xl font-black text-slate-800">Dashboard</h1></div><!-- KPI Cards --><div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6"><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ยอดดูรวม</div><div class="text-4xl font-black text-slate-800">15,307</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">อัตราการมีส่วนร่วม</div><div class="text-4xl font-black" style="color:#e1306c">1.72%</div><div class="text-xs text-slate-400 mt-1">เฉลี่ยวันที่ active</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">การมีส่วนร่วมรวม</div><div class="text-4xl font-black text-slate-800">181</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ผู้ติดตามใหม่</div><div class="text-4xl font-black text-slate-800">0</div><div class="text-xs text-slate-400 mt-1">28 วัน</div></div></div><!-- Charts Grid --><div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6"><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">แนวโน้มยอดดูรายวัน</h2><div class="relative h-64"><canvas id="instagramLineChart"></canvas></div></div><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">สัดส่วนการมีส่วนร่วม</h2><div class="relative h-64"><canvas id="instagramDoughnutChart"></canvas></div></div></div><!-- Daily Table --><div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><h2 class="text-sm font-bold text-slate-700 mb-4">ข้อมูลรายวัน</h2><div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="border-b-2 border-slate-200"><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap ">วันที่</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">ยอดดู</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">การมีส่วนร่วม</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">Impressions</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">เข้าชมโปรไฟล์</th><th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap text-right">คลิกลิงก์</th></tr></thead><tbody><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">16 May 2026</td><td class="px-4 py-3 text-right tabular-nums">40</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">26</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">15 May 2026</td><td class="px-4 py-3 text-right tabular-nums">219</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">121</td><td class="px-4 py-3 text-right tabular-nums">7</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">14 May 2026</td><td class="px-4 py-3 text-right tabular-nums">277</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">126</td><td class="px-4 py-3 text-right tabular-nums">12</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">13 May 2026</td><td class="px-4 py-3 text-right tabular-nums">55</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">33</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">12 May 2026</td><td class="px-4 py-3 text-right tabular-nums">871</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">576</td><td class="px-4 py-3 text-right tabular-nums">13</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">11 May 2026</td><td class="px-4 py-3 text-right tabular-nums">998</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">534</td><td class="px-4 py-3 text-right tabular-nums">14</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">10 May 2026</td><td class="px-4 py-3 text-right tabular-nums">3,395</td><td class="px-4 py-3 text-right tabular-nums">26</td><td class="px-4 py-3 text-right tabular-nums">2,723</td><td class="px-4 py-3 text-right tabular-nums">27</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">09 May 2026</td><td class="px-4 py-3 text-right tabular-nums font-bold" style="color:#e1306c">6,605</td><td class="px-4 py-3 text-right tabular-nums">43</td><td class="px-4 py-3 text-right tabular-nums">5,134</td><td class="px-4 py-3 text-right tabular-nums">50</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">08 May 2026</td><td class="px-4 py-3 text-right tabular-nums">154</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">22</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">07 May 2026</td><td class="px-4 py-3 text-right tabular-nums">132</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">22</td><td class="px-4 py-3 text-right tabular-nums">12</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">06 May 2026</td><td class="px-4 py-3 text-right tabular-nums">111</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">21</td><td class="px-4 py-3 text-right tabular-nums">5</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">05 May 2026</td><td class="px-4 py-3 text-right tabular-nums">108</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">36</td><td class="px-4 py-3 text-right tabular-nums">10</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">04 May 2026</td><td class="px-4 py-3 text-right tabular-nums">310</td><td class="px-4 py-3 text-right tabular-nums">26</td><td class="px-4 py-3 text-right tabular-nums">139</td><td class="px-4 py-3 text-right tabular-nums">37</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">03 May 2026</td><td class="px-4 py-3 text-right tabular-nums">383</td><td class="px-4 py-3 text-right tabular-nums">9</td><td class="px-4 py-3 text-right tabular-nums">133</td><td class="px-4 py-3 text-right tabular-nums">15</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">02 May 2026</td><td class="px-4 py-3 text-right tabular-nums">211</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">120</td><td class="px-4 py-3 text-right tabular-nums">9</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">01 May 2026</td><td class="px-4 py-3 text-right tabular-nums">30</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">7</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">30 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">45</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">25</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">29 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">112</td><td class="px-4 py-3 text-right tabular-nums">3</td><td class="px-4 py-3 text-right tabular-nums">64</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">28 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">1,189</td><td class="px-4 py-3 text-right tabular-nums">49</td><td class="px-4 py-3 text-right tabular-nums">607</td><td class="px-4 py-3 text-right tabular-nums">69</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">27 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">7</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">26 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">25 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">15</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">24 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">8</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">2</td><td class="px-4 py-3 text-right tabular-nums">5</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">23 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">9</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">22 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">23</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">4</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">21 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">1</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">20 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr><tr class="hover:bg-slate-50 border-b border-slate-100 last:border-0"><td class="px-4 py-3 text-slate-600 whitespace-nowrap">19 Apr 2026</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr></tbody></table></div></div></div>
+
+    <!-- ── Import View ── -->
+    <div id="view-import" class="view">
+
+      <h1 class="text-3xl font-black text-slate-800 mb-6">นำเข้าข้อมูล</h1>
+
+      <!-- Platform selector -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+        <p class="text-sm font-semibold text-slate-700 mb-3">เลือก Platform</p>
+        <div class="flex gap-3" id="platformBtns">
+          <button onclick="selectPlatform('Facebook')"
+            class="plat-btn px-5 py-2 rounded-xl border-2 text-sm font-semibold transition-all
+                   border-slate-200 text-slate-600 hover:border-blue-400"
+            style="--pc:#1877f2" id="plat-Facebook">Facebook</button>
+          <button onclick="selectPlatform('Instagram')"
+            class="plat-btn px-5 py-2 rounded-xl border-2 text-sm font-semibold transition-all
+                   border-slate-200 text-slate-600 hover:border-pink-400"
+            style="--pc:#e1306c" id="plat-Instagram">Instagram</button>
+          <button onclick="selectPlatform('TikTok')"
+            class="plat-btn px-5 py-2 rounded-xl border-2 text-sm font-semibold transition-all
+                   border-slate-200 text-slate-600 hover:border-slate-900"
+            style="--pc:#010101" id="plat-TikTok">TikTok</button>
+        </div>
+      </div>
+
+      <!-- Drop zone -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+        <div id="dropZone"
+          class="drop-zone border-2 border-dashed border-slate-300 rounded-2xl p-12 text-center cursor-pointer"
+          onclick="document.getElementById('fileInput').click()"
+          ondragover="handleDragOver(event)"
+          ondragleave="handleDragLeave(event)"
+          ondrop="handleDrop(event)">
+          <div class="text-4xl mb-3">📂</div>
+          <p class="text-slate-600 font-semibold mb-1">ลากไฟล์มาวางที่นี่ หรือคลิกเพื่อเลือกไฟล์</p>
+          <p class="text-xs text-slate-400">รองรับไฟล์ .csv จาก Facebook, Instagram, TikTok</p>
+          <input type="file" id="fileInput" accept=".csv" multiple class="hidden"
+            onchange="handleFileSelect(event)">
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div id="previewArea" class="hidden bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+        <h2 class="text-sm font-bold text-slate-700 mb-4">ตัวอย่างข้อมูล (5 แถวแรก)</h2>
+        <div id="previewTable" class="overflow-x-auto text-sm"></div>
+        <button onclick="confirmImport()"
+          class="mt-4 px-6 py-2.5 rounded-xl text-white text-sm font-semibold transition-colors"
+          style="background:#10b981">
+          ยืนยันการนำเข้า
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script>
+// ── Injected data ──
+const DATA = {"tiktok": {"dates": ["19 Apr", "20 Apr", "21 Apr", "22 Apr", "23 Apr", "24 Apr", "25 Apr", "26 Apr", "27 Apr", "28 Apr", "29 Apr", "30 Apr", "01 May", "02 May", "03 May", "04 May", "05 May", "06 May", "07 May", "08 May", "09 May", "10 May", "11 May", "12 May", "13 May", "14 May", "15 May", "16 May"], "reach": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 133, 151, 35, 140, 112, 407, 851, 840, 25649, 48255, 25263, 21894, 8945, 9703, 4616, 8984, 8721], "columns": ["date", "reach", "profile_visits", "likes", "comments", "shares"], "peak_reach": 48255, "metrics": {"days": 28, "total_reach": 164699, "avg_reach": 5882.1, "avg_er": 5.33, "total_engagement": 10685, "new_followers": 0}, "doughnut": {"labels": ["Likes", "Comments", "Shares"], "data": [8793, 14, 1878], "colors": ["#fd3e81", "#25f4ee", "#010101"]}, "table": [{"date": "2026-05-16", "reach": 8721, "profile_visits": 27, "likes": 442, "comments": 0, "shares": 83}, {"date": "2026-05-15", "reach": 8984, "profile_visits": 36, "likes": 492, "comments": 0, "shares": 98}, {"date": "2026-05-14", "reach": 4616, "profile_visits": 26, "likes": 264, "comments": 2, "shares": 51}, {"date": "2026-05-13", "reach": 9703, "profile_visits": 35, "likes": 554, "comments": 2, "shares": 134}, {"date": "2026-05-12", "reach": 8945, "profile_visits": 32, "likes": 516, "comments": 0, "shares": 81}, {"date": "2026-05-11", "reach": 21894, "profile_visits": 37, "likes": 1305, "comments": 4, "shares": 269}, {"date": "2026-05-10", "reach": 25263, "profile_visits": 80, "likes": 1686, "comments": 0, "shares": 351}, {"date": "2026-05-09", "reach": 48255, "profile_visits": 127, "likes": 2509, "comments": 2, "shares": 528}, {"date": "2026-05-08", "reach": 25649, "profile_visits": 71, "likes": 946, "comments": 2, "shares": 241}, {"date": "2026-05-07", "reach": 840, "profile_visits": 4, "likes": 35, "comments": 0, "shares": 4}, {"date": "2026-05-06", "reach": 851, "profile_visits": 10, "likes": 17, "comments": 0, "shares": 0}, {"date": "2026-05-05", "reach": 407, "profile_visits": 24, "likes": 18, "comments": 0, "shares": 37}, {"date": "2026-05-04", "reach": 112, "profile_visits": 0, "likes": 1, "comments": 0, "shares": 0}, {"date": "2026-05-03", "reach": 140, "profile_visits": 3, "likes": 5, "comments": 1, "shares": 0}, {"date": "2026-05-02", "reach": 35, "profile_visits": 0, "likes": 0, "comments": 1, "shares": 0}, {"date": "2026-05-01", "reach": 151, "profile_visits": 1, "likes": 1, "comments": 0, "shares": 0}, {"date": "2026-04-30", "reach": 133, "profile_visits": 2, "likes": 2, "comments": 0, "shares": 1}, {"date": "2026-04-29", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-28", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-27", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-26", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-25", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-24", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-23", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-22", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-21", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-20", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}, {"date": "2026-04-19", "reach": 0, "profile_visits": 0, "likes": 0, "comments": 0, "shares": 0}]}, "facebook": {"dates": ["19 Apr", "20 Apr", "21 Apr", "22 Apr", "23 Apr", "24 Apr", "25 Apr", "26 Apr", "27 Apr", "28 Apr", "29 Apr", "30 Apr", "01 May", "02 May", "03 May", "04 May", "05 May", "06 May", "07 May", "08 May", "09 May", "10 May", "11 May", "12 May", "13 May", "14 May", "15 May", "16 May"], "reach": [1526, 454, 920, 370, 320, 1094, 454, 321, 505, 1986, 951, 2241, 869, 1163, 2744, 3676, 2072, 1442, 1602, 1048, 25035, 2741, 2528, 1386, 1744, 1127, 358, 250], "columns": ["date", "reach", "engagement", "new_followers", "profile_visits", "link_clicks", "audience"], "peak_reach": 25035, "metrics": {"days": 28, "total_reach": 60927, "avg_reach": 2176.0, "avg_er": 1.08, "total_engagement": 482, "new_followers": 84}, "doughnut": {"labels": ["การมีส่วนร่วม", "ผู้ติดตามใหม่", "คลิกลิงก์"], "data": [482, 84, 86], "colors": ["#1877f2", "#0d5dbf", "#47b0f5"]}, "table": [{"date": "2026-05-16", "reach": 250, "engagement": 8, "new_followers": 1, "profile_visits": 37, "link_clicks": 0, "audience": 207}, {"date": "2026-05-15", "reach": 358, "engagement": 11, "new_followers": 3, "profile_visits": 129, "link_clicks": 0, "audience": 1108}, {"date": "2026-05-14", "reach": 1127, "engagement": 13, "new_followers": 2, "profile_visits": 268, "link_clicks": 2, "audience": 453}, {"date": "2026-05-13", "reach": 1744, "engagement": 2, "new_followers": 8, "profile_visits": 300, "link_clicks": 4, "audience": 137}, {"date": "2026-05-12", "reach": 1386, "engagement": 13, "new_followers": 3, "profile_visits": 169, "link_clicks": 4, "audience": 226}, {"date": "2026-05-11", "reach": 2528, "engagement": 30, "new_followers": 3, "profile_visits": 249, "link_clicks": 3, "audience": 726}, {"date": "2026-05-10", "reach": 2741, "engagement": 37, "new_followers": 1, "profile_visits": 164, "link_clicks": 2, "audience": 1191}, {"date": "2026-05-09", "reach": 25035, "engagement": 59, "new_followers": 13, "profile_visits": 226, "link_clicks": 2, "audience": 15595}, {"date": "2026-05-08", "reach": 1048, "engagement": 27, "new_followers": 0, "profile_visits": 136, "link_clicks": 1, "audience": 238}, {"date": "2026-05-07", "reach": 1602, "engagement": 23, "new_followers": 1, "profile_visits": 137, "link_clicks": 3, "audience": 262}, {"date": "2026-05-06", "reach": 1442, "engagement": 20, "new_followers": 5, "profile_visits": 114, "link_clicks": 3, "audience": 276}, {"date": "2026-05-05", "reach": 2072, "engagement": 26, "new_followers": 6, "profile_visits": 225, "link_clicks": 3, "audience": 309}, {"date": "2026-05-04", "reach": 3676, "engagement": 37, "new_followers": 2, "profile_visits": 305, "link_clicks": 5, "audience": 687}, {"date": "2026-05-03", "reach": 2744, "engagement": 50, "new_followers": 2, "profile_visits": 197, "link_clicks": 2, "audience": 544}, {"date": "2026-05-02", "reach": 1163, "engagement": 10, "new_followers": 2, "profile_visits": 127, "link_clicks": 3, "audience": 252}, {"date": "2026-05-01", "reach": 869, "engagement": 6, "new_followers": 2, "profile_visits": 124, "link_clicks": 3, "audience": 186}, {"date": "2026-04-30", "reach": 2241, "engagement": 31, "new_followers": 3, "profile_visits": 248, "link_clicks": 5, "audience": 522}, {"date": "2026-04-29", "reach": 951, "engagement": 12, "new_followers": 1, "profile_visits": 102, "link_clicks": 3, "audience": 204}, {"date": "2026-04-28", "reach": 1986, "engagement": 32, "new_followers": 6, "profile_visits": 266, "link_clicks": 4, "audience": 565}, {"date": "2026-04-27", "reach": 505, "engagement": 0, "new_followers": 1, "profile_visits": 86, "link_clicks": 4, "audience": 33}, {"date": "2026-04-26", "reach": 321, "engagement": 1, "new_followers": 3, "profile_visits": 49, "link_clicks": 3, "audience": 38}, {"date": "2026-04-25", "reach": 454, "engagement": 0, "new_followers": 1, "profile_visits": 67, "link_clicks": 5, "audience": 103}, {"date": "2026-04-24", "reach": 1094, "engagement": 16, "new_followers": 2, "profile_visits": 92, "link_clicks": 8, "audience": 269}, {"date": "2026-04-23", "reach": 320, "engagement": 0, "new_followers": 1, "profile_visits": 43, "link_clicks": 1, "audience": 32}, {"date": "2026-04-22", "reach": 370, "engagement": 2, "new_followers": 3, "profile_visits": 59, "link_clicks": 2, "audience": 120}, {"date": "2026-04-21", "reach": 920, "engagement": 7, "new_followers": 4, "profile_visits": 78, "link_clicks": 7, "audience": 295}, {"date": "2026-04-20", "reach": 454, "engagement": 0, "new_followers": 2, "profile_visits": 78, "link_clicks": 4, "audience": 133}, {"date": "2026-04-19", "reach": 1526, "engagement": 9, "new_followers": 3, "profile_visits": 118, "link_clicks": 0, "audience": 634}]}, "instagram": {"dates": ["19 Apr", "20 Apr", "21 Apr", "22 Apr", "23 Apr", "24 Apr", "25 Apr", "26 Apr", "27 Apr", "28 Apr", "29 Apr", "30 Apr", "01 May", "02 May", "03 May", "04 May", "05 May", "06 May", "07 May", "08 May", "09 May", "10 May", "11 May", "12 May", "13 May", "14 May", "15 May", "16 May"], "reach": [0, 0, 0, 23, 9, 8, 15, 0, 7, 1189, 112, 45, 30, 211, 383, 310, 108, 111, 132, 154, 6605, 3395, 998, 871, 55, 277, 219, 40], "columns": ["date", "reach", "engagement", "impressions", "profile_visits", "link_clicks"], "peak_reach": 6605, "metrics": {"days": 28, "total_reach": 15307, "avg_reach": 546.7, "avg_er": 1.72, "total_engagement": 181, "new_followers": 0}, "doughnut": {"labels": ["การมีส่วนร่วม", "Impressions", "เข้าชมโปรไฟล์"], "data": [181, 10477, 333], "colors": ["#e1306c", "#833ab4", "#f56040"]}, "table": [{"date": "2026-05-16", "reach": 40, "engagement": 0, "impressions": 26, "profile_visits": 2, "link_clicks": 0}, {"date": "2026-05-15", "reach": 219, "engagement": 4, "impressions": 121, "profile_visits": 7, "link_clicks": 0}, {"date": "2026-05-14", "reach": 277, "engagement": 0, "impressions": 126, "profile_visits": 12, "link_clicks": 0}, {"date": "2026-05-13", "reach": 55, "engagement": 0, "impressions": 33, "profile_visits": 4, "link_clicks": 0}, {"date": "2026-05-12", "reach": 871, "engagement": 4, "impressions": 576, "profile_visits": 13, "link_clicks": 0}, {"date": "2026-05-11", "reach": 998, "engagement": 8, "impressions": 534, "profile_visits": 14, "link_clicks": 0}, {"date": "2026-05-10", "reach": 3395, "engagement": 26, "impressions": 2723, "profile_visits": 27, "link_clicks": 0}, {"date": "2026-05-09", "reach": 6605, "engagement": 43, "impressions": 5134, "profile_visits": 50, "link_clicks": 0}, {"date": "2026-05-08", "reach": 154, "engagement": 1, "impressions": 22, "profile_visits": 3, "link_clicks": 0}, {"date": "2026-05-07", "reach": 132, "engagement": 2, "impressions": 22, "profile_visits": 12, "link_clicks": 0}, {"date": "2026-05-06", "reach": 111, "engagement": 0, "impressions": 21, "profile_visits": 5, "link_clicks": 0}, {"date": "2026-05-05", "reach": 108, "engagement": 1, "impressions": 36, "profile_visits": 10, "link_clicks": 0}, {"date": "2026-05-04", "reach": 310, "engagement": 26, "impressions": 139, "profile_visits": 37, "link_clicks": 0}, {"date": "2026-05-03", "reach": 383, "engagement": 9, "impressions": 133, "profile_visits": 15, "link_clicks": 0}, {"date": "2026-05-02", "reach": 211, "engagement": 4, "impressions": 120, "profile_visits": 9, "link_clicks": 0}, {"date": "2026-05-01", "reach": 30, "engagement": 0, "impressions": 8, "profile_visits": 7, "link_clicks": 0}, {"date": "2026-04-30", "reach": 45, "engagement": 0, "impressions": 25, "profile_visits": 8, "link_clicks": 0}, {"date": "2026-04-29", "reach": 112, "engagement": 3, "impressions": 64, "profile_visits": 8, "link_clicks": 0}, {"date": "2026-04-28", "reach": 1189, "engagement": 49, "impressions": 607, "profile_visits": 69, "link_clicks": 0}, {"date": "2026-04-27", "reach": 7, "engagement": 1, "impressions": 1, "profile_visits": 2, "link_clicks": 0}, {"date": "2026-04-26", "reach": 0, "engagement": 0, "impressions": 0, "profile_visits": 0, "link_clicks": 0}, {"date": "2026-04-25", "reach": 15, "engagement": 0, "impressions": 2, "profile_visits": 8, "link_clicks": 0}, {"date": "2026-04-24", "reach": 8, "engagement": 0, "impressions": 2, "profile_visits": 5, "link_clicks": 0}, {"date": "2026-04-23", "reach": 9, "engagement": 0, "impressions": 1, "profile_visits": 1, "link_clicks": 0}, {"date": "2026-04-22", "reach": 23, "engagement": 0, "impressions": 1, "profile_visits": 4, "link_clicks": 0}, {"date": "2026-04-21", "reach": 0, "engagement": 0, "impressions": 0, "profile_visits": 1, "link_clicks": 0}, {"date": "2026-04-20", "reach": 0, "engagement": 0, "impressions": 0, "profile_visits": 0, "link_clicks": 0}, {"date": "2026-04-19", "reach": 0, "engagement": 0, "impressions": 0, "profile_visits": 0, "link_clicks": 0}]}};
+const COMP = {"platforms": ["tiktok", "facebook", "instagram"], "labels": ["TikTok", "Facebook", "Instagram"], "avg_reach": [5882.1, 2176.0, 546.7], "avg_er": [5.33, 1.08, 1.72], "total_reach": [164699, 60927, 15307], "colors": ["#010101", "#1877f2", "#e1306c"]};
+const PLATFORMS = ["tiktok", "facebook", "instagram"];
+
+// ── Chart instances cache ──
+const chartInstances = {};
+
+// ── Navigation ──
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const target = document.getElementById(id);
+  if (target) target.classList.add('active');
+
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const navId = 'nav-' + id.replace('view-', '');
+  const navBtn = document.getElementById(navId);
+  if (navBtn) navBtn.classList.add('active');
+
+  setTimeout(() => initCharts(id), 50);
+}
+
+// ── Chart initializer ──
+function initCharts(viewId) {
+  if (viewId === 'view-home') {
+    initHomeBar();
+    return;
+  }
+  const platform = viewId.replace('view-', '');
+  if (!DATA[platform]) return;
+  initLineChart(platform);
+  initDoughnutChart(platform);
+}
+
+function initHomeBar() {
+  const canvasId = 'homeBarChart';
+  if (chartInstances[canvasId]) {
+    chartInstances[canvasId].destroy();
+    delete chartInstances[canvasId];
+  }
+  const el = document.getElementById(canvasId);
+  if (!el) return;
+  chartInstances[canvasId] = new Chart(el.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: COMP.labels,
+      datasets: [{
+        label: 'ยอดดูเฉลี่ย/วัน',
+        data: COMP.avg_reach,
+        backgroundColor: COMP.colors.map(c => c + 'cc'),
+        borderColor: COMP.colors,
+        borderWidth: 2,
+        borderRadius: 8,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => 'ยอดดูเฉลี่ย: ' + ctx.parsed.y.toLocaleString('th-TH')
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: {
+          beginAtZero: true,
+          grid: { color: '#f1f5f9' },
+          ticks: { callback: v => v.toLocaleString('th-TH') }
+        }
+      }
+    }
+  });
+}
+
+function initLineChart(platform) {
+  const canvasId = platform + 'LineChart';
+  if (chartInstances[canvasId]) {
+    chartInstances[canvasId].destroy();
+    delete chartInstances[canvasId];
+  }
+  const el = document.getElementById(canvasId);
+  if (!el) return;
+  const pd = DATA[platform];
+  const color = { tiktok: '#010101', facebook: '#1877f2', instagram: '#e1306c' }[platform] || '#2563eb';
+  chartInstances[canvasId] = new Chart(el.getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: pd.dates,
+      datasets: [{
+        label: 'ยอดดู',
+        data: pd.reach,
+        borderColor: color,
+        backgroundColor: color + '22',
+        borderWidth: 2.5,
+        pointRadius: 3,
+        pointHoverRadius: 7,
+        fill: true,
+        tension: 0.35,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => 'ยอดดู: ' + ctx.parsed.y.toLocaleString('th-TH')
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxRotation: 45 } },
+        y: {
+          beginAtZero: true,
+          grid: { color: '#f1f5f9' },
+          ticks: { callback: v => v.toLocaleString('th-TH') }
+        }
+      }
+    }
+  });
+}
+
+function initDoughnutChart(platform) {
+  const canvasId = platform + 'DoughnutChart';
+  if (chartInstances[canvasId]) {
+    chartInstances[canvasId].destroy();
+    delete chartInstances[canvasId];
+  }
+  const el = document.getElementById(canvasId);
+  if (!el) return;
+  const pd = DATA[platform];
+  const dough = pd.doughnut;
+  chartInstances[canvasId] = new Chart(el.getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels: dough.labels,
+      datasets: [{
+        data: dough.data,
+        backgroundColor: dough.colors,
+        borderWidth: 2,
+        borderColor: '#fff',
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '60%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, font: { size: 11 } } },
+        tooltip: {
+          callbacks: {
+            label: ctx => ctx.label + ': ' + ctx.parsed.toLocaleString('th-TH')
+          }
+        }
+      }
+    }
+  });
+}
+
+// ── Import view ──
+let selectedPlatform = null;
+
+function selectPlatform(name) {
+  selectedPlatform = name;
+  document.querySelectorAll('.plat-btn').forEach(b => {
+    b.style.borderColor = '#e2e8f0';
+    b.style.color = '#475569';
+    b.style.background = '';
+  });
+  const btn = document.getElementById('plat-' + name);
+  if (btn) {
+    const pc = btn.style.getPropertyValue('--pc');
+    btn.style.borderColor = pc;
+    btn.style.color = pc;
+  }
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById('dropZone').classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+  document.getElementById('dropZone').classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('drag-over');
+  const files = Array.from(e.dataTransfer.files).filter(f => f.name.endsWith('.csv'));
+  if (files.length > 0) processFiles(files);
+}
+
+function handleFileSelect(e) {
+  const files = Array.from(e.target.files);
+  if (files.length > 0) processFiles(files);
+}
+
+function processFiles(files) {
+  const file = files[0];
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    let text = e.target.result;
+    renderPreview(text, file.name);
+  };
+
+  // Try utf-16 first (Facebook/Instagram), fall back handled by checking BOM
+  const bom16 = new Uint8Array([0xFF, 0xFE]);
+  const slice = file.slice(0, 2);
+  const bomReader = new FileReader();
+  bomReader.onload = function(ev) {
+    const arr = new Uint8Array(ev.target.result);
+    const isUtf16 = (arr[0] === 0xFF && arr[1] === 0xFE) || (arr[0] === 0xFE && arr[1] === 0xFF);
+    reader.readAsText(file, isUtf16 ? 'UTF-16' : 'UTF-8');
+  };
+  bomReader.readAsArrayBuffer(slice);
+}
+
+function parseCSV(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  let dataLines = lines;
+  if (lines.length > 0 && lines[0].trim().startsWith('sep=')) {
+    // narrow format: skip sep= line + metric name line, header at index 2
+    dataLines = lines.slice(2);
+  }
+  if (dataLines.length === 0) return { headers: [], rows: [] };
+  const headers = dataLines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+  const rows = [];
+  for (let i = 1; i < Math.min(dataLines.length, 6); i++) {
+    const cells = dataLines[i].split(',').map(c => c.trim().replace(/^"|"$/g, ''));
+    rows.push(cells);
+  }
+  return { headers, rows };
+}
+
+function renderPreview(text, filename) {
+  const { headers, rows } = parseCSV(text);
+  if (headers.length === 0) return;
+
+  let tableHtml = '<table class="w-full border-collapse">';
+  tableHtml += '<thead><tr>';
+  headers.forEach(h => {
+    tableHtml += '<th class="border border-slate-200 px-3 py-2 bg-slate-50 text-xs font-bold text-slate-600 text-left whitespace-nowrap">' + escHtml(h) + '</th>';
+  });
+  tableHtml += '</tr></thead><tbody>';
+  rows.forEach(row => {
+    tableHtml += '<tr>';
+    headers.forEach((_, i) => {
+      tableHtml += '<td class="border border-slate-200 px-3 py-1.5 text-slate-700 text-xs whitespace-nowrap">' + escHtml(row[i] || '') + '</td>';
+    });
+    tableHtml += '</tr>';
+  });
+  tableHtml += '</tbody></table>';
+
+  document.getElementById('previewTable').innerHTML = tableHtml;
+  document.getElementById('previewArea').classList.remove('hidden');
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function confirmImport() {
+  showToast('นำเข้าสำเร็จ! รีเฟรชหน้าเพื่อดูข้อมูลใหม่ 🎉');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── Boot ──
+showView('view-home');
+</script>
+
+</body>
+</html>
