@@ -87,6 +87,8 @@ INTEL_DATA_FALLBACK = [
         },
         "strengths": ["รับบัตรทอง/ประกันสังคม", "ราคาประหยัด", "TikTok active"],
         "promotions": [],
+        "weaknesses": ["ไม่พบราคาสาธารณะนอกจากรีเทนเนอร์", "ไม่มี Instagram"],
+        "location": "", "hours": "",
         "social_trend": {"primary_platform":"TikTok","posting_frequency":"สม่ำเสมอ","content_style":"promotional","engagement_level":"medium"}
     },
     {
@@ -107,6 +109,8 @@ INTEL_DATA_FALLBACK = [
         },
         "strengths": ["Facebook fans 11,883+", "มีเว็บไซต์", "ชื่อแบรนด์จดจำง่าย"],
         "promotions": [],
+        "weaknesses": ["ราคาสาธารณะน้อย (เฉพาะฟันปลอม)", "ไม่มี Instagram"],
+        "location": "", "hours": "",
         "social_trend": {"primary_platform":"Facebook","posting_frequency":"สม่ำเสมอ","content_style":"promotional","engagement_level":"medium"}
     },
     {
@@ -126,6 +130,8 @@ INTEL_DATA_FALLBACK = [
         },
         "strengths": ["ชื่อแบรนด์ชัดเจน", "บริการครบวงจร"],
         "promotions": [],
+        "weaknesses": ["ไม่พบราคาสาธารณะเลย", "Social media อ่อนแอ", "ไม่มี TikTok", "ไม่มี Instagram"],
+        "location": "", "hours": "",
         "social_trend": {"primary_platform":"Facebook","posting_frequency":"ต่ำ","content_style":"promotional","engagement_level":"low"}
     },
     {
@@ -145,6 +151,8 @@ INTEL_DATA_FALLBACK = [
         },
         "strengths": ["Instagram active", "ทีมหมอเฉพาะทาง", "ครอบคลุมทุกวัย"],
         "promotions": [],
+        "weaknesses": ["ไม่พบราคาสาธารณะ", "ไม่มี TikTok"],
+        "location": "", "hours": "",
         "social_trend": {"primary_platform":"Instagram","posting_frequency":"ปานกลาง","content_style":"educational","engagement_level":"medium"}
     },
     {
@@ -164,6 +172,8 @@ INTEL_DATA_FALLBACK = [
         },
         "strengths": ["Facebook fans 11,153+", "ชื่อแบรนด์จดจำง่าย"],
         "promotions": [],
+        "weaknesses": ["ไม่พบราคาสาธารณะ", "ไม่มี TikTok", "ไม่มี Instagram"],
+        "location": "", "hours": "",
         "social_trend": {"primary_platform":"Facebook","posting_frequency":"ปานกลาง","content_style":"promotional","engagement_level":"medium"}
     },
     {
@@ -237,6 +247,9 @@ INTEL_DATA_FALLBACK = [
         },
         "strengths": ["รับประกันสังคม ใช้บัตรประชาชนอย่างเดียว", "Rating 4.43/5", "เปิดวันหยุด ส-อา"],
         "promotions": ["บริการฟรีสำหรับผู้ถือประกันสังคม"],
+        "weaknesses": ["ไม่มี TikTok เลย", "Social media อ่อนแอมาก", "ราคาสาธารณะไม่มี"],
+        "location": "617/2 ถนนนิตโย ธาตุเชิงชุม สกลนคร โทร 091-865-1625",
+        "hours": "จันทร์–ศุกร์ 16:30–20:00 / เสาร์–อาทิตย์ 09:00–18:00",
         "social_trend": {"primary_platform":"Facebook","posting_frequency":"ต่ำ","content_style":"promotional","engagement_level":"low"}
     },
     {
@@ -256,7 +269,10 @@ INTEL_DATA_FALLBACK = [
             "other": []
         },
         "strengths": ["ทพญ.เฉพาะทาง", "Instagram active", "ผ่อนรายเดือนได้", "Facebook + Instagram dual platform"],
-        "promotions": [],
+        "promotions": ["ผ่อนรายเดือน ไม่มีดอกเบี้ย"],
+        "weaknesses": ["ไม่มี TikTok", "ราคาสูงกว่าตลาด (40,000 บาท จัดฟันใส)"],
+        "location": "1433/6 ถนนยุวพัฒนา ธาตุเชิงชุม เมืองสกลนคร",
+        "hours": "",
         "social_trend": {"primary_platform":"Instagram","posting_frequency":"สม่ำเสมอ","content_style":"before/after","engagement_level":"medium"}
     },
     {
@@ -277,6 +293,9 @@ INTEL_DATA_FALLBACK = [
         },
         "strengths": ["ราคาโปร่งใส ประกาศสาธารณะ", "ฟอกสีฟัน 3,990 แข่งได้", "Damon braces"],
         "promotions": ["จัดฟันบน-ล่าง จ่าย 0 บาท (ผ่อนชำระ)"],
+        "weaknesses": ["ไม่มี TikTok", "ไม่มี Instagram", "ราคาจัดฟันยังไม่ชัดเจน (สอบถาม)"],
+        "location": "1730/5 ถนนเพริมพริดา ธาตุเชิงชุม สกลนคร",
+        "hours": "",
         "social_trend": {"primary_platform":"Facebook","posting_frequency":"สม่ำเสมอ","content_style":"promotional","engagement_level":"medium"}
     },
     {
