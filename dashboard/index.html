@@ -562,14 +562,14 @@ function showView(id) {
 
 // ── Chart initializer ──
 function initCharts(viewId) {
-  if (viewId === 'view-home')    { initHomeBar(); return; }
-  if (viewId === 'view-intel')   { renderIntelCards(); return; }
-  if (viewId === 'view-pricing') { renderPricingView(); return; }
-  if (viewId === 'view-competitor-deep') { renderDeepTab(); return; }
+  if (viewId === 'view-home')    { try { initHomeBar(); } catch(e) { console.error('initHomeBar', e); } return; }
+  if (viewId === 'view-intel')   { try { renderIntelCards(); } catch(e) { console.error('renderIntelCards', e); } return; }
+  if (viewId === 'view-pricing') { try { renderPricingView(); } catch(e) { console.error('renderPricingView', e); } return; }
+  if (viewId === 'view-competitor-deep') { try { renderDeepTab(); } catch(e) { console.error('renderDeepTab', e); } return; }
   const platform = viewId.replace('view-', '');
   if (!DATA[platform]) return;
-  initLineChart(platform);
-  initDoughnutChart(platform);
+  try { initLineChart(platform); } catch(e) { console.error('initLineChart', e); }
+  try { initDoughnutChart(platform); } catch(e) { console.error('initDoughnutChart', e); }
 }
 
 function initHomeBar() {
@@ -1129,6 +1129,12 @@ const COMPETITOR_EVENTS = [
 let currentDeepTab = 'overview';
 let selectedDeepComp = null;
 
+function gotoDeepDetail(idx) {
+  var comps = INTEL.filter(function(x) { return x.category === 'competitor'; });
+  if (idx < comps.length) { selectedDeepComp = comps[idx].id; }
+  setDeepTab('detail');
+}
+
 function setDeepTab(tab) {
   currentDeepTab = tab;
   ['overview','detail','timeline'].forEach(function(t) {
@@ -1180,7 +1186,7 @@ function renderDeepOverview() {
       + '</div>'
       + '<p class="text-xs leading-relaxed" style="color:var(--text-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">' + c.summary + '</p>'
       + '<div class="flex flex-wrap gap-1.5">' + strengths + weakness + '</div>'
-      + '<button onclick="setDeepTab('detail');setTimeout(function(){selectDeepComp('' + cid + '');},60)" class="text-xs font-semibold text-left mt-auto" style="color:#6366f1">ดูรายละเอียด →</button>'
+      + '<button onclick="gotoDeepDetail(' + i + ')" class="text-xs font-semibold text-left mt-auto" style="color:#6366f1">ดูรายละเอียด →</button>'
     + '</div>';
   });
   el.innerHTML = '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">' + cards.join('') + '</div>';
