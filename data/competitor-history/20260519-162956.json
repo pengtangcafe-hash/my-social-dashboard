@@ -1,0 +1,677 @@
+{
+  "date": "2026-05-19T16:29:56.828547",
+  "source": "intel-deep-command",
+  "competitors": [
+    {
+      "id": "competitor-bb-dental",
+      "category": "competitor",
+      "title": "B&B Dental Clinic",
+      "summary": "คลินิกทันตกรรมใน สกลนคร รับบัตรทอง-ประกันสังคม มี TikTok @bb.dental.clinic3 และ Facebook",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "บัตรทอง",
+        "ประกันสังคม",
+        "TikTok"
+      ],
+      "relevance": "high",
+      "detail": "พบใน TikTok (@bb.dental.clinic3) และ Facebook รีเทนเนอร์ 2,499 บาท รับบัตรทอง/ประกันสังคม active สม่ำเสมอ",
+      "pricing": {
+        "implant": {
+          "price": "",
+          "note": ""
+        },
+        "braces_metal": {
+          "price": "",
+          "note": ""
+        },
+        "braces_clear": {
+          "price": "",
+          "note": ""
+        },
+        "whitening": {
+          "price": "",
+          "note": ""
+        },
+        "denture_full": {
+          "price": "",
+          "note": ""
+        },
+        "denture_partial": {
+          "price": "",
+          "note": ""
+        },
+        "veneer": {
+          "price": "",
+          "note": ""
+        },
+        "root_canal": {
+          "price": "",
+          "note": ""
+        },
+        "extraction": {
+          "price": "",
+          "note": ""
+        },
+        "filling": {
+          "price": "",
+          "note": ""
+        },
+        "scaling": {
+          "price": "",
+          "note": ""
+        },
+        "other": [
+          {
+            "name": "รีเทนเนอร์",
+            "price": "2499",
+            "note": "ต่อชุด"
+          }
+        ]
+      },
+      "strengths": [
+        "รับบัตรทอง/ประกันสังคม",
+        "ราคาประหยัด",
+        "TikTok active"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "ไม่พบราคาสาธารณะนอกจากรีเทนเนอร์",
+        "ไม่มี Instagram"
+      ],
+      "location": "",
+      "hours": "",
+      "social_trend": {
+        "primary_platform": "TikTok",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "promotional",
+        "engagement_level": "medium"
+      }
+    },
+    {
+      "id": "competitor-mor-jan-jao",
+      "category": "competitor",
+      "title": "คลินิกทันตกรรมหมอจั่นเจา",
+      "summary": "Facebook 11,883+ likes มี TikTok @dr.piyawat5 และ website ฟันปลอมโลหะเยอรมัน 8,000 บาท",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "ฟันปลอม",
+        "Facebook"
+      ],
+      "relevance": "high",
+      "detail": "Facebook 11,883+ likes, TikTok @dr.piyawat5 มีเว็บไซต์ ฟันปลอมโลหะเยอรมัน 8,000 บาท Facebook fans สูงมาก",
+      "pricing": {
+        "implant": {
+          "price": "",
+          "note": ""
+        },
+        "braces_metal": {
+          "price": "",
+          "note": ""
+        },
+        "braces_clear": {
+          "price": "",
+          "note": ""
+        },
+        "whitening": {
+          "price": "",
+          "note": ""
+        },
+        "denture_full": {
+          "price": "",
+          "note": ""
+        },
+        "denture_partial": {
+          "price": "",
+          "note": ""
+        },
+        "veneer": {
+          "price": "",
+          "note": ""
+        },
+        "root_canal": {
+          "price": "",
+          "note": ""
+        },
+        "extraction": {
+          "price": "",
+          "note": ""
+        },
+        "filling": {
+          "price": "",
+          "note": ""
+        },
+        "scaling": {
+          "price": "",
+          "note": ""
+        },
+        "other": [
+          {
+            "name": "ฟันปลอมโลหะเยอรมัน",
+            "price": "8000",
+            "note": "ต่อชุด"
+          }
+        ]
+      },
+      "strengths": [
+        "Facebook fans 11,883+",
+        "มีเว็บไซต์",
+        "ชื่อแบรนด์จดจำง่าย"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "ราคาสาธารณะน้อย (เฉพาะฟันปลอม)",
+        "ไม่มี Instagram"
+      ],
+      "location": "",
+      "hours": "",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "promotional",
+        "engagement_level": "medium"
+      }
+    },
+    {
+      "id": "competitor-dental-park",
+      "category": "competitor",
+      "title": "Dental Park Clinic — คลินิกทันตกรรมเดนทัลปาร์ค",
+      "summary": "คลินิกทันตกรรม สกลนคร บริการจัดฟัน ทำฟัน ครบวงจร ยังไม่พบราคาสาธารณะ",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "จัดฟัน",
+        "ทำฟัน"
+      ],
+      "relevance": "high",
+      "detail": "Dental Park Clinic สกลนคร บริการจัดฟัน ถอนฟัน อุดฟัน รักษารากฟัน ยังไม่พบข้อมูลราคาสาธารณะ",
+      "pricing": {
+        "implant": {
+          "price": "",
+          "note": ""
+        },
+        "braces_metal": {
+          "price": "",
+          "note": "สอบถาม"
+        },
+        "braces_clear": {
+          "price": "",
+          "note": "สอบถาม"
+        },
+        "whitening": {
+          "price": "",
+          "note": ""
+        },
+        "denture_full": {
+          "price": "",
+          "note": ""
+        },
+        "denture_partial": {
+          "price": "",
+          "note": ""
+        },
+        "veneer": {
+          "price": "",
+          "note": ""
+        },
+        "root_canal": {
+          "price": "",
+          "note": ""
+        },
+        "extraction": {
+          "price": "",
+          "note": ""
+        },
+        "filling": {
+          "price": "",
+          "note": ""
+        },
+        "scaling": {
+          "price": "",
+          "note": ""
+        },
+        "other": []
+      },
+      "strengths": [
+        "ชื่อแบรนด์ชัดเจน",
+        "บริการครบวงจร"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "ไม่พบราคาสาธารณะเลย",
+        "Social media อ่อนแอ",
+        "ไม่มี TikTok",
+        "ไม่มี Instagram"
+      ],
+      "location": "",
+      "hours": "",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "ต่ำ",
+        "content_style": "promotional",
+        "engagement_level": "low"
+      }
+    },
+    {
+      "id": "competitor-toothmate",
+      "category": "competitor",
+      "title": "ToothMate Dental Clinic",
+      "summary": "Facebook + Instagram @toothmate_dc คู่แข่งเดียวที่ active ใน Instagram ทีมหมอเฉพาะทาง",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Instagram",
+        "เฉพาะทาง"
+      ],
+      "relevance": "high",
+      "detail": "Facebook และ Instagram @toothmate_dc ทีมหมอเฉพาะทาง ครอบคลุมทุกวัย คู่แข่งเดียวที่มี Instagram active",
+      "pricing": {
+        "implant": {
+          "price": "",
+          "note": ""
+        },
+        "braces_metal": {
+          "price": "",
+          "note": ""
+        },
+        "braces_clear": {
+          "price": "",
+          "note": ""
+        },
+        "whitening": {
+          "price": "",
+          "note": ""
+        },
+        "denture_full": {
+          "price": "",
+          "note": ""
+        },
+        "denture_partial": {
+          "price": "",
+          "note": ""
+        },
+        "veneer": {
+          "price": "",
+          "note": ""
+        },
+        "root_canal": {
+          "price": "",
+          "note": ""
+        },
+        "extraction": {
+          "price": "",
+          "note": ""
+        },
+        "filling": {
+          "price": "",
+          "note": ""
+        },
+        "scaling": {
+          "price": "",
+          "note": ""
+        },
+        "other": []
+      },
+      "strengths": [
+        "Instagram active",
+        "ทีมหมอเฉพาะทาง",
+        "ครอบคลุมทุกวัย"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "ไม่พบราคาสาธารณะ",
+        "ไม่มี TikTok"
+      ],
+      "location": "",
+      "hours": "",
+      "social_trend": {
+        "primary_platform": "Instagram",
+        "posting_frequency": "ปานกลาง",
+        "content_style": "educational",
+        "engagement_level": "medium"
+      }
+    },
+    {
+      "id": "competitor-yim-wan",
+      "category": "competitor",
+      "title": "คลินิกยิ้มหวาน",
+      "summary": "Facebook 11,153+ likes ชื่อแบรนด์จดจำง่าย เน้น Facebook เป็นหลัก",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Facebook"
+      ],
+      "relevance": "medium",
+      "detail": "Facebook 11,153+ likes ชื่อแบรนด์ที่จดจำง่าย เน้นกลุ่มครอบครัว",
+      "pricing": {
+        "implant": {
+          "price": "",
+          "note": ""
+        },
+        "braces_metal": {
+          "price": "",
+          "note": ""
+        },
+        "braces_clear": {
+          "price": "",
+          "note": ""
+        },
+        "whitening": {
+          "price": "",
+          "note": ""
+        },
+        "denture_full": {
+          "price": "",
+          "note": ""
+        },
+        "denture_partial": {
+          "price": "",
+          "note": ""
+        },
+        "veneer": {
+          "price": "",
+          "note": ""
+        },
+        "root_canal": {
+          "price": "",
+          "note": ""
+        },
+        "extraction": {
+          "price": "",
+          "note": ""
+        },
+        "filling": {
+          "price": "",
+          "note": ""
+        },
+        "scaling": {
+          "price": "",
+          "note": ""
+        },
+        "other": []
+      },
+      "strengths": [
+        "Facebook fans 11,153+",
+        "ชื่อแบรนด์จดจำง่าย"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "ไม่พบราคาสาธารณะ",
+        "ไม่มี TikTok",
+        "ไม่มี Instagram"
+      ],
+      "location": "",
+      "hours": "",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "ปานกลาง",
+        "content_style": "promotional",
+        "engagement_level": "medium"
+      }
+    },
+    {
+      "id": "competitor-smile-club",
+      "category": "competitor",
+      "title": "คลินิกทันตกรรมสไมล์คลับ สกลนคร",
+      "summary": "Facebook Page (617/2 ถนนนิตโย ธาตุเชิงชุม) เปิดวันหยุด ส-อา รับประกันสังคม Rating 4.43/5 ไม่พบ TikTok",
+      "source_url": "https://www.facebook.com/p/คลินิกทันตกรรมสไมล์คลับ-สกลนคร-100057161032829/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "ประกันสังคม",
+        "Facebook",
+        "สไมล์คลับ"
+      ],
+      "relevance": "high",
+      "detail": "คลินิกทันตกรรมสไมล์คลับ สกลนคร 617/2 ถนนนิตโย ธาตุเชิงชุม โทร +66 91 865 1625 จ-ศ 16:30-20:00 / ส-อา 09:00-18:00 รับประกันสังคม ฟรี: อุดฟัน ถอนฟัน ขูดหินปูน ผ่าฟันคุด Rating 4.43/5 (7 รีวิว) ไม่พบ TikTok account ไม่พบราคาสาธารณะ Social Media อ่อนแอ — ช่องว่างที่เราสามารถ dominate ได้",
+      "pricing": {
+        "implant": {
+          "price": "",
+          "note": "สอบถาม"
+        },
+        "braces_metal": {
+          "price": "",
+          "note": "สอบถาม"
+        },
+        "braces_clear": {
+          "price": "",
+          "note": "สอบถาม"
+        },
+        "whitening": {
+          "price": "",
+          "note": "สอบถาม"
+        },
+        "denture_full": {
+          "price": "",
+          "note": ""
+        },
+        "denture_partial": {
+          "price": "",
+          "note": ""
+        },
+        "veneer": {
+          "price": "",
+          "note": ""
+        },
+        "root_canal": {
+          "price": "",
+          "note": ""
+        },
+        "extraction": {
+          "price": "",
+          "note": "ฟรีประกันสังคม"
+        },
+        "filling": {
+          "price": "",
+          "note": "ฟรีประกันสังคม"
+        },
+        "scaling": {
+          "price": "",
+          "note": "ฟรีประกันสังคม"
+        },
+        "other": []
+      },
+      "strengths": [
+        "รับประกันสังคม ใช้บัตรประชาชนอย่างเดียว",
+        "Rating 4.43/5",
+        "เปิดวันหยุด ส-อา"
+      ],
+      "promotions": [
+        "บริการฟรีสำหรับผู้ถือประกันสังคม"
+      ],
+      "weaknesses": [
+        "ไม่มี TikTok เลย",
+        "Social media อ่อนแอมาก",
+        "ราคาสาธารณะไม่มี"
+      ],
+      "location": "617/2 ถนนนิตโย ธาตุเชิงชุม สกลนคร โทร 091-865-1625",
+      "hours": "จันทร์–ศุกร์ 16:30–20:00 / เสาร์–อาทิตย์ 09:00–18:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "ต่ำ",
+        "content_style": "promotional",
+        "engagement_level": "low"
+      }
+    },
+    {
+      "id": "competitor-supawadee-dental",
+      "category": "competitor",
+      "title": "คลินิกทันตกรรมสุภาวดี สกลนคร",
+      "summary": "ทพญ.สุภาวดี กรีพละ มี Facebook + Instagram active จัดฟัน 35,000–40,000 บาท มีผ่อนรายเดือน",
+      "source_url": "https://zeekdoc.com/clinic/supawadee-dental-clinic-561",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "จัดฟัน",
+        "Facebook",
+        "Instagram"
+      ],
+      "relevance": "high",
+      "detail": "คลินิกทันตกรรมสุภาวดี 1433/6 ถนนยุวพัฒนา ธาตุเชิงชุม อำเภอเมืองสกลนคร ทันตแพทย์: ทพญ.สุภาวดี กรีพละ มี Facebook + Instagram active (พบโพสต์ พ.ค. 2026) ราคาจัดฟัน 35,000-40,000 บาท ขึ้นกับลักษณะฟัน มีบริการผ่อนรายเดือน เป็นคู่แข่งใหม่ที่ไม่เคยพบในรายงานก่อนหน้า Instagram active = คู่แข่งที่น่าจับตาสูงสุด",
+      "pricing": {
+        "implant": {
+          "price": "",
+          "note": "สอบถาม"
+        },
+        "braces_metal": {
+          "price": "35000",
+          "note": "ขึ้นกับลักษณะฟัน ผ่อนได้"
+        },
+        "braces_clear": {
+          "price": "40000",
+          "note": "ขึ้นกับลักษณะฟัน ผ่อนได้"
+        },
+        "whitening": {
+          "price": "",
+          "note": ""
+        },
+        "denture_full": {
+          "price": "",
+          "note": ""
+        },
+        "denture_partial": {
+          "price": "",
+          "note": ""
+        },
+        "veneer": {
+          "price": "",
+          "note": ""
+        },
+        "root_canal": {
+          "price": "",
+          "note": ""
+        },
+        "extraction": {
+          "price": "",
+          "note": ""
+        },
+        "filling": {
+          "price": "",
+          "note": ""
+        },
+        "scaling": {
+          "price": "",
+          "note": ""
+        },
+        "other": []
+      },
+      "strengths": [
+        "ทพญ.เฉพาะทาง",
+        "Instagram active",
+        "ผ่อนรายเดือนได้",
+        "Facebook + Instagram dual platform"
+      ],
+      "promotions": [
+        "ผ่อนรายเดือน ไม่มีดอกเบี้ย"
+      ],
+      "weaknesses": [
+        "ไม่มี TikTok",
+        "ราคาสูงกว่าตลาด (40,000 บาท จัดฟันใส)"
+      ],
+      "location": "1433/6 ถนนยุวพัฒนา ธาตุเชิงชุม เมืองสกลนคร",
+      "hours": "",
+      "social_trend": {
+        "primary_platform": "Instagram",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "before/after",
+        "engagement_level": "medium"
+      }
+    },
+    {
+      "id": "competitor-t-smile-dental",
+      "category": "competitor",
+      "title": "T Smile Dental Clinic สกลนคร",
+      "summary": "Facebook active ราคาสาธารณะชัดเจน: รีเทนเนอร์ 2,990 บาท ฟอกสีฟัน 3,990 บาท จัดฟัน Damon/ใส/โลหะผ่อนได้",
+      "source_url": "https://www.facebook.com/p/คลินิกทันตกรรมทีสมายล์-สกลนคร-100091255752847/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "จัดฟัน",
+        "ฟอกสีฟัน",
+        "Facebook"
+      ],
+      "relevance": "high",
+      "detail": "T Smile Dental Clinic Sakon Nakhon 1730/5 ถนนเพริมพริดา ธาตุเชิงชุม Facebook active ราคาสาธารณะ: รีเทนเนอร์ 2,990 บาท ฟอกสีฟัน 3,990 บาท จัดฟัน (โลหะ/ใส/Damon) ผ่อนได้ เป็นคู่แข่งที่มีราคาโปร่งใสมากที่สุด ใช้เป็น benchmark ราคาตลาดได้",
+      "pricing": {
+        "implant": {
+          "price": "",
+          "note": "สอบถาม"
+        },
+        "braces_metal": {
+          "price": "",
+          "note": "ผ่อนได้ สอบถาม"
+        },
+        "braces_clear": {
+          "price": "",
+          "note": "ผ่อนได้ สอบถาม"
+        },
+        "whitening": {
+          "price": "3990",
+          "note": "ต่อครั้ง"
+        },
+        "denture_full": {
+          "price": "",
+          "note": ""
+        },
+        "denture_partial": {
+          "price": "",
+          "note": ""
+        },
+        "veneer": {
+          "price": "",
+          "note": ""
+        },
+        "root_canal": {
+          "price": "",
+          "note": ""
+        },
+        "extraction": {
+          "price": "",
+          "note": ""
+        },
+        "filling": {
+          "price": "",
+          "note": ""
+        },
+        "scaling": {
+          "price": "",
+          "note": ""
+        },
+        "other": [
+          {
+            "name": "รีเทนเนอร์",
+            "price": "2990",
+            "note": "ต่อชุด"
+          }
+        ]
+      },
+      "strengths": [
+        "ราคาโปร่งใส ประกาศสาธารณะ",
+        "ฟอกสีฟัน 3,990 แข่งได้",
+        "Damon braces"
+      ],
+      "promotions": [
+        "จัดฟันบน-ล่าง จ่าย 0 บาท (ผ่อนชำระ)"
+      ],
+      "weaknesses": [
+        "ไม่มี TikTok",
+        "ไม่มี Instagram",
+        "ราคาจัดฟันยังไม่ชัดเจน (สอบถาม)"
+      ],
+      "location": "1730/5 ถนนเพริมพริดา ธาตุเชิงชุม สกลนคร",
+      "hours": "",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "promotional",
+        "engagement_level": "medium"
+      }
+    }
+  ]
+}
