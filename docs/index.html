@@ -414,6 +414,15 @@
         <div id="best-days-content"></div>
       </div>
 
+      <!-- Goal Tracker -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 mt-5" id="goal-tracker-card">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-sm font-semibold text-slate-700">🎯 เป้าหมายรายเดือน</h2>
+          <span class="text-xs px-2 py-0.5 rounded-full font-medium" style="background:var(--badge-bg);color:var(--badge-txt)" id="goal-month-badge">—</span>
+        </div>
+        <div id="goal-tracker-content"></div>
+      </div>
+
     </div>
 
     <!-- ── Platform Views (injected) ── -->
@@ -1228,6 +1237,9 @@ function gotoDeepDetail(idx) {
   setDeepTab('detail');
 }
 
+// ── Goal Tracker Data ──
+const GOAL_DATA = {"month": "2026-05", "updated": "2026-05-27", "platforms": {"tiktok": {"label": "TikTok", "color": "#010101", "kpis": {"total_reach": {"label": "Reach รวม", "format": "number", "target": 180000, "actual": 164699, "pct": 91.5}, "avg_engagement_rate": {"label": "Engagement Rate", "format": "percent", "target": 5.0, "actual": 5.33, "pct": 106.6}}}, "facebook": {"label": "Facebook", "color": "#1877f2", "kpis": {"total_reach": {"label": "Reach รวม", "format": "number", "target": 70000, "actual": 60927, "pct": 87.0}, "avg_engagement_rate": {"label": "Engagement Rate", "format": "percent", "target": 1.2, "actual": 1.08, "pct": 90.0}, "total_new_followers": {"label": "Followers ใหม่", "format": "number", "target": 100, "actual": 84, "pct": 84.0}}}, "instagram": {"label": "Instagram", "color": "#e1306c", "kpis": {"total_reach": {"label": "Reach รวม", "format": "number", "target": 18000, "actual": 15307, "pct": 85.0}, "avg_engagement_rate": {"label": "Engagement Rate", "format": "percent", "target": 2.0, "actual": 1.72, "pct": 86.0}}}}};
+
 // ── Competitor Tracker Data ──
 const COMP_TRACK = {
   "period": "2026-W22",
@@ -1723,11 +1735,114 @@ function renderBestDays() {
   el.innerHTML = html;
 }
 
+// ── Goal Tracker ──
+function renderGoals() {
+  const el = document.getElementById('goal-tracker-content');
+  if (!el) return;
+  if (typeof GOAL_DATA === 'undefined') {
+    el.innerHTML = '<p class="text-xs" style="color:var(--text-muted)">ยังไม่มีข้อมูล — รัน <code>python src/goal_tracker.py inject dashboard/index.html</code></p>';
+    return;
+  }
+
+  // ตั้ง badge เดือน
+  const badge = document.getElementById('goal-month-badge');
+  if (badge && GOAL_DATA.month) {
+    const [y, m] = GOAL_DATA.month.split('-');
+    const thMonth = ['','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+    const thYear  = parseInt(y) + 543;
+    badge.textContent = `${thMonth[parseInt(m)]} ${thYear}`;
+  }
+
+  const platforms = GOAL_DATA.platforms || {};
+  const keys = Object.keys(platforms);
+  if (!keys.length) {
+    el.innerHTML = '<p class="text-xs" style="color:var(--text-muted)">ไม่มีข้อมูล — แก้ data/goals.json</p>';
+    return;
+  }
+
+  function fmtNum(v, fmt) {
+    if (v === null || v === undefined) return '—';
+    if (fmt === 'percent') return parseFloat(v).toFixed(2) + '%';
+    return Math.round(v).toLocaleString();
+  }
+  function statusColor(pct) {
+    if (pct === null || pct === undefined) return '#94a3b8';
+    if (pct >= 100) return '#16a34a';
+    if (pct >= 60)  return '#d97706';
+    return '#dc2626';
+  }
+  function statusEmoji(pct) {
+    if (pct === null || pct === undefined) return '—';
+    if (pct >= 100) return '✅';
+    if (pct >= 60)  return '⚠️';
+    return '🔴';
+  }
+
+  let html = '<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">';
+
+  keys.forEach(platform => {
+    const info  = platforms[platform];
+    const color = info.color || '#6366f1';
+    const kpis  = info.kpis || {};
+    const kpiKeys = Object.keys(kpis);
+
+    let kpiHtml = '';
+    let allMet = 0, total = 0;
+
+    kpiKeys.forEach(kpi => {
+      const v   = kpis[kpi];
+      const pct = v.pct;
+      const bar = Math.min(pct || 0, 100);
+      const col = statusColor(pct);
+      const em  = statusEmoji(pct);
+      total++;
+      if ((pct || 0) >= 100) allMet++;
+
+      kpiHtml += `
+        <div class="mb-3">
+          <div class="flex justify-between items-center mb-1">
+            <span class="text-xs font-medium" style="color:var(--text-muted)">${v.label}</span>
+            <span class="text-xs font-bold" style="color:${col}">${em} ${pct !== null ? pct.toFixed(1) + '%' : '—'}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="flex-1 rounded-full h-2" style="background:var(--grid)">
+              <div class="h-2 rounded-full transition-all" style="width:${bar}%;background:${col}"></div>
+            </div>
+          </div>
+          <div class="flex justify-between mt-0.5">
+            <span class="text-xs tabular-nums" style="color:var(--text)">${fmtNum(v.actual, v.format)}</span>
+            <span class="text-xs" style="color:var(--text-muted)">เป้า ${fmtNum(v.target, v.format)}</span>
+          </div>
+        </div>`;
+    });
+
+    const overallPct = total > 0 ? Math.round(allMet / total * 100) : 0;
+    const overallColor = statusColor(overallPct === 100 ? 100 : overallPct > 0 ? 70 : 0);
+
+    html += `
+      <div class="rounded-xl border p-4" style="background:var(--card);border-color:${color}33">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-bold uppercase tracking-widest px-2 py-0.5 rounded-full text-white" style="background:${color}">${info.label}</span>
+          <span class="text-xs font-bold" style="color:${overallColor}">${allMet}/${total} เป้าสำเร็จ</span>
+        </div>
+        ${kpiHtml || '<p class="text-xs" style="color:var(--text-muted)">ไม่มีเป้าหมาย</p>'}
+      </div>`;
+  });
+
+  html += '</div>';
+
+  // tip: แก้เป้าได้ที่ data/goals.json
+  html += `<p class="mt-3 text-xs" style="color:var(--text-muted)">💡 แก้เป้าหมายได้ที่ <code>data/goals.json</code> หรือรัน <code>python src/goal_tracker.py set [platform] [kpi] [value]</code></p>`;
+
+  el.innerHTML = html;
+}
+
 // ── Boot ──
 applyStoredTheme();
 showView('view-home');
 renderUpdateMeta();
 renderBestDays();
+renderGoals();
 </script>
 
 </body>

@@ -1,0 +1,22 @@
+{
+  "_comment": "ตั้งเป้า KPI รายเดือน — แก้ได้โดยตรงหรือผ่าน /set-goal",
+  "monthly_targets": {
+    "tiktok": {
+      "total_reach":          180000,
+      "avg_engagement_rate":  5.0,
+      "total_new_followers":  null
+    },
+    "facebook": {
+      "total_reach":          70000,
+      "avg_engagement_rate":  1.2,
+      "total_new_followers":  100
+    },
+    "instagram": {
+      "total_reach":          18000,
+      "avg_engagement_rate":  2.0,
+      "total_new_followers":  null
+    }
+  },
+  "updated_at": "2026-05-27",
+  "note": "เป้าหมายเดือนพฤษภาคม 2569 — ตั้งจากฐาน +10-20% ของเดือนก่อน"
+}

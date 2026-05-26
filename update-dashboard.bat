@@ -23,6 +23,9 @@ if errorlevel 1 echo [WARNING] update_logger inject failed (continuing...)
 python src\competitor_tracker.py inject dashboard\index.html
 if errorlevel 1 echo [WARNING] competitor_tracker inject failed (continuing...)
 
+python src\goal_tracker.py inject dashboard\index.html
+if errorlevel 1 echo [WARNING] goal_tracker inject failed (continuing...)
+
 echo [update-dashboard] All constants injected.
 
 :: Step 3: Copy to docs/ for GitHub Pages
