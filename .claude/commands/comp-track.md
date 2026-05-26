@@ -42,7 +42,13 @@
 
 4. Agent จะค้นหา + สร้าง JSON + บันทึกลง `data/competitors/{name}/{period}.json`
 
-5. แสดงสรุปใน chat:
+5. **บันทึก update log** โดยรัน:
+   ```
+   python src/update_logger.py log comp_track
+   python src/update_logger.py inject dashboard/index.html
+   ```
+
+6. แสดงสรุปใน chat:
    - รายชื่อ competitor ที่ snapshot สำเร็จ
    - จำนวนโปรโมชันและ content theme ที่พบ
    - path ไฟล์ที่บันทึก

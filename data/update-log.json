@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "intel": {
+      "label": "ข่าวกรองตลาด",
+      "last_updated": "2026-05-26",
+      "update_count": 2,
+      "history": ["2026-05-18", "2026-05-26"]
+    },
+    "pricing": {
+      "label": "ราคาทำฟัน",
+      "last_updated": "2026-05-26",
+      "update_count": 2,
+      "history": ["2026-05-18", "2026-05-26"]
+    },
+    "deep": {
+      "label": "วิเคราะห์เชิงลึก",
+      "last_updated": "2026-05-18",
+      "update_count": 1,
+      "history": ["2026-05-18"]
+    },
+    "comp_track": {
+      "label": "Tracker คู่แข่ง",
+      "last_updated": "2026-05-27",
+      "update_count": 1,
+      "history": ["2026-05-27"]
+    }
+  }
+}

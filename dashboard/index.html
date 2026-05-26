@@ -166,6 +166,40 @@
     .intel-accord-hdr:hover { background: var(--nav-active); }
     .intel-accord-body { display: none; padding: 0 18px 16px; }
     .intel-accord-body.open { display: block; }
+
+    /* ── Update Meta Bar ── */
+    .update-meta {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      margin-bottom: 20px; padding: 8px 14px;
+      background: var(--card); border: 1px solid var(--border, #e2e8f0);
+      border-radius: 12px; font-size: .75rem; color: var(--text-muted);
+    }
+    .update-meta .um-icon { font-size: .9rem; }
+    .update-meta .um-date { font-weight: 600; color: var(--text); }
+    .update-meta .um-count {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--accent, #2563eb); color: #fff;
+      border-radius: 999px; padding: 2px 9px; font-weight: 700;
+      font-size: .7rem; cursor: pointer; position: relative;
+    }
+    .update-meta .um-count:hover .um-history { display: block; }
+    .update-meta .um-history {
+      display: none; position: absolute; top: calc(100% + 6px); left: 50%;
+      transform: translateX(-50%); z-index: 99;
+      background: var(--card); border: 1px solid var(--border, #e2e8f0);
+      border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.12);
+      padding: 10px 14px; min-width: 160px; white-space: nowrap;
+    }
+    .update-meta .um-history-title {
+      font-size: .68rem; text-transform: uppercase; letter-spacing: .08em;
+      color: var(--text-muted); margin-bottom: 6px; font-weight: 700;
+    }
+    .update-meta .um-history-item {
+      font-size: .75rem; color: var(--text); padding: 3px 0;
+      border-bottom: 1px solid var(--border, #e2e8f0);
+    }
+    .update-meta .um-history-item:last-child { border-bottom: none; }
+    .update-meta .um-divider { color: var(--border, #cbd5e1); }
   </style>
 </head>
 <body style="font-family: 'Prompt', system-ui, sans-serif" class="text-slate-800">
@@ -382,7 +416,8 @@
 
     <!-- ── Intel View ── -->
     <div id="view-intel" class="view">
-      <h1 class="text-3xl font-black mb-6" style="color:var(--text)">ข่าวกรองตลาด</h1>
+      <h1 class="text-3xl font-black mb-3" style="color:var(--text)">ข่าวกรองตลาด</h1>
+      <div id="update-meta-intel" class="update-meta"></div>
 
       <!-- Filter tabs -->
       <div class="flex flex-wrap gap-2 mb-5">
@@ -399,7 +434,8 @@
 
     <!-- ── Pricing View ── -->
     <div id="view-pricing" class="view">
-      <h1 class="text-3xl font-black mb-6" style="color:var(--text)">ราคาทำฟัน — เปรียบเทียบคู่แข่ง</h1>
+      <h1 class="text-3xl font-black mb-3" style="color:var(--text)">ราคาทำฟัน — เปรียบเทียบคู่แข่ง</h1>
+      <div id="update-meta-pricing" class="update-meta"></div>
 
       <!-- KPI cards (4) -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6" id="pricing-kpi-cards"></div>
@@ -452,7 +488,8 @@
     <!-- ── Competitor Deep View ── -->
     <div id="view-competitor-deep" class="view">
       <h1 class="text-3xl font-black mb-1" style="color:var(--text)">วิเคราะห์เชิงลึกคู่แข่ง</h1>
-      <p class="text-sm text-slate-500 mb-6">5 มิติ: Social Presence · Content Strategy · Pricing · Services/Positioning · Reviews</p>
+      <p class="text-sm text-slate-500 mb-3">5 มิติ: Social Presence · Content Strategy · Pricing · Services/Positioning · Reviews</p>
+      <div id="update-meta-deep" class="update-meta"></div>
 
       <div class="flex flex-wrap gap-2 mb-6">
         <button class="intel-tab active" id="deep-tab-overview"  onclick="setDeepTab('overview')">📊 ภาพรวมการเปลี่ยนแปลง</button>
@@ -468,7 +505,8 @@
     <!-- ── Competitor Tracker View ── -->
     <div id="view-comp-track" class="view">
       <h1 class="text-3xl font-black mb-1" style="color:var(--text)">Tracker คู่แข่ง</h1>
-      <p class="text-sm text-slate-500 mb-6">ติดตามการเคลื่อนไหวคู่แข่งรายสัปดาห์ — snapshot ล่าสุด</p>
+      <p class="text-sm text-slate-500 mb-3">ติดตามการเคลื่อนไหวคู่แข่งรายสัปดาห์ — snapshot ล่าสุด</p>
+      <div id="update-meta-comp_track" class="update-meta"></div>
       <div id="comp-track-content"></div>
     </div>
 
@@ -537,6 +575,8 @@ const DATA = {"tiktok": {"dates": ["19 Apr", "20 Apr", "21 Apr", "22 Apr", "23 A
 const COMP = {"platforms": ["tiktok", "facebook", "instagram"], "labels": ["TikTok", "Facebook", "Instagram"], "avg_reach": [5882.1, 2176.0, 546.7], "avg_er": [5.33, 1.08, 1.72], "total_reach": [164699, 60927, 15307], "total_engagement": [10685, 482, 181], "colors": ["#010101", "#1877f2", "#e1306c"]};
 const PLATFORMS = ["tiktok", "facebook", "instagram"];
 const INTEL = [{"id": "competitor-bb-dental", "category": "competitor", "title": "B&B Dental Clinic", "summary": "คลินิกทันตกรรมใน สกลนคร รับบัตรทอง-ประกันสังคม มี TikTok @bb.dental.clinic3 และ Facebook", "source_url": "", "thumbnail_url": "", "tags": ["สกลนคร", "บัตรทอง", "ประกันสังคม", "TikTok"], "relevance": "high", "detail": "พบใน TikTok (@bb.dental.clinic3) และ Facebook รีเทนเนอร์ 2,499 บาท รับบัตรทอง/ประกันสังคม active สม่ำเสมอ", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": [{"name": "รีเทนเนอร์", "price": "2499", "note": "ต่อชุด"}]}, "strengths": ["รับบัตรทอง/ประกันสังคม", "ราคาประหยัด", "TikTok active"], "promotions": [], "weaknesses": ["ไม่พบราคาสาธารณะนอกจากรีเทนเนอร์", "ไม่มี Instagram"], "location": "", "hours": "", "social_trend": {"primary_platform": "TikTok", "posting_frequency": "สม่ำเสมอ", "content_style": "promotional", "engagement_level": "medium"}}, {"id": "competitor-mor-jan-jao", "category": "competitor", "title": "คลินิกทันตกรรมหมอจั่นเจา", "summary": "Facebook 11,883+ likes มี TikTok @dr.piyawat5 และ website ฟันปลอมโลหะเยอรมัน 8,000 บาท", "source_url": "", "thumbnail_url": "", "tags": ["สกลนคร", "ฟันปลอม", "Facebook"], "relevance": "high", "detail": "Facebook 11,883+ likes, TikTok @dr.piyawat5 มีเว็บไซต์ ฟันปลอมโลหะเยอรมัน 8,000 บาท Facebook fans สูงมาก", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": [{"name": "ฟันปลอมโลหะเยอรมัน", "price": "8000", "note": "ต่อชุด"}]}, "strengths": ["Facebook fans 11,883+", "มีเว็บไซต์", "ชื่อแบรนด์จดจำง่าย"], "promotions": [], "weaknesses": ["ราคาสาธารณะน้อย (เฉพาะฟันปลอม)", "ไม่มี Instagram"], "location": "", "hours": "", "social_trend": {"primary_platform": "Facebook", "posting_frequency": "สม่ำเสมอ", "content_style": "promotional", "engagement_level": "medium"}}, {"id": "competitor-dental-park", "category": "competitor", "title": "Dental Park Clinic — คลินิกทันตกรรมเดนทัลปาร์ค", "summary": "TikTok @dental.park.clinic active มากที่สุดในกลุ่ม 'Dr.Park แม่แฝดหมอจัดฟัน' ภาษาอีสาน educational content ไม่ระบุราคาสาธารณะ", "source_url": "https://www.tiktok.com/@dental.park.clinic", "thumbnail_url": "", "tags": ["สกลนคร", "จัดฟัน", "TikTok", "ภาษาอีสาน", "educational"], "relevance": "high", "detail": "TikTok @dental.park.clinic active สูงสุดในกลุ่มคู่แข่ง ทพญ.พนิตนาฎ คงกระพันธ์ (ThaiOrtho certified) content เชิงลึก: จัดฟันร่วมกับผ่าตัดขากรรไกร ฟันสบคร่อม คางยื่น รุ่นใหญ่จัดฟัน Clear Aligner ล่าสุด 2026 ใช้ภาษาอีสาน 'บ่ได้ทำแค่จัดฟัน มาโลด!!!' สร้าง local connection สูง ไม่มี Instagram/Website/LINE OA", "pricing": {"implant": {"price": "", "note": "สอบถาม"}, "braces_metal": {"price": "", "note": "สอบถาม"}, "braces_clear": {"price": "", "note": "สอบถาม"}, "whitening": {"price": "", "note": "สอบถาม"}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": ["TikTok content ดีสุดในกลุ่ม", "Brand identity ชัด (Dr.Park แม่แฝด)", "ภาษาอีสาน local connection สูง", "Educational content เชิงลึก", "ThaiOrtho certified"], "promotions": [], "weaknesses": ["ไม่พบราคาสาธารณะเลย", "ไม่มี Instagram", "ไม่มี LINE OA", "ไม่มี Website", "เวลาทำการสั้น (จ-ศ เพียง 16:30-20:00)"], "location": "1446/24 ถ.ยุวพัฒนา ต.ธาตุเชิงชุม อ.เมือง สกลนคร", "hours": "จ-ศ 16:30-20:00 / ส-อา+วันหยุด 09:00-16:00", "social_trend": {"primary_platform": "TikTok", "posting_frequency": "สม่ำเสมอ", "content_style": "educational", "engagement_level": "high"}}, {"id": "competitor-dio-dental", "category": "competitor", "title": "Dio Dental Clinic สกลนคร — ดีโอ้ เดนทัล", "summary": "Chain 21+ สาขา ISO 9001 จัดฟันใส 27,500 บาท รับบัตรทอง+ประกันสังคม Facebook 5,926 likes Slogan 'ดีโอ้ดีอะ'", "source_url": "https://diodental.com/branch/snk/", "thumbnail_url": "", "tags": ["สกลนคร", "Chain", "ISO9001", "บัตรทอง", "จัดฟันใส"], "relevance": "high", "detail": "Dio Dental สกลนคร Chain 21+ สาขาทั่วไทย ISO 9001 Facebook @diodentalsakhon ~5,926 likes รับบัตรทอง 30 บาท ประกันสังคม มี pricing page สาธารณะ: จัดฟันใส 27,500 บาท ขึ้นไป รากฟันเทียม ~23,999 บาท เปิด พฤ-อ 11:00-20:00 (ปิดวันพุธ) Facebook recommendation 100% (88 reviews)", "pricing": {"implant": {"price": "23999", "note": "ราคาเริ่มต้น"}, "braces_metal": {"price": "", "note": "สอบถาม"}, "braces_clear": {"price": "27500", "note": "D-Smile เริ่มต้น"}, "whitening": {"price": "", "note": "สอบถาม"}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": "ฟรีบัตรทอง"}, "filling": {"price": "", "note": "ฟรีบัตรทอง"}, "scaling": {"price": "", "note": "ฟรีบัตรทอง"}, "other": [{"name": "จัดฟัน (ผ่อน)", "price": "999", "note": "ต่อเดือน (เงื่อนไขขึ้นกับแพ็กเกจ)"}]}, "strengths": ["รับบัตรทอง+ประกันสังคม", "ISO 9001 มาตรฐานสากล", "Pricing page สาธารณะ", "Facebook recommendation 100%", "Brand recall สูง (ดีโอ้ดีอะ)", "21+ สาขา ความน่าเชื่อถือสูง"], "promotions": ["รับบัตรทอง 30 บาท", "รับประกันสังคม"], "weaknesses": ["Chain — ความรู้สึกส่วนตัวน้อย", "ปิดวันพุธ", "TikTok เป็น account กลาง ไม่ใช่ local"], "location": "1754/2 ซอย ถ.รัฐพัฒนา ต.ธาตุเชิงชุม สกลนคร", "hours": "พฤ-อ 11:00-20:00 (ปิดวันพุธ)", "social_trend": {"primary_platform": "Facebook", "posting_frequency": "สม่ำเสมอ", "content_style": "promotional", "engagement_level": "medium"}}, {"id": "competitor-toothmate", "category": "competitor", "title": "ToothMate Dental Clinic", "summary": "Facebook + Instagram @toothmate_dc คู่แข่งเดียวที่ active ใน Instagram ทีมหมอเฉพาะทาง", "source_url": "", "thumbnail_url": "", "tags": ["สกลนคร", "Instagram", "เฉพาะทาง"], "relevance": "high", "detail": "Facebook และ Instagram @toothmate_dc ทีมหมอเฉพาะทาง ครอบคลุมทุกวัย คู่แข่งเดียวที่มี Instagram active", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": ["Instagram active", "ทีมหมอเฉพาะทาง", "ครอบคลุมทุกวัย"], "promotions": [], "weaknesses": ["ไม่พบราคาสาธารณะ", "ไม่มี TikTok"], "location": "", "hours": "", "social_trend": {"primary_platform": "Instagram", "posting_frequency": "ปานกลาง", "content_style": "educational", "engagement_level": "medium"}}, {"id": "competitor-yim-wan", "category": "competitor", "title": "คลินิกยิ้มหวาน", "summary": "Facebook 11,153+ likes ชื่อแบรนด์จดจำง่าย เน้น Facebook เป็นหลัก", "source_url": "", "thumbnail_url": "", "tags": ["สกลนคร", "Facebook"], "relevance": "medium", "detail": "Facebook 11,153+ likes ชื่อแบรนด์ที่จดจำง่าย เน้นกลุ่มครอบครัว", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": ["Facebook fans 11,153+", "ชื่อแบรนด์จดจำง่าย"], "promotions": [], "weaknesses": ["ไม่พบราคาสาธารณะ", "ไม่มี TikTok", "ไม่มี Instagram"], "location": "", "hours": "", "social_trend": {"primary_platform": "Facebook", "posting_frequency": "ปานกลาง", "content_style": "promotional", "engagement_level": "medium"}}, {"id": "knowledge-longevity", "category": "dental_knowledge", "title": "เทรนด์ Longevity Dentistry 2026", "summary": "Eat Well + Sleep Well + Be Well เปลี่ยนวิธีมองการดูแลฟัน กลุ่ม 30-45 ปีมีกำลังซื้อสูง", "source_url": "", "thumbnail_url": "", "tags": ["longevity", "เทรนด์2026", "สุขภาพ"], "relevance": "high", "detail": "COSDENT คาดรายได้โต 20%+ ปี 2026 นวัตกรรม: Lip Juice Laser (ลดนอนกรน), Flash Whitening ไม่เสียว Content series 'ฟันดี ชีวิตดี' engage กลุ่ม 30-45 ปีได้ดี", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": [], "promotions": [], "social_trend": {"primary_platform": "TikTok", "posting_frequency": "", "content_style": "educational", "engagement_level": "high"}}, {"id": "knowledge-hashtags", "category": "dental_knowledge", "title": "Hashtags ยืนยันจากโพสต์จริง", "summary": "#ทำฟันสกลนคร #จัดฟันสกลนคร #รีเทนเนอร์สกลนคร #บัตรทองทำฟันฟรี #ประกันสังคมทำฟันฟรี900บาท", "source_url": "", "thumbnail_url": "", "tags": ["hashtag", "TikTok", "Facebook", "สกลนคร"], "relevance": "high", "detail": "Hashtags verified จากโพสต์จริงใน TikTok/Facebook สกลนคร พบในโพสต์คู่แข่ง ควรใช้เป็น primary hashtags ทุกโพสต์", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": [], "promotions": [], "social_trend": {"primary_platform": "TikTok", "posting_frequency": "", "content_style": "educational", "engagement_level": "high"}}, {"id": "event-wellness-expo", "category": "news_events", "title": "Thailand Wellness & Healthcare Expo 2026", "summary": "25–27 มิ.ย. 2026 ที่ BITEC มี PAP+ suppliers และ Digital Scanner หลายรายในที่เดียว", "source_url": "", "thumbnail_url": "", "tags": ["expo", "BITEC", "มิถุนายน2026", "dental"], "relevance": "high", "detail": "Thailand Wellness & Healthcare Expo 25-27 มิถุนายน 2026 BITEC กรุงเทพฯ โอกาสเดียวครึ่งปีแรกที่มี PAP+ suppliers Digital Scanner หลายราย ควรลงทะเบียนล่วงหน้า", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": [], "promotions": [], "social_trend": {"primary_platform": "", "posting_frequency": "", "content_style": "", "engagement_level": ""}}, {"id": "equipment-scanner", "category": "equipment", "title": "Digital Intraoral Scanner + AI X-ray", "summary": "ราคาลดลงมากปี 2026 แทนการพิมพ์ฟัน ใช้เป็น content ดึงดูดลูกค้าได้ดี ตลาดโลกโตสู่ $12.34B ปี 2031", "source_url": "", "thumbnail_url": "", "tags": ["อุปกรณ์", "เทคโนโลยี", "นวัตกรรม", "CAD/CAM"], "relevance": "high", "detail": "Digital Intraoral Scanner + AI X-ray Analysis + CAD/CAM ครอบฟันวันเดียว เพิ่ม patient experience ตลาดโลกเติบโตสู่ $12.34 พันล้าน USD ภายในปี 2031", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "", "note": ""}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": [], "promotions": [], "social_trend": {"primary_platform": "", "posting_frequency": "", "content_style": "", "engagement_level": ""}}, {"id": "competitor-smile-club", "category": "competitor", "title": "คลินิกทันตกรรมสไมล์คลับ สกลนคร", "summary": "Facebook Page (617/2 ถนนนิตโย ธาตุเชิงชุม) เปิดวันหยุด ส-อา รับประกันสังคม Rating 4.43/5 ไม่พบ TikTok", "source_url": "https://www.facebook.com/p/คลินิกทันตกรรมสไมล์คลับ-สกลนคร-100057161032829/", "thumbnail_url": "", "tags": ["สกลนคร", "ประกันสังคม", "Facebook", "สไมล์คลับ"], "relevance": "high", "detail": "คลินิกทันตกรรมสไมล์คลับ สกลนคร 617/2 ถนนนิตโย ธาตุเชิงชุม โทร +66 91 865 1625 จ-ศ 16:30-20:00 / ส-อา 09:00-18:00 รับประกันสังคม ฟรี: อุดฟัน ถอนฟัน ขูดหินปูน ผ่าฟันคุด Rating 4.43/5 (7 รีวิว) ไม่พบ TikTok account ไม่พบราคาสาธารณะ Social Media อ่อนแอ — ช่องว่างที่เราสามารถ dominate ได้", "pricing": {"implant": {"price": "", "note": "สอบถาม"}, "braces_metal": {"price": "", "note": "สอบถาม"}, "braces_clear": {"price": "", "note": "สอบถาม"}, "whitening": {"price": "", "note": "สอบถาม"}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": "ฟรีประกันสังคม"}, "filling": {"price": "", "note": "ฟรีประกันสังคม"}, "scaling": {"price": "", "note": "ฟรีประกันสังคม"}, "other": []}, "strengths": ["รับประกันสังคม ใช้บัตรประชาชนอย่างเดียว", "Rating 4.43/5", "เปิดวันหยุด ส-อา"], "promotions": ["บริการฟรีสำหรับผู้ถือประกันสังคม"], "weaknesses": ["ไม่มี TikTok เลย", "Social media อ่อนแอมาก", "ราคาสาธารณะไม่มี"], "location": "617/2 ถนนนิตโย ธาตุเชิงชุม สกลนคร โทร 091-865-1625", "hours": "จันทร์–ศุกร์ 16:30–20:00 / เสาร์–อาทิตย์ 09:00–18:00", "social_trend": {"primary_platform": "Facebook", "posting_frequency": "ต่ำ", "content_style": "promotional", "engagement_level": "low"}}, {"id": "competitor-supawadee-dental", "category": "competitor", "title": "คลินิกทันตกรรมสุภาวดี สกลนคร", "summary": "ทพญ.สุภาวดี กรีพละ มี Facebook + Instagram active จัดฟัน 35,000–40,000 บาท มีผ่อนรายเดือน", "source_url": "https://zeekdoc.com/clinic/supawadee-dental-clinic-561", "thumbnail_url": "", "tags": ["สกลนคร", "จัดฟัน", "Facebook", "Instagram"], "relevance": "high", "detail": "คลินิกทันตกรรมสุภาวดี 1433/6 ถนนยุวพัฒนา ธาตุเชิงชุม อำเภอเมืองสกลนคร ทันตแพทย์: ทพญ.สุภาวดี กรีพละ มี Facebook + Instagram active (พบโพสต์ พ.ค. 2026) ราคาจัดฟัน 35,000-40,000 บาท ขึ้นกับลักษณะฟัน มีบริการผ่อนรายเดือน เป็นคู่แข่งใหม่ที่ไม่เคยพบในรายงานก่อนหน้า Instagram active = คู่แข่งที่น่าจับตาสูงสุด", "pricing": {"implant": {"price": "", "note": "สอบถาม"}, "braces_metal": {"price": "35000", "note": "ขึ้นกับลักษณะฟัน ผ่อนได้"}, "braces_clear": {"price": "40000", "note": "ขึ้นกับลักษณะฟัน ผ่อนได้"}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": ["ทพญ.เฉพาะทาง", "Instagram active", "ผ่อนรายเดือนได้", "Facebook + Instagram dual platform"], "promotions": ["ผ่อนรายเดือน ไม่มีดอกเบี้ย"], "weaknesses": ["ไม่มี TikTok", "ราคาสูงกว่าตลาด (40,000 บาท จัดฟันใส)"], "location": "1433/6 ถนนยุวพัฒนา ธาตุเชิงชุม เมืองสกลนคร", "hours": "", "social_trend": {"primary_platform": "Instagram", "posting_frequency": "สม่ำเสมอ", "content_style": "before/after", "engagement_level": "medium"}}, {"id": "competitor-t-smile-dental", "category": "competitor", "title": "T Smile Dental Clinic สกลนคร", "summary": "Facebook active ราคาสาธารณะชัดเจน: รีเทนเนอร์ 2,990 บาท ฟอกสีฟัน 3,990 บาท จัดฟัน Damon/ใส/โลหะผ่อนได้", "source_url": "https://www.facebook.com/p/คลินิกทันตกรรมทีสมายล์-สกลนคร-100091255752847/", "thumbnail_url": "", "tags": ["สกลนคร", "จัดฟัน", "ฟอกสีฟัน", "Facebook"], "relevance": "high", "detail": "T Smile Dental Clinic Sakon Nakhon 1730/5 ถนนเพริมพริดา ธาตุเชิงชุม Facebook active ราคาสาธารณะ: รีเทนเนอร์ 2,990 บาท ฟอกสีฟัน 3,990 บาท จัดฟัน (โลหะ/ใส/Damon) ผ่อนได้ เป็นคู่แข่งที่มีราคาโปร่งใสมากที่สุด ใช้เป็น benchmark ราคาตลาดได้", "pricing": {"implant": {"price": "", "note": "สอบถาม"}, "braces_metal": {"price": "", "note": "ผ่อนได้ สอบถาม"}, "braces_clear": {"price": "", "note": "ผ่อนได้ สอบถาม"}, "whitening": {"price": "3990", "note": "ต่อครั้ง"}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": [{"name": "รีเทนเนอร์", "price": "2990", "note": "ต่อชุด"}]}, "strengths": ["ราคาโปร่งใส ประกาศสาธารณะ", "ฟอกสีฟัน 3,990 แข่งได้", "Damon braces"], "promotions": ["จัดฟันบน-ล่าง จ่าย 0 บาท (ผ่อนชำระ)"], "weaknesses": ["ไม่มี TikTok", "ไม่มี Instagram", "ราคาจัดฟันยังไม่ชัดเจน (สอบถาม)"], "location": "1730/5 ถนนเพริมพริดา ธาตุเชิงชุม สกลนคร", "hours": "", "social_trend": {"primary_platform": "Facebook", "posting_frequency": "สม่ำเสมอ", "content_style": "promotional", "engagement_level": "medium"}}, {"id": "knowledge-clear-aligner-ai-2026", "category": "dental_knowledge", "title": "AI Clear Aligner Boom ปี 2026 — โอกาสเป็น First Mover ใน สกลนคร", "summary": "Align Technology เปิดตัว mandibular advancement ใน Asia-Pacific Dr Clear Aligners ขยายสู่ไทย มี.ค. 2026 ราคาเริ่มต้นในสกลนคร 27,500 บาท", "source_url": "https://emag.medicalexpo.com/orthodontics-2026-ai-driven-treatment-the-expanding-aligner-market-and-the-rise-of-intelligent-practice-infrastructure/", "thumbnail_url": "", "tags": ["จัดฟันใส", "AI", "Invisalign", "2026", "Thailand", "first-mover"], "relevance": "high", "detail": "2026 เป็นปีที่ AI-driven clear aligner เข้าสู่ mainstream ในไทย Align Technology เปิดตัว Invisalign mandibular advancement ใน Asia-Pacific Dr Clear Aligners จัดงาน Asia expansion ในไทย 31 มี.ค. 2026 SPARK Aligners ใช้ AI 3D Approver™ ราคาเริ่มต้นใน สกลนคร 27,500 บาท คลินิกที่นำเสนอ clear aligner + before/after content จะ dominate TikTok ได้ก่อนคู่แข่ง", "pricing": {"implant": {"price": "", "note": ""}, "braces_metal": {"price": "", "note": ""}, "braces_clear": {"price": "27500", "note": "ราคาเริ่มต้นในสกลนคร ปี 2026"}, "whitening": {"price": "", "note": ""}, "denture_full": {"price": "", "note": ""}, "denture_partial": {"price": "", "note": ""}, "veneer": {"price": "", "note": ""}, "root_canal": {"price": "", "note": ""}, "extraction": {"price": "", "note": ""}, "filling": {"price": "", "note": ""}, "scaling": {"price": "", "note": ""}, "other": []}, "strengths": [], "promotions": [], "social_trend": {"primary_platform": "TikTok", "posting_frequency": "", "content_style": "before/after", "engagement_level": "high"}}];
+
+const UPDATE_LOG = {"intel": {"label": "ข่าวกรองตลาด", "last_updated": "2026-05-26", "last_updated_th": "26 พ.ค. 2569", "update_count": 2, "history": ["2026-05-18", "2026-05-26"], "history_th": ["18 พ.ค. 2569", "26 พ.ค. 2569"]}, "pricing": {"label": "ราคาทำฟัน", "last_updated": "2026-05-26", "last_updated_th": "26 พ.ค. 2569", "update_count": 2, "history": ["2026-05-18", "2026-05-26"], "history_th": ["18 พ.ค. 2569", "26 พ.ค. 2569"]}, "deep": {"label": "วิเคราะห์เชิงลึก", "last_updated": "2026-05-18", "last_updated_th": "18 พ.ค. 2569", "update_count": 1, "history": ["2026-05-18"], "history_th": ["18 พ.ค. 2569"]}, "comp_track": {"label": "Tracker คู่แข่ง", "last_updated": "2026-05-27", "last_updated_th": "27 พ.ค. 2569", "update_count": 1, "history": ["2026-05-27"], "history_th": ["27 พ.ค. 2569"]}};
 
 // ── Chart instances cache ──
 const chartInstances = {};
@@ -1457,9 +1497,47 @@ function renderDeepTimeline() {
   + '</div>';
 }
 
+// ── Update Meta Badges ──
+function renderUpdateMeta() {
+  if (typeof UPDATE_LOG === 'undefined') return;
+  const sectionMap = {
+    'intel':      'update-meta-intel',
+    'pricing':    'update-meta-pricing',
+    'deep':       'update-meta-deep',
+    'comp_track': 'update-meta-comp_track',
+  };
+  Object.entries(sectionMap).forEach(([key, elId]) => {
+    const el = document.getElementById(elId);
+    if (!el) return;
+    const sec = UPDATE_LOG[key];
+    if (!sec) {
+      el.innerHTML = '<span class="um-icon">🕐</span><span>ยังไม่มีข้อมูลการอัปเดต</span>';
+      return;
+    }
+    const historyItems = (sec.history_th || [])
+      .slice().reverse()
+      .map((d, i) => `<div class="um-history-item">${i === 0 ? '🟢 ' : ''}${d}</div>`)
+      .join('');
+    el.innerHTML = `
+      <span class="um-icon">🕐</span>
+      <span>อัปเดตล่าสุด:</span>
+      <span class="um-date">${sec.last_updated_th || sec.last_updated || '—'}</span>
+      <span class="um-divider">·</span>
+      <span class="um-count" title="คลิกดูประวัติ">
+        🔄 ${sec.update_count || 0} ครั้ง
+        <div class="um-history">
+          <div class="um-history-title">ประวัติการอัปเดต</div>
+          ${historyItems || '<div class="um-history-item">ไม่มีข้อมูล</div>'}
+        </div>
+      </span>
+    `;
+  });
+}
+
 // ── Boot ──
 applyStoredTheme();
 showView('view-home');
+renderUpdateMeta();
 </script>
 
 </body>

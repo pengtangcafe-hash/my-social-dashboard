@@ -14,7 +14,14 @@
    reports/intel-[YYYYMMDD].md
    (ถ้ามีไฟล์ชื่อเดิมอยู่แล้วให้ใช้ reports/intel-[YYYYMMDD]-[topic].md)
 
-4. สรุปสั้นๆ ใน chat:
+4. **บันทึก update log** โดยรันคำสั่ง:
+   ```
+   python src/update_logger.py log intel pricing
+   python src/update_logger.py inject dashboard/index.html
+   ```
+   (intel และ pricing อัปเดตพร้อมกันเพราะข้อมูลราคามาจาก intel)
+
+5. สรุปสั้นๆ ใน chat:
    - topic และ city ที่ค้นหา
    - highlights 3 จุดที่น่าสนใจที่สุดจาก report
    - path ของ report ที่บันทึก

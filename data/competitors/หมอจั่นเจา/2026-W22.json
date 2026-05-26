@@ -4,30 +4,23 @@
   "snapshot_date": "2026-05-27",
   "platforms": {
     "facebook": {
-      "page": "JunjaoDentalClinic (คลินิกทันตกรรมหมอจั่นเจา สกลนคร)",
+      "page": "JunjaoDentalClinic",
       "followers_est": null,
       "posts_count": null,
       "posts": [
         {
           "date": null,
           "topic": "สาขาในเมืองพร้อมดูแลทุกรอยยิ้ม — บรรยากาศอบอุ่น เปิดบริการแล้ว",
-          "type": "other",
+          "type": "clinic_tour",
           "estimated_reach": null,
           "url": "https://www.facebook.com/JunjaoDentalClinic/videos/1823402325200137/"
         },
         {
           "date": null,
-          "topic": "รีวิวพิกัดคลินิก — ทักมาสอบถามได้ทุกวัน",
+          "topic": "ในฐานะผู้ผลิตสื่อให้คลินิกทันตกรรมหมอจั่นเจา — ทุกคลิปทุกโพสต์",
           "type": "engagement",
           "estimated_reach": null,
-          "url": "https://www.facebook.com/JunjaoDentalClinic/videos/1180933712413704/"
-        },
-        {
-          "date": null,
-          "topic": "ย้ายเคสจัดฟันต่อ — เตรียมค่าใช้จ่าย",
-          "type": "educational",
-          "estimated_reach": null,
-          "url": "https://www.facebook.com/JunjaoDentalClinic/videos/3665057883799241/"
+          "url": "https://www.facebook.com/JunjaoDentalClinic/videos/777096228214375/"
         }
       ]
     },
@@ -37,64 +30,85 @@
       "videos_count": null,
       "videos": [
         {
-          "date": null,
-          "title": "คลินิกทันตกรรมหมอจั่นเจาในเมืองเปิดบริการแล้ว",
+          "date": "~2026-05 (3 weeks ago)",
+          "title": "ฟันปลอมฐานโลหะ เหมาะกับใคร?",
           "views": null,
           "likes": null,
-          "topic": "เปิดสาขาใหม่ในเมืองสกลนคร"
+          "topic": "ให้ความรู้ทันตกรรม — ฟันปลอมฐานโลหะ",
+          "url": "https://www.tiktok.com/@dr.piyawat5/video/7637037849770052885"
         },
         {
           "date": null,
-          "title": "ฟันปลอมฐานโลหะ — ข้อดี/ข้อเสีย ราคา 8,000 บาท/ซี่ นำเข้าจากเยอรมัน",
+          "title": "ฟันปลอมฐานโลหะ ข้อดี/ข้อเสีย ราคา 8,000 บาท/ซี่ นำเข้าจากเยอรมัน",
           "views": null,
           "likes": null,
-          "topic": "ให้ความรู้ทันตกรรม"
+          "topic": "ให้ความรู้ + ราคา",
+          "url": "https://www.tiktok.com/@dr.piyawat5/video/7195442484829343003"
         },
         {
           "date": null,
-          "title": "รีวิวพิกัดคลินิกหมอจั่นเจา สกลนคร",
+          "title": "ฟันปลอมฐานไทเทเนียม น้ำหนักเบา ใส่สบาย อายุการใช้งาน 10 ปีขึ้นไป",
           "views": null,
           "likes": null,
-          "topic": "รีวิวคลินิก"
+          "topic": "ให้ความรู้ทันตกรรม — ฟันปลอมไทเทเนียม",
+          "url": "https://www.tiktok.com/@dr.piyawat5/video/7470560220180352274"
+        },
+        {
+          "date": null,
+          "title": "ใครฟันซ้อนเกหนักทักปรึกษาได้ที่เพจทันตกรรมคุณหมอจั่นเจา",
+          "views": null,
+          "likes": null,
+          "topic": "จัดฟัน — Damon braces",
+          "url": "https://www.tiktok.com/@dr.piyawat5/video/7254755202518027525"
+        },
+        {
+          "date": null,
+          "title": "รีวิวงานจัดฟันคุณหมอจั่นเจาสกลนคร — ฟันซ้อนมากดึงขึ้นมาเรียงสวยงาม",
+          "views": null,
+          "likes": null,
+          "topic": "รีวิวเคสจัดฟัน before/after",
+          "url": "https://www.tiktok.com/@dr.piyawat5/video/7196568917605715226"
         }
       ]
     },
     "instagram": {
-      "account": null,
+      "account": "",
       "followers_est": null,
       "posts_count": 0,
       "posts": []
     }
   },
   "promotions": [
-    "ฟันปลอมฐานโลหะนำเข้าจากเยอรมัน ราคา 8,000 บาท/ซี่แรก ซี่ต่อไป 500 บาท รับประกัน 1 ปี"
+    "ฟันปลอมฐานโลหะนำเข้าจากเยอรมัน ราคา 8,000 บาท/ซี่แรก ซี่ต่อไปซี่ละ 500 บาท รับประกัน 1 ปี ระยะเวลาทำ 7-14 วัน"
   ],
   "content_themes": [
-    "before_after",
-    "dental_tips",
+    "dental_education",
+    "denture_metal_base",
+    "denture_titanium",
+    "orthodontics_damon",
+    "before_after_cases",
     "clinic_tour",
-    "case_study",
-    "educational"
+    "pricing_info"
   ],
   "top_content": [
     {
       "platform": "tiktok",
-      "title": "คลินิกทันตกรรมหมอจั่นเจาในเมืองเปิดบริการแล้ว",
+      "title": "ฟันปลอมฐานโลหะ เหมาะกับใคร?",
       "views": null,
-      "url": "https://www.tiktok.com/@dr.piyawat5/video/7539968538442878216",
-      "topic": "เปิดสาขาใหม่ในเมืองสกลนคร"
+      "url": "https://www.tiktok.com/@dr.piyawat5/video/7637037849770052885",
+      "topic": "ให้ความรู้ทันตกรรม — ล่าสุด ~3 สัปดาห์ที่แล้ว"
     },
     {
       "platform": "facebook",
       "title": "สาขาในเมืองพร้อมดูแลทุกรอยยิ้ม",
       "views": null,
       "url": "https://www.facebook.com/JunjaoDentalClinic/videos/1823402325200137/",
-      "topic": "เปิดสาขาใหม่"
+      "topic": "เปิดสาขาใหม่ในเมืองสกลนคร"
     }
   ],
   "activity_level": "medium",
-  "primary_platform": "facebook",
-  "posting_frequency": "สัปดาห์ละ 1-2 ครั้ง",
+  "primary_platform": "tiktok",
+  "posting_frequency": "สัปดาห์ละ 1-2 ครั้ง (ประมาณ)",
   "estimated_reach": null,
-  "notes": "ข่าวสำคัญ: หมอจั่นเจาเปิดสาขาในเมืองสกลนคร (สาขาที่ 2 ในสกลนคร + มุกดาหาร) บ่งชี้ว่ากำลังขยายฐาน content ส่วนใหญ่เป็น educational + clinic tour + before_after website: junjaodentalclinic.com ยังใช้งานอยู่ มี media producer ดูแล content โดยเฉพาะ"
+  "notes": "TikTok @dr.piyawat5 active — video ล่าสุดที่พบคือ ฟันปลอมฐานโลหะ เหมาะกับใคร (3 สัปดาห์ก่อน) content เน้น dental education + ราคา + before/after จัดฟัน Facebook JunjaoDentalClinic ยืนยัน active มี media producer ดูแล content โดยเฉพาะ บริการหลัก: จัดฟัน (Damon, Clear, Self), รากฟันเทียม, ฟันปลอม (โลหะ/ไทเทเนียม), วีเนียร์, ฟอกสีฟัน สาขา: 272/10 ถ.นิตโย (หลัก) + 1865 ถ.รัฐพัฒนา (ในเมือง) + มุกดาหาร website: junjaodentalclinic.com"
 }
