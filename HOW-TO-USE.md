@@ -1,6 +1,6 @@
 # คู่มือการใช้งาน Social Analytics Dashboard
 **คลินิกทันตกรรม สกลนคร**
-อัปเดตล่าสุด: 27 พฤษภาคม 2569
+อัปเดตล่าสุด: 27 พฤษภาคม 2569 (v2 — Goal Tracker + Monthly Trend + Content Analyzer)
 
 ---
 
@@ -64,6 +64,62 @@
 
 ---
 
+## ตั้งเป้าหมาย KPI รายเดือน
+
+แก้ไขไฟล์ `data/goals.json` โดยตรง หรือใช้ CLI:
+
+```bash
+# ตั้งเป้า reach TikTok ที่ 200,000
+python src/goal_tracker.py set tiktok total_reach 200000
+
+# ตั้งเป้า engagement rate Facebook
+python src/goal_tracker.py set facebook avg_engagement_rate 1.5
+
+# ตั้งเป้า followers ใหม่ Instagram
+python src/goal_tracker.py set instagram total_new_followers 150
+
+# ดูความก้าวหน้า KPI ทุก platform ใน terminal
+python src/goal_tracker.py show
+```
+
+**KPI ที่ track ได้:** `total_reach` | `avg_engagement_rate` | `total_new_followers`
+**ผลลัพธ์:** แสดงใน dashboard หน้าแรก การ์ด "🎯 เป้าหมายเดือนนี้" พร้อม progress bar
+
+---
+
+## บันทึก Content Log (สำหรับ Content Category Analyzer)
+
+หลังโพสต์ content แต่ละชิ้น บันทึกผลลัพธ์เพื่อวิเคราะห์ว่า content ประเภทไหน perform ดีที่สุด:
+
+```bash
+python src/content_category_analyzer.py log [platform] [category] "ชื่อ post" --reach [จำนวน] --engagement [จำนวน]
+```
+
+**ตัวอย่าง:**
+```bash
+python src/content_category_analyzer.py log tiktok education "วิธีแปรงฟันที่ถูกต้อง" --reach 5200 --engagement 312
+python src/content_category_analyzer.py log facebook before_after "จัดฟัน 6 เดือน เปลี่ยนไปแค่ไหน" --reach 2100 --engagement 198
+python src/content_category_analyzer.py log instagram promotion "โปรฟอกสีฟัน 2 คนราคาพิเศษ" --reach 950 --engagement 67
+
+# ดูสรุป category performance ใน terminal
+python src/content_category_analyzer.py show
+```
+
+**Categories ที่ใช้ได้:**
+
+| Category | ความหมาย |
+|---|---|
+| `education` | ความรู้ทันตกรรม (วิธีแปรงฟัน, อาหารที่ดีต่อฟัน ฯลฯ) |
+| `before_after` | ก่อน-หลังรักษา (จัดฟัน, ฟอกสีฟัน, รากเทียม) |
+| `faq` | ตอบคำถามที่พบบ่อย (จัดฟันเจ็บไหม, ราคาเท่าไหร่) |
+| `promotion` | โปรโมชั่น, ราคาพิเศษ, แพ็กเกจ |
+| `behind_scenes` | เบื้องหลังคลินิก, ทีมหมอ, เครื่องมือ |
+| `local` | Content ท้องถิ่นสกลนคร |
+
+**ผลลัพธ์:** dashboard หน้าแรก การ์ด "📊 Content Performance" แท็บ "หมวด Content" จะแสดง average reach + engagement rate ต่อ category เรียงลำดับ
+
+---
+
 ## Workflow ประจำสัปดาห์ (แนะนำ)
 
 ```
@@ -77,9 +133,11 @@
 5. พิมพ์ /analyze              ← วิเคราะห์ performance ของเรา
 
 ── วันศุกร์/เสาร์ (ปิดสัปดาห์) ────────────────────────
-6. พิมพ์ /comp-track --snapshot    ← บันทึกสถานะคู่แข่งสัปดาห์นี้
-7. ดับเบิลคลิก update-dashboard.bat
-   → dashboard บน GitHub Pages อัปเดตภายใน 2 นาที
+6. บันทึก content log ที่โพสต์ในสัปดาห์นี้:
+   python src/content_category_analyzer.py log tiktok education "ชื่อ post" --reach 5000 --engagement 300
+7. พิมพ์ /comp-track --snapshot    ← บันทึกสถานะคู่แข่งสัปดาห์นี้
+8. ดับเบิลคลิก update-dashboard.bat
+   → inject ข้อมูลใหม่ทั้งหมด + push ขึ้น GitHub Pages ภายใน 2 นาที
 ```
 
 **สัปดาห์หน้า:** ทำซ้ำ แล้วพิมพ์ `/comp-track --compare week` เพื่อดูว่าคู่แข่งเปลี่ยนอะไร
@@ -143,8 +201,13 @@ git push
 | `dashboard/` | HTML dashboards ล่าสุด (local preview) |
 | `reports/` | รายงาน intel, comparison, comp-track ทั้งหมด |
 | `src/competitor_tracker.py` | Python engine ติดตามคู่แข่ง + inject COMP_TRACK เข้า dashboard |
+| `src/goal_tracker.py` | ติดตาม KPI vs เป้าหมายรายเดือน + inject GOAL_DATA |
+| `src/monthly_trend.py` | แนวโน้ม Reach/Engagement รายสัปดาห์-รายเดือน + inject MONTHLY_TREND |
+| `src/content_category_analyzer.py` | วิเคราะห์ content format/category performance + inject CONTENT_PERF |
 | `src/posting_time_analyzer.py` | วิเคราะห์วันดีที่สุดในการโพสต์ + inject BEST_DAYS |
 | `src/update_logger.py` | บันทึกประวัติการอัปเดตแต่ละ section + inject UPDATE_LOG |
+| `data/goals.json` | เป้าหมาย KPI รายเดือน (แก้ตรงหรือผ่าน goal_tracker.py set) |
+| `data/content-log.json` | บันทึก post รายหมวด (เพิ่มผ่าน content_category_analyzer.py log) |
 | `data/dental-calendar.json` | ปฏิทินทันตกรรม: ธีมรายเดือน, วันสำคัญ, hashtags |
 | `.claude/agents/comp-track-agent.md` | Agent ค้นหา + บันทึก snapshot คู่แข่ง |
 | `.claude/agents/weekly-agent.md` | Agent สร้าง weekly summary report |
@@ -159,8 +222,13 @@ git push
 
 | หน้า | เนื้อหา |
 |---|---|
-| ภาพรวม | KPI cards + Platform Comparison + 4 doughnut charts |
-| TikTok / Facebook / Instagram | line chart + engagement breakdown + data table |
+| ภาพรวม (Home) | KPI cards + Platform Comparison + 4 doughnut charts |
+| ↳ Best Day to Post | bar chart วันที่ควรโพสต์ต่อ platform (auto จาก history) |
+| ↳ Competitor Tracker | สถานะคู่แข่งล่าสุด — activity, theme, โปรโมชั่น |
+| ↳ เป้าหมายเดือนนี้ | KPI progress bar (actual vs target) ทุก platform |
+| ↳ แนวโน้ม Reach | line chart รายสัปดาห์/รายเดือน ต่อ platform (Reach + Engagement toggle) |
+| ↳ Content Performance | Facebook format breakdown (Reels/Image/Story) + Category log ranking |
+| TikTok / Facebook / Instagram | line chart + engagement breakdown + data table รายวัน |
 | ข่าวกรอง | คู่แข่ง + ความรู้ + Events + อุปกรณ์ (card feed) |
 | ราคาทำฟัน | ตารางราคาแยกตามประเภทบริการ + Social Trend |
 | เชิงลึก | วิเคราะห์คู่แข่ง 5 มิติ + Timeline การเปลี่ยนแปลง |
