@@ -1,0 +1,100 @@
+{
+  "competitor": "หมอจั่นเจา",
+  "period": "2026-W22",
+  "snapshot_date": "2026-05-27",
+  "platforms": {
+    "facebook": {
+      "page": "JunjaoDentalClinic (คลินิกทันตกรรมหมอจั่นเจา สกลนคร)",
+      "followers_est": null,
+      "posts_count": null,
+      "posts": [
+        {
+          "date": null,
+          "topic": "สาขาในเมืองพร้อมดูแลทุกรอยยิ้ม — บรรยากาศอบอุ่น เปิดบริการแล้ว",
+          "type": "other",
+          "estimated_reach": null,
+          "url": "https://www.facebook.com/JunjaoDentalClinic/videos/1823402325200137/"
+        },
+        {
+          "date": null,
+          "topic": "รีวิวพิกัดคลินิก — ทักมาสอบถามได้ทุกวัน",
+          "type": "engagement",
+          "estimated_reach": null,
+          "url": "https://www.facebook.com/JunjaoDentalClinic/videos/1180933712413704/"
+        },
+        {
+          "date": null,
+          "topic": "ย้ายเคสจัดฟันต่อ — เตรียมค่าใช้จ่าย",
+          "type": "educational",
+          "estimated_reach": null,
+          "url": "https://www.facebook.com/JunjaoDentalClinic/videos/3665057883799241/"
+        }
+      ]
+    },
+    "tiktok": {
+      "account": "@dr.piyawat5",
+      "followers_est": null,
+      "videos_count": null,
+      "videos": [
+        {
+          "date": null,
+          "title": "คลินิกทันตกรรมหมอจั่นเจาในเมืองเปิดบริการแล้ว",
+          "views": null,
+          "likes": null,
+          "topic": "เปิดสาขาใหม่ในเมืองสกลนคร"
+        },
+        {
+          "date": null,
+          "title": "ฟันปลอมฐานโลหะ — ข้อดี/ข้อเสีย ราคา 8,000 บาท/ซี่ นำเข้าจากเยอรมัน",
+          "views": null,
+          "likes": null,
+          "topic": "ให้ความรู้ทันตกรรม"
+        },
+        {
+          "date": null,
+          "title": "รีวิวพิกัดคลินิกหมอจั่นเจา สกลนคร",
+          "views": null,
+          "likes": null,
+          "topic": "รีวิวคลินิก"
+        }
+      ]
+    },
+    "instagram": {
+      "account": null,
+      "followers_est": null,
+      "posts_count": 0,
+      "posts": []
+    }
+  },
+  "promotions": [
+    "ฟันปลอมฐานโลหะนำเข้าจากเยอรมัน ราคา 8,000 บาท/ซี่แรก ซี่ต่อไป 500 บาท รับประกัน 1 ปี"
+  ],
+  "content_themes": [
+    "before_after",
+    "dental_tips",
+    "clinic_tour",
+    "case_study",
+    "educational"
+  ],
+  "top_content": [
+    {
+      "platform": "tiktok",
+      "title": "คลินิกทันตกรรมหมอจั่นเจาในเมืองเปิดบริการแล้ว",
+      "views": null,
+      "url": "https://www.tiktok.com/@dr.piyawat5/video/7539968538442878216",
+      "topic": "เปิดสาขาใหม่ในเมืองสกลนคร"
+    },
+    {
+      "platform": "facebook",
+      "title": "สาขาในเมืองพร้อมดูแลทุกรอยยิ้ม",
+      "views": null,
+      "url": "https://www.facebook.com/JunjaoDentalClinic/videos/1823402325200137/",
+      "topic": "เปิดสาขาใหม่"
+    }
+  ],
+  "activity_level": "medium",
+  "primary_platform": "facebook",
+  "posting_frequency": "สัปดาห์ละ 1-2 ครั้ง",
+  "estimated_reach": null,
+  "notes": "ข่าวสำคัญ: หมอจั่นเจาเปิดสาขาในเมืองสกลนคร (สาขาที่ 2 ในสกลนคร + มุกดาหาร) บ่งชี้ว่ากำลังขยายฐาน content ส่วนใหญ่เป็น educational + clinic tour + before_after website: junjaodentalclinic.com ยังใช้งานอยู่ มี media producer ดูแล content โดยเฉพาะ"
+}

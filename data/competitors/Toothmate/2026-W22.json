@@ -1,0 +1,76 @@
+{
+  "competitor": "Toothmate",
+  "period": "2026-W22",
+  "snapshot_date": "2026-05-27",
+  "platforms": {
+    "facebook": {
+      "page": "ToothmateDC (คลินิกทันตกรรมทูธเมท สกลนคร - Toothmate Dental Clinic)",
+      "followers_est": null,
+      "posts_count": null,
+      "posts": [
+        {
+          "date": null,
+          "topic": "รีวิวเคส Composite Veneer — ติดต่อนัดหมายก่อนเข้ารับบริการ",
+          "type": "before_after",
+          "estimated_reach": null,
+          "url": "https://www.facebook.com/ToothmateDC/posts/831516172576361/"
+        },
+        {
+          "date": null,
+          "topic": "แนะนำคุณหมอประจำ Toothmate — ทีมที่พร้อมดูแลสุขภาพช่องปาก",
+          "type": "other",
+          "estimated_reach": null,
+          "url": "https://www.facebook.com/ToothmateDC/posts/715834154144564/"
+        }
+      ]
+    },
+    "tiktok": {
+      "account": "@toothmate_dc",
+      "followers_est": null,
+      "videos_count": null,
+      "videos": []
+    },
+    "instagram": {
+      "account": "@toothmate_dc",
+      "followers_est": 111,
+      "posts_count": 60,
+      "posts": [
+        {
+          "date": null,
+          "topic": "อัตราค่ารักษาโรคเหงือกและปริทันต์",
+          "type": "educational",
+          "estimated_reach": null,
+          "url": "https://www.instagram.com/toothmate_dc/p/Cgb_TrxvsHO/"
+        }
+      ]
+    }
+  },
+  "promotions": [],
+  "content_themes": [
+    "before_after",
+    "educational",
+    "price_transparency",
+    "team_intro"
+  ],
+  "top_content": [
+    {
+      "platform": "facebook",
+      "title": "รีวิวเคส Composite Veneer — ติดต่อนัดหมายได้ทาง Inbox",
+      "views": null,
+      "url": "https://www.facebook.com/ToothmateDC/posts/831516172576361/",
+      "topic": "before_after composite veneer"
+    },
+    {
+      "platform": "instagram",
+      "title": "อัตราค่ารักษาโรคเหงือกและปริทันต์",
+      "views": null,
+      "url": "https://www.instagram.com/toothmate_dc/p/Cgb_TrxvsHO/",
+      "topic": "price transparency / educational"
+    }
+  ],
+  "activity_level": "low",
+  "primary_platform": "facebook",
+  "posting_frequency": "สัปดาห์ละ 1-2 ครั้ง",
+  "estimated_reach": null,
+  "notes": "Toothmate โดดเด่นด้วยการเปิดเผย price list บนเว็บ (toothmatedentalclinic.com/prices/) จุดแข็งคือหมอจบมหิดล+จุฬา Instagram มีผู้ติดตาม 111 คน (60 posts) — activity ต่ำกว่าคู่แข่งอื่น ไม่มีหลักฐาน TikTok activity ชัดเจน ไม่พบโปรโมชันพิเศษในช่วง W22"
+}

@@ -1,0 +1,115 @@
+{
+  "competitor": "DentalPark",
+  "period": "2026-W22",
+  "snapshot_date": "2026-05-27",
+  "platforms": {
+    "facebook": {
+      "page": "Dentalpark2020 (Dental Park Clinic สกลนคร)",
+      "followers_est": null,
+      "posts_count": null,
+      "posts": [
+        {
+          "date": null,
+          "topic": "พร้อมให้บริการทุกระดับประทับใจ — แจ้งเวลาทำการ จ-ศ 16:30-20:00 น. เสาร์-อาทิตย์ 09:00-16:00 น.",
+          "type": "engagement",
+          "estimated_reach": null,
+          "url": ""
+        }
+      ]
+    },
+    "tiktok": {
+      "account": "@dental.park.clinic",
+      "followers_est": null,
+      "videos_count": null,
+      "videos": [
+        {
+          "date": null,
+          "title": "มาถอดเหล็กกันรัวๆค้า — #dr.parkแม่แฝดหมอจัดฟัน",
+          "views": null,
+          "likes": null,
+          "topic": "before_after จัดฟันสำเร็จ"
+        },
+        {
+          "date": null,
+          "title": "รุ่นใหญ่ก็จัดฟันได้ — ประเมินฟัน เตรียมเหงือก พร้อมใส่เหล็กหรือใสก็ได้",
+          "views": null,
+          "likes": null,
+          "topic": "target กลุ่ม adult orthodontics"
+        },
+        {
+          "date": null,
+          "title": "จัดฟันใสด้วยนวัตกรรมใหม่ แบบสบายๆ",
+          "views": null,
+          "likes": null,
+          "topic": "โปรโมต clear aligner"
+        },
+        {
+          "date": null,
+          "title": "ฟันสบคร่อม (underbite) — กรรมพันธุ์ ต้องผ่าตัดหรือจัดฟันอย่างเดียว?",
+          "views": null,
+          "likes": null,
+          "topic": "educational dental knowledge"
+        },
+        {
+          "date": null,
+          "title": "ตอบกลับ @_mxjoy46 — ทำทุกอย่างเด้อ บ่ได้ทำแค่จัดฟัน มาโลด!",
+          "views": null,
+          "likes": null,
+          "topic": "engagement ภาษาอีสาน"
+        },
+        {
+          "date": null,
+          "title": "ว่าด้วยเรื่อง 'รีเทรนเนอร์' (Retainer)",
+          "views": null,
+          "likes": null,
+          "topic": "post-treatment education"
+        }
+      ]
+    },
+    "instagram": {
+      "account": null,
+      "followers_est": null,
+      "posts_count": 0,
+      "posts": []
+    }
+  },
+  "promotions": [
+    "จัดฟันใส (clear aligner) — นวัตกรรมใหม่ แบบสบาย (ราคาไม่ระบุ)"
+  ],
+  "content_themes": [
+    "before_after",
+    "educational",
+    "engagement",
+    "clear_aligner",
+    "adult_orthodontics",
+    "isaan_language"
+  ],
+  "top_content": [
+    {
+      "platform": "tiktok",
+      "title": "จัดฟันใสด้วยนวัตกรรมใหม่ แบบสบายๆ",
+      "views": null,
+      "url": "https://www.tiktok.com/@dental.park.clinic/video/7583700467545394450",
+      "topic": "clear aligner promotion"
+    },
+    {
+      "platform": "tiktok",
+      "title": "รุ่นใหญ่ก็จัดฟันได้ — #รุ่นใหญ่ก็ยิ้มมั่นใจได้",
+      "views": null,
+      "url": "https://www.tiktok.com/@dental.park.clinic/video/7574342787307474184",
+      "topic": "adult orthodontics targeting"
+    },
+    {
+      "platform": "tiktok",
+      "title": "มาถอดเหล็กกันรัวๆค้า — #dr.parkแม่แฝดหมอจัดฟัน",
+      "views": null,
+      "url": "https://www.tiktok.com/@dental.park.clinic/video/7544667889807248648",
+      "topic": "before_after completion"
+    }
+  ],
+  "activity_level": "high",
+  "primary_platform": "tiktok",
+  "posting_frequency": "สัปดาห์ละ 3-5 ครั้ง",
+  "estimated_reach": null,
+  "notes": "DentalPark เป็นคู่แข่งที่ใช้ TikTok เป็น platform หลัก — โดดเด่นด้วย identity 'แม่แฝดหมอจัดฟัน' (#dr.parkแม่แฝดหมอจัดฟัน) และการใช้ภาษาอีสาน สร้างความใกล้ชิดกับคนท้องถิ่น content หลักคือ before_after + educational ortho + engagement ล่าสุดกำลัง push จัดฟันใส (clear aligner) อย่างจริงจัง เวลาทำการ จ-ศ 16:30-20:00 เสาร์-อาทิตย์ 09:00-16:00 เบอร์: 065-9917990"
+}

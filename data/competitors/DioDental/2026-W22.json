@@ -1,0 +1,89 @@
+{
+  "competitor": "DioDental",
+  "period": "2026-W22",
+  "snapshot_date": "2026-05-27",
+  "platforms": {
+    "facebook": {
+      "page": "DioDentalClinicEsan (Dio Dental Clinic ดีโอ้ เดนทัล คลินิก - ศูนย์ภาคอีสาน)",
+      "followers_est": 17268,
+      "posts_count": null,
+      "posts": [
+        {
+          "date": null,
+          "topic": "รีวิวจริงจากคนไข้ — จากรอยยิ้มไม่มั่นใจสู่รอยยิ้มสดใสในแบบที่อยากเป็น",
+          "type": "before_after",
+          "estimated_reach": null,
+          "url": "https://www.facebook.com/diodentalsakhon/posts/786676560547399/"
+        }
+      ]
+    },
+    "tiktok": {
+      "account": "@diodental",
+      "followers_est": 12300,
+      "videos_count": null,
+      "videos": [
+        {
+          "date": null,
+          "title": "พาทัวร์สาขาสกลนคร ฟันสะอาด บรรยากาศดี",
+          "views": null,
+          "likes": null,
+          "topic": "clinic tour สาขาสกลนคร"
+        },
+        {
+          "date": null,
+          "title": "คุณหมอไทเกอร์ให้ความรู้ — ใครกลัวหมอฟันไม่ต้องกลัว หมอใจดี",
+          "views": null,
+          "likes": null,
+          "topic": "สร้าง trust กับ brand doctor"
+        },
+        {
+          "date": null,
+          "title": "คนไข้ก็เลื่อนนัดบ่อย — อย่าเลื่อนนัดหมอกัน",
+          "views": null,
+          "likes": null,
+          "topic": "engagement / humor"
+        }
+      ]
+    },
+    "instagram": {
+      "account": "@diodentalclinic",
+      "followers_est": 208,
+      "posts_count": 153,
+      "posts": []
+    }
+  },
+  "promotions": [
+    "จัดฟันใส ผ่อนเพียง 3,999 บาท/เดือน",
+    "รับบัตรทอง (สิทธิ 30 บาท)",
+    "รับประกันสังคม (900+300 บาท)",
+    "ปรึกษาฟรี ไม่มีค่าใช้จ่าย — นัดผ่าน link: opl.to/dio"
+  ],
+  "content_themes": [
+    "clinic_tour",
+    "before_after",
+    "educational",
+    "brand_doctor",
+    "engagement"
+  ],
+  "top_content": [
+    {
+      "platform": "facebook",
+      "title": "รีวิวจริงจากคนไข้ — รอยยิ้มไม่มั่นใจสู่รอยยิ้มสดใส",
+      "views": null,
+      "url": "https://www.facebook.com/diodentalsakhon/posts/786676560547399/",
+      "topic": "before_after / patient review"
+    },
+    {
+      "platform": "tiktok",
+      "title": "พาทัวร์สาขาสกลนคร",
+      "views": null,
+      "url": "https://www.tiktok.com/@diodental/video/7186951957603421467",
+      "topic": "clinic tour"
+    }
+  ],
+  "activity_level": "high",
+  "primary_platform": "facebook",
+  "posting_frequency": "สัปดาห์ละ 3-5 ครั้ง",
+  "estimated_reach": null,
+  "notes": "Dio Dental เป็น chain 21+ สาขา ได้ ISO 9001 มี 2 เพจ Facebook แยกกัน (Esan region page + สกลนคร local page) strategy หลักคือ patient review + brand doctor trust content TikTok @diodental ใช้สำหรับ chain-level content ส่วน diodentalsakhon ใช้สำหรับ local Sakon Nakhon content"
+}

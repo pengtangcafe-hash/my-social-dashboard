@@ -38,7 +38,14 @@
 ## Commands
 - /analyze FILE — วิเคราะห์ไฟล์ CSV จาก social platform
 - /intel [topic] [city] — ค้นหาข้อมูลคู่แข่ง, hashtags, trends, events, equipment
-- /compare — เปรียบเทียบ platform performance
+- /compare — เปรียบเทียบ platform performance ของเราเอง
+- /comp-track — ติดตามและเปรียบเทียบคู่แข่ง before/after
+  - `/comp-track --snapshot` — บันทึก snapshot คู่แข่งทุกราย (ค้นหาจาก web)
+  - `/comp-track --compare week` — เปรียบเทียบสัปดาห์นี้ vs สัปดาห์ก่อน
+  - `/comp-track --compare month` — เปรียบเทียบเดือนนี้ vs เดือนก่อน
+  - `/comp-track --compare year` — เปรียบเทียบปีนี้ vs ปีก่อน
+  - `/comp-track --list` — ดู snapshots ที่มีทั้งหมด
+  - `/comp-track --report` — สร้าง report รวมบันทึกไฟล์
 
 ## Tech Stack
 - Python 3 + pandas สำหรับ data processing
@@ -65,3 +72,10 @@
 - `.claude/agents/intel-agent.md` — ค้นหาข้อมูลแล้วส่งคืน JSON structure
 - JSON fields: `category`, `pricing`, `strengths`, `social_trend`, `promotions`
 - categories: `competitor` | `dental_knowledge` | `news_events` | `equipment`
+
+### Competitor Tracking Agent (ใหม่)
+- `.claude/agents/comp-track-agent.md` — ค้นหา + บันทึก + เปรียบเทียบ snapshot คู่แข่ง
+- Storage: `data/competitors/{ชื่อ}/{YYYY-WXX}.json` (weekly) หรือ `{YYYY-MM}.json` (monthly)
+- Python module: `src/competitor_tracker.py` — save/load/compare/report
+- Command: `/comp-track` — ดู, snapshot, เปรียบเทียบ week/month/year
+- Tracks: promotions, content themes, platform activity, followers, top content
