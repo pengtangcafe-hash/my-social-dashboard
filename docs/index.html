@@ -423,6 +423,26 @@
         <div id="goal-tracker-content"></div>
       </div>
 
+      <!-- Monthly Trend -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 mt-5" id="monthly-trend-card">
+        <div class="flex items-center justify-between mb-1">
+          <h2 class="text-sm font-semibold text-slate-700">📈 แนวโน้ม Reach</h2>
+          <div class="flex gap-1">
+            <button onclick="setTrendMetric('reach')" id="trend-btn-reach"
+              class="text-xs px-3 py-1 rounded-full font-semibold transition-colors"
+              style="background:var(--accent-bg);color:var(--accent-txt)">Reach</button>
+            <button onclick="setTrendMetric('engagement_rate')" id="trend-btn-engagement_rate"
+              class="text-xs px-3 py-1 rounded-full font-semibold transition-colors"
+              style="background:var(--grid);color:var(--text-muted)">Engagement</button>
+          </div>
+        </div>
+        <div id="monthly-trend-subtitle" class="text-xs mb-3" style="color:var(--text-muted)"></div>
+        <div class="relative" style="height:200px">
+          <canvas id="trend-chart"></canvas>
+        </div>
+        <div id="monthly-trend-legend" class="flex flex-wrap gap-4 mt-3"></div>
+      </div>
+
     </div>
 
     <!-- ── Platform Views (injected) ── -->
@@ -1237,6 +1257,9 @@ function gotoDeepDetail(idx) {
   setDeepTab('detail');
 }
 
+// ── Monthly Trend Data ──
+const MONTHLY_TREND = {"mode": "weekly", "period": "2026-05", "month_label": "พ.ค. 2569", "labels_short": ["สัป.1", "สัป.2", "สัป.3", "สัป.4"], "labels_long": ["19-25 เม.ย.", "26 เม.ย. – 2 พ.ค.", "3-9 พ.ค.", "10-16 พ.ค."], "series": {"tiktok": {"label": "TikTok", "color": "#010101", "reach": [0.0, 319.0, 76254.0, 88126.0], "engagement_rate": [0, 0.94, 4.63, 5.97]}, "facebook": {"label": "Facebook", "color": "#1877f2", "reach": [5138.0, 8036.0, 37619.0, 10134.0], "engagement_rate": [0.66, 1.14, 0.64, 1.12]}, "instagram": {"label": "Instagram", "color": "#e1306c", "reach": [55.0, 1594.0, 7803.0, 5855.0], "engagement_rate": [0.0, 3.58, 1.05, 0.72]}}, "generated_at": "2026-05-27"};
+
 // ── Goal Tracker Data ──
 const GOAL_DATA = {"month": "2026-05", "updated": "2026-05-27", "platforms": {"tiktok": {"label": "TikTok", "color": "#010101", "kpis": {"total_reach": {"label": "Reach รวม", "format": "number", "target": 180000, "actual": 164699, "pct": 91.5}, "avg_engagement_rate": {"label": "Engagement Rate", "format": "percent", "target": 5.0, "actual": 5.33, "pct": 106.6}}}, "facebook": {"label": "Facebook", "color": "#1877f2", "kpis": {"total_reach": {"label": "Reach รวม", "format": "number", "target": 70000, "actual": 60927, "pct": 87.0}, "avg_engagement_rate": {"label": "Engagement Rate", "format": "percent", "target": 1.2, "actual": 1.08, "pct": 90.0}, "total_new_followers": {"label": "Followers ใหม่", "format": "number", "target": 100, "actual": 84, "pct": 84.0}}}, "instagram": {"label": "Instagram", "color": "#e1306c", "kpis": {"total_reach": {"label": "Reach รวม", "format": "number", "target": 18000, "actual": 15307, "pct": 85.0}, "avg_engagement_rate": {"label": "Engagement Rate", "format": "percent", "target": 2.0, "actual": 1.72, "pct": 86.0}}}}};
 
@@ -1837,12 +1860,127 @@ function renderGoals() {
   el.innerHTML = html;
 }
 
+// ── Monthly Trend Chart ──
+var _trendChart = null;
+var _trendMetric = 'reach';
+
+function setTrendMetric(metric) {
+  _trendMetric = metric;
+  // toggle button styles
+  ['reach', 'engagement_rate'].forEach(function(m) {
+    var btn = document.getElementById('trend-btn-' + m);
+    if (!btn) return;
+    if (m === metric) {
+      btn.style.background = 'var(--accent-bg)';
+      btn.style.color = 'var(--accent-txt)';
+    } else {
+      btn.style.background = 'var(--grid)';
+      btn.style.color = 'var(--text-muted)';
+    }
+  });
+  renderMonthlyTrend();
+}
+
+function renderMonthlyTrend() {
+  var canvas = document.getElementById('trend-chart');
+  var subtitle = document.getElementById('monthly-trend-subtitle');
+  var legend = document.getElementById('monthly-trend-legend');
+  if (!canvas) return;
+
+  if (typeof MONTHLY_TREND === 'undefined' || MONTHLY_TREND.mode === 'empty') {
+    if (subtitle) subtitle.textContent = 'ยังไม่มีข้อมูล — ใช้ /analyze เพื่อนำเข้าข้อมูล';
+    return;
+  }
+
+  var d = MONTHLY_TREND;
+  var isEngagement = (_trendMetric === 'engagement_rate');
+  var labels = d.labels_long || d.labels_short || [];
+
+  // subtitle
+  if (subtitle) {
+    var modeText = d.mode === 'weekly'
+      ? (d.month_label || '') + ' — แบ่งตามสัปดาห์'
+      : 'เปรียบเทียบรายเดือน';
+    subtitle.textContent = modeText + (isEngagement ? ' · Engagement Rate (%)' : ' · Reach รวม');
+  }
+
+  var datasets = Object.entries(d.series || {}).map(function(entry) {
+    var platform = entry[0];
+    var s = entry[1];
+    var values = isEngagement ? s.engagement_rate : s.reach;
+    var isDark = s.color === '#010101';
+    return {
+      label:           s.label,
+      data:            values,
+      borderColor:     s.color,
+      backgroundColor: s.color + (isDark ? '18' : '22'),
+      borderWidth:     2,
+      pointRadius:     4,
+      pointHoverRadius: 6,
+      tension:         0.35,
+      fill:            true,
+    };
+  });
+
+  // destroy old chart
+  if (_trendChart) { _trendChart.destroy(); _trendChart = null; }
+
+  _trendChart = new Chart(canvas, {
+    type: 'line',
+    data: { labels: labels, datasets: datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              var v = ctx.parsed.y;
+              return ' ' + ctx.dataset.label + ': ' +
+                (isEngagement ? v.toFixed(2) + '%' : Math.round(v).toLocaleString());
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(0,0,0,0.04)' },
+          ticks: { font: { size: 11 } }
+        },
+        y: {
+          grid: { color: 'rgba(0,0,0,0.04)' },
+          ticks: {
+            font: { size: 11 },
+            callback: function(v) {
+              return isEngagement ? v + '%' : (v >= 1000 ? (v/1000).toFixed(0) + 'k' : v);
+            }
+          },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // legend
+  if (legend) {
+    legend.innerHTML = Object.values(d.series || {}).map(function(s) {
+      return '<div class="flex items-center gap-1.5">'
+        + '<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:' + s.color + '"></span>'
+        + '<span class="text-xs font-medium" style="color:var(--text)">' + s.label + '</span>'
+        + '</div>';
+    }).join('');
+  }
+}
+
 // ── Boot ──
 applyStoredTheme();
 showView('view-home');
 renderUpdateMeta();
 renderBestDays();
 renderGoals();
+renderMonthlyTrend();
 </script>
 
 </body>
