@@ -37,9 +37,31 @@
 
 ## Commands
 - /analyze FILE — วิเคราะห์ไฟล์ CSV จาก social platform
-- (เพิ่มเติมใน lesson ต่อๆ ไป)
+- /intel [topic] [city] — ค้นหาข้อมูลคู่แข่ง, hashtags, trends, events, equipment
+- /compare — เปรียบเทียบ platform performance
 
 ## Tech Stack
 - Python 3 + pandas สำหรับ data processing
 - HTML + Chart.js สำหรับ dashboard visualization
 - JSON สำหรับ historical data storage
+
+## Intelligence Module
+
+### คู่แข่งหลักที่ติดตาม (สกลนคร)
+1. **หมอจั่นเจา** — FB: JunjaoDentalClinic | TikTok: @dr.piyawat5 | Website: junjaodentalclinic.com | 2 สาขา + มุกดาหาร
+2. **Dio Dental** — FB: DioDentalClinicEsan, diodentalsakhon | TikTok: @diodental | Chain 21+ สาขา, ISO 9001, รับบัตรทอง
+3. **Toothmate** — FB: ToothmateDC | IG: @toothmate_dc | หมอจบมหิดล+จุฬา | มี Price list บนเว็บ
+4. **Dental Park** — FB: Dentalpark2020 | TikTok: @dental.park.clinic | "แม่แฝดหมอจัดฟัน" | ใช้ภาษาอีสาน
+
+### Intel Reports Location
+- `reports/intel-*.md` — รายงานคู่แข่งและตลาด
+- `reports/intel-20260518-DentalParkClinic.md` — Deep-dive Dental Park
+- `reports/intel-20260518-หมอจั่นเจา.md` — Deep-dive หมอจั่นเจา
+
+### Intelligence Context (อ่านก่อนสร้าง Intel Dashboard)
+→ `docs/intelligence-brief.md` — Framework, ข้อมูลคู่แข่งครบ 4 ราย, hashtags, market gaps, UI requirements
+
+### Intel Agent
+- `.claude/agents/intel-agent.md` — ค้นหาข้อมูลแล้วส่งคืน JSON structure
+- JSON fields: `category`, `pricing`, `strengths`, `social_trend`, `promotions`
+- categories: `competitor` | `dental_knowledge` | `news_events` | `equipment`

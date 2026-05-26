@@ -1,0 +1,69 @@
+##################################################################################
+data/schema.json รู้จัก TikTok, Facebook, Instagram ทั้ง wide และ narrow format
+src/normalize.py auto-detect platform และรวม column ให้เป็นภาษาเดียวกัน
+
+
+##################################################################################
+/analyze อัปเกรดแล้ว รัน normalize ก่อนเสมอ
+##################################################################################
+
+สรุป Lesson 3
+จบแล้ว ตอนนี้มีเพิ่มขึ้น:
+
+src/generate_dashboard.py สร้าง HTML dashboard อัตโนมัติ
+dashboard/index.html มี sidebar, KPI cards, charts, ตารางข้อมูล
+ระบบ 3 themes: Light / Dark / Fancy
+หน้า "นำเข้าข้อมูล" สำหรับ drag & drop CSV
+/analyze ตอนนี้สร้างทั้ง markdown report และ dashboard พร้อมกัน
+Pipeline ตอนนี้:
+
+CSV → normalize.py → generate_dashboard.py → dashboard/index.html
+                   ↓
+              markdown report → reports/
+ที่ยังขาดอยู่: ถ้า export CSV สัปดาห์หน้ามาใหม่แล้วรัน /analyze อีกครั้ง ข้อมูลเก่าหายไปเลย ยังไม่มีการเก็บย้อนหลัง และยังเปรียบเทียบ "สัปดาห์นี้ vs สัปดาห์ที่แล้ว" ไม่ได้
+
+Lesson 4 จะแก้ปัญหานี้ สร้างระบบ historical storage และ Comparison Matrix
+
+พิมพ์ "Start Lesson 4" ได้เลย
+
+##################################################################################
+สรุป Lesson 4
+จบแล้ว ตอนนี้มีเพิ่มขึ้น:
+
+src/history_store.py — เซฟ snapshot อัตโนมัติทุกครั้งที่ /analyze
+data/history/ — JSON ข้อมูลย้อนหลังทุก platform
+src/compare.py — engine เปรียบเทียบ period และ platform
+.claude/commands/compare.md — /compare command
+Dashboard แสดง KPI, chart, ตาราง ครบทุก platform
+Pipeline ตอนนี้:
+
+/analyze     → normalize → save_snapshot → report + dashboard
+/compare     → load_history → comparison matrix → report + dashboard
+ที่ยังขาดอยู่: ทุกอย่างยังรันแบบ sequential ทีละขั้น และยังไม่มีระบบติดตามข่าวหรือคู่แข่ง
+
+Lesson 5 จะแก้ทั้งสองเรื่อง แยก 3 sub-agents รันแบบ parallel พร้อมกัน และเพิ่ม /intel command ที่ใช้ web search หาข่าวคู่แข่งได้
+
+พิมพ์ "Start Lesson 5" ได้เลย
+
+##################################################################################
+อัปเดต .claude/commands/analyze.md ให้ใช้ sub-agents:
+
+เมื่อได้รับ FILE_PATH ให้:
+
+1. เรียกใช้ data-agent และ intel-agent พร้อมกัน (parallel):
+   - ส่ง data-agent: FILE_PATH
+   - ส่ง intel-agent: topic="คลินิกทันตกรรม", city="สกลนคร", platforms=["tiktok","facebook","instagram"]
+
+2. รอทั้งคู่เสร็จ แล้วส่ง output ของ data-agent ให้ dashboard-agent ทำต่อ
+
+3. เมื่อทุก agent เสร็จแล้ว สร้าง Full Report ที่รวม:
+   - Data Analysis section (จาก data-agent + dashboard-agent)
+   - Intelligence section (จาก intel-agent)
+   - Combined Recommendations (รวม insights จากทั้ง 2 ด้าน)
+
+4. บอกผู้ใช้ว่า:
+   - Report อยู่ที่ไหน
+   - Dashboard อยู่ที่ไหน
+   - Intelligence section มีข้อมูลอะไรน่าสนใจบ้าง (2-3 bullet)
+
+update ไฟล์ command แล้วบอกฉัน

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Social Analytics Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/libs/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Prompt', sans-serif; background-color: #f1f5f9; }
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .theme-FACEBOOK { color: #1877F2; } .theme-INSTAGRAM { color: #E4405F; } .theme-TIKTOK { color: #000000; } .theme-DENTCLOUD { color: #0ea5e9; }
+        .bg-theme-FACEBOOK { background-color: #1877F2; color: white; }
+        .bg-theme-INSTAGRAM { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
+        .bg-theme-TIKTOK { background-color: #000000; color: white; }
+        .bg-theme-DENTCLOUD { background-color: #0ea5e9; color: white; }
+        
+        /* สไตล์สำหรับการ Export PDF ให้สวยงามและคมชัด */
+        .exporting-pdf { background-color: #0f172a !important; padding: 20px; }
+        .exporting-pdf * { color: #ffffff !important; }
+        .exporting-pdf .bg-white { background-color: #1e293b !important; border: 1px solid #334155 !important; }
+        .exporting-pdf .chart-container { background-color: #ffffff !important; border-radius: 12px; padding: 15px; }
+        .exporting-pdf .chart-container * { color: #000 !important; }
+        .export-hide { display: none !important; }
+    </style>
+</head>
+<body class="text-slate-800 flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-white border-r border-slate-200 flex flex-col h-full shadow-sm z-10 hidden md:flex flex-shrink-0">
+        <div class="p-6 border-b border-slate-100 cursor-pointer" onclick="switchView('home')">
+            <h1 class="text-2xl font-black text-slate-800 leading-tight">SOCIAL<br><span class="text-blue-600">ANALYTICS</span></h1>
+        </div>
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <button onclick="switchView('home')" id="nav-home" class="w-full text-left px-4 py-3 rounded-xl font-bold flex items-center gap-3 bg-slate-100 text-slate-800 transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> หน้าหลัก</button>
+            <button onclick="switchView('upload')" id="nav-upload" class="w-full text-left px-4 py-3 rounded-xl font-bold flex items-center gap-3 text-slate-500 hover:bg-slate-50 transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg> นำเข้าข้อมูล</button>
+            <div class="pt-4 pb-1"><p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Dashboards</p></div>
+            <button onclick="switchPlatform('FACEBOOK')" id="nav-FACEBOOK" class="w-full text-left px-4 py-3 rounded-xl font-bold flex items-center gap-3 text-slate-500 hover:bg-slate-50 transition-all"><div class="w-3 h-3 rounded-full bg-[#1877F2]"></div> Facebook</button>
+            <button onclick="switchPlatform('INSTAGRAM')" id="nav-INSTAGRAM" class="w-full text-left px-4 py-3 rounded-xl font-bold flex items-center gap-3 text-slate-500 hover:bg-slate-50 transition-all"><div class="w-3 h-3 rounded-full bg-[#E4405F]"></div> Instagram</button>
+            <button onclick="switchPlatform('TIKTOK')" id="nav-TIKTOK" class="w-full text-left px-4 py-3 rounded-xl font-bold flex items-center gap-3 text-slate-500 hover:bg-slate-50 transition-all"><div class="w-3 h-3 rounded-full bg-black"></div> TikTok</button>
+            <button onclick="switchPlatform('DENTCLOUD')" id="nav-DENTCLOUD" class="w-full text-left px-4 py-3 rounded-xl font-bold flex items-center gap-3 text-slate-500 hover:bg-slate-50 transition-all"><div class="w-3 h-3 rounded-full bg-[#0ea5e9]"></div> Dentcloud</button>
+        </nav>
+        <div id="syncStatus" class="p-4 border-t border-slate-100 text-[10px] text-slate-400 font-bold uppercase tracking-widest text-center">Checking Drive...</div>
+    </aside>
+
+    <main class="flex-1 h-full overflow-y-auto bg-slate-50 relative" id="mainArea">
+        
+        <div id="homeView" class="p-6 md:p-10 max-w-7xl mx-auto fade-in">
+            <div class="mb-10">
+                <h1 class="text-4xl font-black text-slate-800 tracking-tight">Social Overview</h1>
+                <p class="text-slate-500 font-medium mt-1">สรุปข้อมูลทุกแพลตฟอร์ม ณ เวลา: <span id="timeNow" class="text-slate-900 font-bold"></span></p>
+            </div>
+            
+            <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-200 mb-8 overflow-hidden">
+                <h3 class="text-xl font-bold text-slate-800 mb-6">Platform Comparison Matrix (%)</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[10px] uppercase font-black text-slate-400 border-b border-slate-100">
+                                <th class="pb-4">Platform</th>
+                                <th class="pb-4 text-right">Avg Views / Day</th>
+                                <th class="pb-4 text-right">Engagement Rate</th>
+                                <th class="pb-4 text-right">Growth (Views)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparisonTableBody" class="divide-y divide-slate-50"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10" id="homeCards"></div>
+            
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-200">
+                <h3 class="text-xl font-bold text-slate-800 mb-6 px-2">Market Share (Views)</h3>
+                <div class="chart-container relative h-80 w-full"><canvas id="homeBarChart"></canvas></div>
+            </div>
+        </div>
+
+        <div id="uploadView" class="hidden p-6 md:p-10 max-w-5xl mx-auto fade-in">
+            <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200 p-10 mb-8">
+                <h2 class="text-3xl font-black text-slate-800 mb-6">Import & Sync CSV Data</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-4">เลือกแพลตฟอร์ม</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="cursor-pointer group"><input type="radio" name="platformSelect" value="FACEBOOK" class="peer sr-only" checked><div class="p-4 rounded-2xl border-2 border-slate-100 text-center peer-checked:border-[#1877F2] peer-checked:bg-blue-50 font-bold text-slate-500 peer-checked:text-[#1877F2]">Facebook</div></label>
+                            <label class="cursor-pointer group"><input type="radio" name="platformSelect" value="INSTAGRAM" class="peer sr-only"><div class="p-4 rounded-2xl border-2 border-slate-100 text-center peer-checked:border-[#E4405F] peer-checked:bg-pink-50 font-bold text-slate-500 peer-checked:text-[#E4405F]">Instagram</div></label>
+                            <label class="cursor-pointer group"><input type="radio" name="platformSelect" value="TIKTOK" class="peer sr-only"><div class="p-4 rounded-2xl border-2 border-slate-100 text-center peer-checked:border-black peer-checked:bg-slate-100 font-bold text-slate-500 peer-checked:text-black">TikTok</div></label>
+                            <label class="cursor-pointer group"><input type="radio" name="platformSelect" value="DENTCLOUD" class="peer sr-only"><div class="p-4 rounded-2xl border-2 border-slate-100 text-center peer-checked:border-[#0ea5e9] peer-checked:bg-sky-50 font-bold text-slate-500 peer-checked:text-[#0ea5e9]">Dentcloud</div></label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-4">อัปโหลดไฟล์ (Data Cleaning Auto)</label>
+                        <div class="border-2 border-dashed border-slate-300 rounded-2xl p-12 text-center hover:bg-slate-50 cursor-pointer" onclick="document.getElementById('fileInput').click()">
+                            <span class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg">เลือกไฟล์ CSV ทั้งหมด</span>
+                            <input type="file" id="fileInput" class="hidden" multiple accept=".csv" onchange="processFiles(this.files)" />
+                        </div>
+                    </div>
+                </div>
+                <div id="uploadStatus" class="hidden mt-8 p-4 bg-blue-50 text-blue-700 rounded-xl font-bold flex justify-center items-center gap-3">
+                    <svg class="w-6 h-6 animate-spin" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    กำลังประมวลผลข้อมูลและรวมไฟล์...
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200 p-8">
+                <h3 class="text-xl font-bold text-slate-800 mb-6 px-2">History Log (Cloud)</h3>
+                <div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead class="text-slate-400 font-bold uppercase tracking-widest text-[10px] border-b"><tr><th class="px-6 py-4">Timestamp</th><th class="px-6 py-4">Platform</th><th class="px-6 py-4 text-center">Action</th></tr></thead><tbody id="historyTable" class="divide-y text-slate-700"></tbody></table></div>
+            </div>
+        </div>
+
+        <div id="dashboardView" class="hidden p-6 md:p-10 max-w-7xl mx-auto fade-in">
+            <div id="dashboardCaptureArea" class="pb-10">
+                <div class="flex justify-between items-center mb-10 export-hide">
+                    <button onclick="switchView('home')" class="flex items-center gap-2 text-slate-500 hover:text-slate-800 font-bold"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-width="3"></path></svg> Back to Home</button>
+                    <div class="flex gap-3">
+                        <button onclick="exportData('pdf')" class="px-6 py-2.5 bg-rose-500 text-white rounded-xl font-bold shadow-md hover:bg-rose-600 transition-all">Export PDF</button>
+                        <button onclick="exportData('pptx')" class="px-6 py-2.5 bg-orange-500 text-white rounded-xl font-bold shadow-md hover:bg-orange-600 transition-all">Export PPTX</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center mb-10 gap-6">
+                    <div>
+                        <div id="platformBadge" class="inline-block px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-4"></div>
+                        <h1 class="text-5xl font-black text-slate-900 mb-2">Platform Analysis</h1>
+                        <p class="text-slate-500 font-medium" id="dashTime"></p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-200">
+                        <p class="text-xs font-bold text-slate-400 uppercase mb-3">Total Views</p>
+                        <h3 class="text-4xl font-black text-slate-800" id="kpiViews">0</h3>
+                        <div id="diffViews" class="text-[10px] font-bold mt-2"></div>
+                    </div>
+                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-200">
+                        <p class="text-xs font-bold text-slate-400 uppercase mb-3">Engagement Rate</p>
+                        <h3 class="text-4xl font-black text-slate-800" id="kpiRate">0%</h3>
+                        <p class="text-[10px] text-slate-400 font-bold mt-2">Average Rate</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-200">
+                        <p class="text-xs font-bold text-slate-400 uppercase mb-3">Total Engagements</p>
+                        <h3 class="text-4xl font-black text-slate-800" id="kpiInteractions">0</h3>
+                        <div id="diffInteractions" class="text-[10px] font-bold mt-2"></div>
+                    </div>
+                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-200">
+                        <p class="text-xs font-bold text-slate-400 uppercase mb-3">Total Followers (New)</p>
+                        <h3 class="text-4xl font-black text-slate-800" id="kpiFollowers">0</h3>
+                        <div id="diffFollowers" class="text-[10px] font-bold mt-2"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+                    <div class="lg:col-span-2 bg-white p-8 rounded-[3rem] shadow-sm border border-slate-200">
+                        <h4 class="font-bold text-slate-800 mb-8">Performance Trends (Line Chart)</h4>
+                        <div class="chart-container relative h-80 w-full"><canvas id="mainChart"></canvas></div>
+                    </div>
+                    <div class="bg-white p-8 rounded-[3rem] shadow-sm border border-slate-200 flex flex-col items-center">
+                        <h4 class="font-bold text-slate-800 mb-8">Interaction Share</h4>
+                        <div class="chart-container relative h-64 w-full"><canvas id="doughnutChart"></canvas></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[3rem] shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="p-8 border-b"><h4 class="font-bold text-slate-800">Raw Data Breakdown (Pivot Ready)</h4></div>
+                    <div class="overflow-x-auto"><table class="w-full text-left text-sm" id="pivotTable">
+                        <thead class="bg-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                            <tr><th class="px-8 py-5">Date</th><th class="px-8 py-5 text-right">Followers</th><th class="px-8 py-5 text-right">Views</th><th class="px-8 py-5 text-right">Reach</th><th class="px-8 py-5 text-right">Engage</th><th class="px-8 py-5 text-right">Clicks</th></tr>
+                        </thead>
+                        <tbody id="dataTableBody" class="divide-y text-slate-600 font-medium"></tbody>
+                    </table></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ================= Core Storage =================
+        const STORAGE_KEY = 'social_gas_final';
+        let db = { FACEBOOK: [], TIKTOK: [], INSTAGRAM: [], DENTCLOUD: [] };
+        let currentPlatform = 'FACEBOOK';
+        let charts = { main: null, doughnut: null, homeBar: null };
+
+        const metricsKey = {
+            'Followers': ['ติดตาม', 'follow'], 'Interactions': ['โต้ตอบ', 'engage', 'like', 'comment', 'share', 'ถูกใจ'],
+            'Audience': ['ผู้ชม', 'reach', 'เข้าถึง', 'total viewer'], 'Views': ['ยอดดู', 'view', 'impression', 'play', 'video view'],
+            'Link_Clicks': ['คลิก', 'click', 'link'], 'Visits': ['เข้าชม', 'visit', 'profile']
+        };
+
+        function getThaiTime() {
+            const d = new Date();
+            return `${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')} ${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()+543}`;
+        }
+        function getFileTime() {
+            const d = new Date();
+            return `${d.getDate()}_${d.getMonth()+1}_${d.getFullYear()+543}_${d.getHours()}_${d.getMinutes()}`;
+        }
+
+        // ================= Cloud Sync Initialization =================
+        function init() {
+            document.getElementById('syncStatus').textContent = "Syncing with Cloud...";
+            if (typeof google !== 'undefined' && google.script) {
+                google.script.run.withSuccessHandler(data => {
+                    db = { FACEBOOK: [], TIKTOK: [], INSTAGRAM: [], DENTCLOUD: [] };
+                    
+                    // จัดกลุ่มไฟล์ที่มี prefix เวลาเดียวกัน
+                    for (let p in data) {
+                        let groups = {};
+                        data[p].forEach(f => {
+                            let prefix = f.fileName.split('_').slice(0, 5).join('_');
+                            if(!groups[prefix]) groups[prefix] = [];
+                            groups[prefix].push(f);
+                        });
+                        
+                        for (let prefix in groups) {
+                            let combined = {};
+                            groups[prefix].forEach(f => parseDataToCombined(f.content, p, combined));
+                            saveCombinedToDB(combined, p, getThaiTime());
+                        }
+                    }
+                    document.getElementById('syncStatus').textContent = "Cloud Sync: Connected";
+                    switchView('home');
+                }).syncDataFromDrive();
+            } else {
+                // Local fallback
+                document.getElementById('syncStatus').textContent = "Local Mode";
+                switchView('home');
+            }
+        }
+
+        // ================= Parser Logic =================
+        function parseTikTokDate(str) {
+            const ms = {'jan':'01','feb':'02','mar':'03','apr':'04','may':'05','jun':'06','jul':'07','aug':'08','sep':'09','oct':'10','nov':'11','dec':'12'};
+            let p = str.trim().split(' ');
+            if (p.length === 2 && ms[p[0].toLowerCase().slice(0,3)]) return `2026-${ms[p[0].toLowerCase().slice(0,3)]}-${String(p[1]).padStart(2,'0')}`;
+            return str;
+        }
+
+        // หัวใจหลัก: รวมไฟล์ทุกไฟล์ที่โยนเข้ามาให้อยู่ใน Object เดียวกัน (แก้หน้าจอขาวและ FB แยกไฟล์)
+        function parseDataToCombined(text, plat, combined) {
+            const lines = text.split('\n').map(l => l.trim()).filter(l => l !== '');
+            if (lines.length < 2) return;
+
+            const isFB = lines[0].toLowerCase().includes('sep=') || (lines[1] && lines[1].toLowerCase().includes('วันที่'));
+            
+            if (isFB) {
+                let mName = 'Unknown', ht = (lines[0] + (lines[1] || "")).toLowerCase();
+                for (let k in metricsKey) if (metricsKey[k].some(kw => ht.includes(kw))) { mName = k; break; }
+                
+                for (let i = 2; i < lines.length; i++) {
+                    let p = lines[i].split(','); if (p.length < 2) continue;
+                    let d = p[0].replace(/"/g,'').split('T')[0];
+                    let v = parseInt(p[1].replace(/"/g,'').replace(/,/g,'')) || 0;
+                    if (d.includes('-')) { 
+                        if (!combined[d]) combined[d] = {Views:0, Interactions:0, Link_Clicks:0, Audience:0, Visits:0, Followers:0}; 
+                        combined[d][mName] = (combined[d][mName] || 0) + v; 
+                    }
+                }
+            } else {
+                let hds = lines[0].split(',').map(h => h.replace(/"/g,'').toLowerCase()), colMap = {};
+                hds.forEach((h, idx) => { for(let k in metricsKey) if(metricsKey[k].some(kw => h.includes(kw))) { colMap[idx] = k; break; }});
+                for (let i = 1; i < lines.length; i++) {
+                    let p = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); if (p.length < 2) continue;
+                    let d = parseTikTokDate(p[0].replace(/"/g,''));
+                    if (d && !d.toLowerCase().includes('date')) {
+                        if (!combined[d]) combined[d] = {Views:0, Interactions:0, Link_Clicks:0, Audience:0, Visits:0, Followers:0};
+                        Object.keys(colMap).forEach(idx => {
+                            let valStr = p[idx] ? p[idx].replace(/"/g,'').replace(/,/g,'') : '0';
+                            combined[d][colMap[idx]] = (combined[d][colMap[idx]] || 0) + (parseInt(valStr) || 0);
+                        });
+                    }
+                }
+            }
+        }
+
+        function saveCombinedToDB(combined, plat, timeStr) {
+            if (Object.keys(combined).length > 0) {
+                let totals = { Views:0, Interactions:0, Link_Clicks:0, Audience:0, Visits:0, Followers:0 };
+                Object.values(combined).forEach(day => Object.keys(totals).forEach(k => totals[k] += (day[k] || 0)));
+                db[plat].unshift({ id: Date.now() + Math.random(), at: timeStr, data: combined, totals });
+            }
+        }
+
+        async function processFiles(files) {
+            const plat = document.querySelector('input[name="platformSelect"]:checked').value;
+            const status = document.getElementById('uploadStatus');
+            status.classList.remove('hidden');
+            
+            let filesToDrive = [];
+            let combined = {}; // ตัวแปรหลักที่ใช้รวมไฟล์ FB ทั้ง 6 ไฟล์เป็นก้อนเดียว!
+
+            for (let f of files) {
+                const text = await f.text();
+                parseDataToCombined(text, plat, combined); // ผสมข้อมูลเข้า combined
+                const base64 = await new Promise(r => { const reader = new FileReader(); reader.onload=()=>r(reader.result.split(',')[1]); reader.readAsDataURL(f); });
+                filesToDrive.push({ base64 });
+            }
+
+            saveCombinedToDB(combined, plat, getThaiTime()); // บันทึกก้อนเดียวลง DB
+
+            if (Object.keys(combined).length > 0) {
+                if (typeof google !== 'undefined' && google.script) {
+                    google.script.run.withSuccessHandler(() => {
+                        status.classList.add('hidden');
+                        alert('อัปโหลดข้อมูลสำเร็จ!');
+                        switchPlatform(plat);
+                    }).withFailureHandler(() => {
+                        status.classList.add('hidden');
+                        alert('แสดงผลลัพธ์ลง Dashboard แล้ว (แต่เซฟลง Drive ล้มเหลว)');
+                        switchPlatform(plat);
+                    }).uploadFilesToDrive(filesToDrive, plat);
+                } else {
+                    status.classList.add('hidden');
+                    alert('อัปโหลดข้อมูลสำเร็จ!');
+                    switchPlatform(plat);
+                }
+            } else {
+                status.classList.add('hidden');
+                alert('ไม่พบข้อมูลรูปแบบที่ถูกต้อง');
+            }
+        }
+
+        // ================= View Navigation =================
+        function switchView(v) {
+            ['homeView', 'uploadView', 'dashboardView'].forEach(id => document.getElementById(id).classList.toggle('hidden', id !== v + 'View'));
+            document.querySelectorAll('aside nav button').forEach(b => { b.classList.remove('bg-slate-100','text-slate-800'); b.classList.add('text-slate-500'); });
+            const nav = document.getElementById('nav-'+v); if(nav) { nav.classList.add('bg-slate-100','text-slate-800'); nav.classList.remove('text-slate-500'); }
+            
+            // รอให้ DOM วาดเสร็จก่อนสั่ง Render ป้องกันปัญหาหน้าจอขาว
+            setTimeout(() => {
+                if (v === 'home') renderHome();
+                if (v === 'dash') renderDashboard();
+                if (v === 'upload') renderHistory();
+            }, 50);
+        }
+
+        function switchPlatform(p) {
+            currentPlatform = p;
+            if (db[p].length > 0) {
+                switchView('dash');
+            } else {
+                alert('ไม่มีข้อมูลสำหรับแพลตฟอร์มนี้ กรุณานำเข้าก่อนครับ');
+                document.querySelector(`input[name="platformSelect"][value="${p}"]`).checked = true;
+                switchView('upload');
+            }
+        }
+
+        // ================= Render Logic =================
+        function renderHome() {
+            document.getElementById('timeNow').textContent = getThaiTime();
+            const area = document.getElementById('homeCards'); area.innerHTML = '';
+            const compareBody = document.getElementById('comparisonTableBody'); compareBody.innerHTML = '';
+            let colors = {FACEBOOK:'#1877F2', TIKTOK:'#000', INSTAGRAM:'#E4405F', DENTCLOUD:'#0ea5e9'};
+            
+            for (let p in db) {
+                const latest = db[p][0];
+                if (latest) {
+                    const days = Object.keys(latest.data).length || 1;
+                    const avgViews = (latest.totals.Views / days).toFixed(0);
+                    const eRate = ((latest.totals.Interactions / (latest.totals.Views || 1)) * 100).toFixed(2);
+                    
+                    // Growth Index
+                    let growthHtml = '<td class="py-4 text-right text-slate-400 font-bold">-</td>';
+                    if (db[p][1]) {
+                        let prev = db[p][1];
+                        let diff = latest.totals.Views - prev.totals.Views;
+                        let pct = ((diff / (prev.totals.Views || 1)) * 100).toFixed(1);
+                        growthHtml = diff >= 0 ? `<td class="py-4 text-right text-emerald-500 font-bold">▲ +${pct}%</td>` : `<td class="py-4 text-right text-rose-500 font-bold">▼ ${pct}%</td>`;
+                    }
+                    
+                    area.innerHTML += `<div class="bg-white p-7 rounded-[2rem] shadow-sm border-2 border-slate-50 cursor-pointer hover:-translate-y-1 transition-transform" onclick="switchPlatform('${p}')"><span class="px-3 py-1 rounded-full text-[9px] font-black text-white" style="background:${colors[p]}">${p}</span><p class="text-3xl font-black mt-4 text-slate-800">${latest.totals.Views.toLocaleString()}</p><p class="text-[10px] font-bold text-slate-400 uppercase">Total Views</p></div>`;
+                    
+                    compareBody.innerHTML += `<tr><td class="py-4 font-black text-slate-700">${p}</td><td class="py-4 text-right font-mono">${parseInt(avgViews).toLocaleString()}</td><td class="py-4 text-right text-blue-600 font-bold">${eRate}%</td>${growthHtml}</tr>`;
+                }
+            }
+            if(charts.homeBar) charts.homeBar.destroy();
+            charts.homeBar = new Chart(document.getElementById('homeBarChart'), { type:'bar', data:{labels:Object.keys(db), datasets:[{data:Object.keys(db).map(p=>db[p][0]?.totals.Views||0), backgroundColor:Object.keys(db).map(p=>colors[p]), borderRadius:15}]}, options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}}});
+        }
+
+        function renderDashboard() {
+            const latest = db[currentPlatform][0], prev = db[currentPlatform][1] || null;
+            const badge = document.getElementById('platformBadge');
+            badge.textContent = currentPlatform; badge.className = `inline-block px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] bg-theme-${currentPlatform}`;
+            document.getElementById('dashTime').textContent = `เวลาที่วิเคราะห์: ${latest.at}`;
+            
+            document.getElementById('kpiViews').textContent = latest.totals.Views.toLocaleString();
+            document.getElementById('kpiInteractions').textContent = latest.totals.Interactions.toLocaleString();
+            document.getElementById('kpiClicks').textContent = latest.totals.Link_Clicks.toLocaleString();
+            document.getElementById('kpiFollowers').textContent = latest.totals.Followers.toLocaleString();
+            document.getElementById('kpiRate').textContent = ((latest.totals.Interactions / (latest.totals.Views || 1)) * 100).toFixed(2) + '%';
+
+            // Differences
+            ['Views','Interactions','Followers'].forEach(k => {
+                if (prev) {
+                    let diff = latest.totals[k] - prev.totals[k], pct = ((diff/(prev.totals[k]||1))*100).toFixed(1);
+                    document.getElementById('diff'+k).className = diff >= 0 ? 'text-[10px] font-bold mt-2 text-emerald-500' : 'text-[10px] font-bold mt-2 text-rose-500';
+                    document.getElementById('diff'+k).innerHTML = `${diff >= 0 ? '▲' : '▼'} ${Math.abs(pct)}% <span class="text-slate-400 font-medium">เทียบครั้งก่อน</span>`;
+                } else document.getElementById('diff'+k).innerHTML = '<span class="text-slate-400">บันทึกครั้งแรก</span>';
+            });
+
+            const dates = Object.keys(latest.data).sort();
+            const tbody = document.getElementById('dataTableBody'); tbody.innerHTML = '';
+            [...dates].reverse().forEach(d => {
+                const r = latest.data[d];
+                tbody.innerHTML += `<tr><td class="px-8 py-4 font-bold text-slate-900">${d}</td><td class="px-8 py-4 text-right ${r.Followers > 0 ? 'text-emerald-500 font-bold' : ''}">${(r.Followers||0).toLocaleString()}</td><td class="px-8 py-4 text-right">${(r.Views||0).toLocaleString()}</td><td class="px-8 py-4 text-right">${(r.Audience||0).toLocaleString()}</td><td class="px-8 py-4 text-right">${(r.Interactions||0).toLocaleString()}</td><td class="px-8 py-4 text-right">${(r.Link_Clicks||0).toLocaleString()}</td></tr>`;
+            });
+
+            if (charts.main) charts.main.destroy();
+            charts.main = new Chart(document.getElementById('mainChart'), { type:'line', data:{labels:dates, datasets:[{label:'Views', data:dates.map(d=>latest.data[d].Views), borderColor:'#3b82f6', tension:0.4, fill:true, backgroundColor:'rgba(59,130,246,0.1)'}]}, options:{responsive:true, maintainAspectRatio:false, animation:false}});
+            if (charts.doughnut) charts.doughnut.destroy();
+            charts.doughnut = new Chart(document.getElementById('doughnutChart'), { type:'doughnut', data:{labels:['Views','Interactions','Clicks'], datasets:[{data:[latest.totals.Views, latest.totals.Interactions, latest.totals.Link_Clicks], backgroundColor:['#3b82f6','#ec4899','#f59e0b'], borderWidth:0}]}, options:{responsive:true, maintainAspectRatio:false, cutout:'75%'}});
+        }
+
+        function renderHistory() {
+            const body = document.getElementById('historyTable'); body.innerHTML = '';
+            for (let p in db) db[p].forEach(item => {
+                body.innerHTML += `<tr><td class="px-6 py-4 font-bold">${item.at}</td><td class="px-6 py-4"><span class="px-2 py-1 bg-theme-${p} text-white rounded text-[8px] font-black">${p}</span></td><td class="px-6 py-4 text-center"><button onclick="switchPlatform('${p}')" class="text-blue-600 font-bold hover:underline">เรียกดู</button></td></tr>`;
+            });
+        }
+
+        // ================= Export =================
+        function exportData(type) {
+            const latest = db[currentPlatform][0];
+            const fn = `${currentPlatform.toLowerCase()}_report_${getFileTime()}`;
+            if (type === 'pdf') {
+                const el = document.getElementById('dashboardCaptureArea'); el.classList.add('exporting-pdf');
+                document.querySelectorAll('.export-hide').forEach(n => n.style.display = 'none');
+                html2pdf().set({ margin:0.3, filename:fn+'.pdf', html2canvas:{scale:2, backgroundColor:'#0f172a'}, jsPDF:{orientation:'landscape'} }).from(el).save().then(() => {
+                    el.classList.remove('exporting-pdf');
+                    document.querySelectorAll('.export-hide').forEach(n => n.style.display = '');
+                });
+            } else if (type === 'pptx') {
+                let pptx = new PptxGenJS(); let slide = pptx.addSlide(); slide.background = { color: "F8FAFC" };
+                slide.addText(`${currentPlatform} Analytics Dashboard`, { x:0.5, y:0.5, fontSize:28, bold:true, color:'0F172A' });
+                slide.addText(`เวลา: ${latest.at}`, { x:0.5, y:1.1, fontSize:12, color:'64748B' });
+                slide.addText(`Views\n${latest.totals.Views.toLocaleString()}`, { x: 0.5, y: 1.6, w: 2.2, h: 1, fill:{color:'FFFFFF'}, color:'3B82F6', align:'center', bold:true });
+                slide.addText(`Interactions\n${latest.totals.Interactions.toLocaleString()}`, { x: 2.9, y: 1.6, w: 2.2, h: 1, fill:{color:'FFFFFF'}, color:'EC4899', align:'center', bold:true });
+                slide.addImage({ data: document.getElementById('mainChart').toDataURL(), x:0.5, y:2.9, w:7, h:2.5 });
+                pptx.writeFile({ fileName: fn+'.pptx' });
+            }
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>

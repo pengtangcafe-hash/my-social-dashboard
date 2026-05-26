@@ -1,0 +1,50 @@
+const MAIN_FOLDER_ID = '1okSMfPAeDPRrfSRQ79RaRcyIrH3F4nXY';
+
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile('index')
+      .setTitle('Social App Analytics Dashboard')
+      .addMetaTag('viewport', 'width=device-width, initial-scale=1')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+function getOrCreateSubfolder(parent, name) {
+  const folders = parent.getFoldersByName(name);
+  return folders.hasNext() ? folders.next() : parent.createFolder(name);
+}
+
+function syncDataFromDrive() {
+  const parentFolder = DriveApp.getFolderById(MAIN_FOLDER_ID);
+  const platforms = { 'fb': 'FACEBOOK', 'ig': 'INSTAGRAM', 'tt': 'TIKTOK', 'dc': 'DENTCLOUD' };
+  let allPlatformData = {};
+
+  Object.keys(platforms).forEach(key => {
+    const subFolder = getOrCreateSubfolder(parentFolder, key);
+    const files = subFolder.getFilesByType(MimeType.CSV);
+    allPlatformData[platforms[key]] = [];
+    while (files.hasNext()) {
+      let file = files.next();
+      allPlatformData[platforms[key]].push({
+        fileName: file.getName(),
+        content: file.getBlob().getDataAsString(),
+        dateCreated: file.getDateCreated()
+      });
+    }
+  });
+  return allPlatformData;
+}
+
+function uploadFilesToDrive(filesData, platform) {
+  try {
+    const parentFolder = DriveApp.getFolderById(MAIN_FOLDER_ID);
+    const folderMap = { 'FACEBOOK': 'fb', 'INSTAGRAM': 'ig', 'TIKTOK': 'tt', 'DENTCLOUD': 'dc' };
+    const subFolder = getOrCreateSubfolder(parentFolder, folderMap[platform]);
+    const now = new Date();
+    const timeStr = `${now.getDate()}_${now.getMonth()+1}_${now.getFullYear()+543}_${now.getHours()}_${now.getMinutes()}`;
+    filesData.forEach((file, i) => {
+      let fileName = `${folderMap[platform]}_${timeStr}_${i+1}.csv`;
+      let blob = Utilities.newBlob(Utilities.base64Decode(file.base64), 'text/csv', fileName);
+      subFolder.createFile(blob);
+    });
+    return { success: true };
+  } catch(e) { return { success: false, error: e.toString() }; }
+}
