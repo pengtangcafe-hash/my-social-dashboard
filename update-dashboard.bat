@@ -29,6 +29,9 @@ if errorlevel 1 echo [WARNING] goal_tracker inject failed (continuing...)
 python src\monthly_trend.py inject dashboard\index.html
 if errorlevel 1 echo [WARNING] monthly_trend inject failed (continuing...)
 
+python src\content_category_analyzer.py inject dashboard\index.html
+if errorlevel 1 echo [WARNING] content_category_analyzer inject failed (continuing...)
+
 echo [update-dashboard] All constants injected.
 
 :: Step 3: Copy to docs/ for GitHub Pages

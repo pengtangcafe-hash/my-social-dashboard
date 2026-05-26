@@ -443,6 +443,35 @@
         <div id="monthly-trend-legend" class="flex flex-wrap gap-4 mt-3"></div>
       </div>
 
+      <!-- Content Category Analyzer -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 mt-5" id="content-perf-card">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-sm font-semibold text-slate-700">📊 Content Performance</h2>
+          <div class="flex gap-1" id="content-perf-tabs">
+            <button onclick="setContentTab('format')" id="cpTab-format"
+              class="text-xs px-2.5 py-1 rounded-lg font-medium transition-colors bg-teal-500 text-white">
+              Format (FB)
+            </button>
+            <button onclick="setContentTab('category')" id="cpTab-category"
+              class="text-xs px-2.5 py-1 rounded-lg font-medium transition-colors bg-slate-100 text-slate-500">
+              หมวด Content
+            </button>
+          </div>
+        </div>
+        <!-- Format panel -->
+        <div id="cp-panel-format">
+          <div class="text-xs text-slate-400 mb-2">รูปแบบ content บน Facebook — เรียงตาม Reach</div>
+          <div id="cp-format-bars" class="space-y-2"></div>
+        </div>
+        <!-- Category panel -->
+        <div id="cp-panel-category" class="hidden">
+          <div class="text-xs text-slate-400 mb-2">บันทึก post ของคุณเพื่อดู category ที่ perform ดีที่สุด</div>
+          <div id="cp-category-content"></div>
+        </div>
+        <!-- Recommendation -->
+        <div id="cp-recommendation" class="mt-3 text-xs text-teal-700 bg-teal-50 rounded-lg px-3 py-2 leading-relaxed"></div>
+      </div>
+
     </div>
 
     <!-- ── Platform Views (injected) ── -->
@@ -1257,6 +1286,9 @@ function gotoDeepDetail(idx) {
   setDeepTab('detail');
 }
 
+// ── Content Category Data ──
+const CONTENT_PERF = {"generated_at": "2026-05-27", "has_format_data": true, "has_category_data": true, "total_logged_posts": 4, "fb_formats": {"labels": ["Reels", "รูปภาพ", "สตอรี่", "หลายรูปภาพ", "ข้อความ", "อื่นๆ", "ลิงก์"], "reach": [181, 169, 53, 36, 35, 8, 0], "engagement": [8, 13, 31, 0, 9, 0, 0], "impressions": [31729, 20394, 0, 2894, 4605, 681, 624], "top_reach": "Reels", "top_engagement": "สตอรี่"}, "categories": {"education": {"label": "ความรู้ทันตกรรม", "emoji": "💡", "posts": 1, "avg_reach": 4800, "avg_eng_rate": 5.94}, "before_after": {"label": "ก่อน-หลังรักษา", "emoji": "✨", "posts": 1, "avg_reach": 2100, "avg_eng_rate": 9.43}, "faq": {"label": "ตอบคำถามที่พบบ่อย", "emoji": "❓", "posts": 1, "avg_reach": 7200, "avg_eng_rate": 8.5}, "promotion": {"label": "โปรโมชั่น", "emoji": "🎁", "posts": 1, "avg_reach": 950, "avg_eng_rate": 7.05}, "behind_scenes": {"label": "เบื้องหลังคลินิก", "emoji": "🏥", "posts": 0, "avg_reach": 0, "avg_eng_rate": 0}, "local": {"label": "Content สกลนคร", "emoji": "🌊", "posts": 0, "avg_reach": 0, "avg_eng_rate": 0}}, "top_category": "before_after", "recommendation": "'Reels' สร้าง Reach สูงสุดบน Facebook — เพิ่มสัดส่วนในแผน content • 'สตอรี่' ได้ Engagement ต่อโพสต์สูงสุด • '✨ ก่อน-หลังรักษา' engagement rate เฉลี่ย 9.4% — แนะนำเพิ่ม content ประเภทนี้"};
+
 // ── Monthly Trend Data ──
 const MONTHLY_TREND = {"mode": "weekly", "period": "2026-05", "month_label": "พ.ค. 2569", "labels_short": ["สัป.1", "สัป.2", "สัป.3", "สัป.4"], "labels_long": ["19-25 เม.ย.", "26 เม.ย. – 2 พ.ค.", "3-9 พ.ค.", "10-16 พ.ค."], "series": {"tiktok": {"label": "TikTok", "color": "#010101", "reach": [0.0, 319.0, 76254.0, 88126.0], "engagement_rate": [0, 0.94, 4.63, 5.97]}, "facebook": {"label": "Facebook", "color": "#1877f2", "reach": [5138.0, 8036.0, 37619.0, 10134.0], "engagement_rate": [0.66, 1.14, 0.64, 1.12]}, "instagram": {"label": "Instagram", "color": "#e1306c", "reach": [55.0, 1594.0, 7803.0, 5855.0], "engagement_rate": [0.0, 3.58, 1.05, 0.72]}}, "generated_at": "2026-05-27"};
 
@@ -1974,6 +2006,105 @@ function renderMonthlyTrend() {
   }
 }
 
+// ── Content Category Analyzer ──
+let _cpTab = 'format';
+
+function setContentTab(tab) {
+  _cpTab = tab;
+  document.getElementById('cp-panel-format').classList.toggle('hidden', tab !== 'format');
+  document.getElementById('cp-panel-category').classList.toggle('hidden', tab !== 'category');
+  ['format','category'].forEach(t => {
+    const btn = document.getElementById('cpTab-' + t);
+    if (t === tab) {
+      btn.classList.replace('bg-slate-100','bg-teal-500');
+      btn.classList.replace('text-slate-500','text-white');
+    } else {
+      btn.classList.replace('bg-teal-500','bg-slate-100');
+      btn.classList.replace('text-white','text-slate-500');
+    }
+  });
+}
+
+function renderContentPerf() {
+  const cp = (typeof CONTENT_PERF !== 'undefined') ? CONTENT_PERF : null;
+  if (!cp) return;
+
+  // ── Format bars ──
+  const fmtEl = document.getElementById('cp-format-bars');
+  if (cp.has_format_data && cp.fb_formats) {
+    const fb = cp.fb_formats;
+    const maxR = Math.max(...fb.reach, 1);
+    fmtEl.innerHTML = fb.labels.map((lbl, i) => {
+      const r  = fb.reach[i] || 0;
+      const e  = fb.engagement[i] || 0;
+      const pct = Math.round(r / maxR * 100);
+      const isTopR = lbl === fb.top_reach;
+      const isTopE = lbl === fb.top_engagement;
+      return `<div class="flex items-center gap-2">
+        <span class="text-xs w-20 text-right shrink-0 font-medium ${isTopR ? 'text-teal-700' : 'text-slate-600'}">${lbl}</span>
+        <div class="flex-1 relative h-5 bg-slate-100 rounded overflow-hidden">
+          <div class="h-full rounded transition-all" style="width:${pct}%;background:${isTopR ? '#0d9488' : '#94a3b8'}"></div>
+        </div>
+        <span class="text-xs tabular-nums text-slate-500 w-16 shrink-0">
+          R:${r} ${isTopE ? '<span class="text-amber-500" title="Top Engagement">★</span>' : ''}E:${e}
+        </span>
+        ${isTopR ? '<span class="text-xs text-teal-600 font-bold">👑</span>' : '<span class="w-4"></span>'}
+      </div>`;
+    }).join('');
+  } else {
+    fmtEl.innerHTML = '<p class="text-xs text-slate-400">ไม่พบไฟล์ Facebook content format CSV</p>';
+  }
+
+  // ── Category panel ──
+  const catEl = document.getElementById('cp-category-content');
+  const cats = cp.categories || {};
+  const hasCatData = cp.has_category_data;
+
+  if (hasCatData) {
+    const sorted = Object.entries(cats)
+      .filter(([,v]) => v.posts > 0)
+      .sort((a,b) => b[1].avg_eng_rate - a[1].avg_eng_rate);
+
+    const maxAvgR = Math.max(...sorted.map(([,v]) => v.avg_reach), 1);
+
+    catEl.innerHTML = sorted.map(([key, v]) => {
+      const pct = Math.round(v.avg_reach / maxAvgR * 100);
+      const isTop = key === cp.top_category;
+      return `<div class="flex items-center gap-2 mb-1.5">
+        <span class="text-base w-5 shrink-0">${v.emoji}</span>
+        <span class="text-xs w-28 text-slate-600 shrink-0 font-medium">${v.label}</span>
+        <div class="flex-1 relative h-5 bg-slate-100 rounded overflow-hidden">
+          <div class="h-full rounded" style="width:${pct}%;background:${isTop ? '#0d9488' : '#a5b4fc'}"></div>
+        </div>
+        <span class="text-xs tabular-nums text-slate-500 w-32 shrink-0 text-right">
+          avg ${(v.avg_reach).toLocaleString()} reach&nbsp;·&nbsp;${v.avg_eng_rate.toFixed(1)}%
+        </span>
+        ${isTop ? '<span class="text-xs text-teal-600 font-bold ml-1">👑</span>' : ''}
+      </div>`;
+    }).join('');
+
+    document.querySelector('.text-xs.text-slate-400.mb-2', document.getElementById('cp-panel-category'))
+    document.getElementById('cp-panel-category').querySelector('.text-xs.text-slate-400.mb-2').textContent =
+      cp.total_logged_posts + ' post ที่บันทึกไว้ — เรียงตาม Engagement Rate';
+  } else {
+    catEl.innerHTML = `<div class="text-center py-4 text-slate-400">
+      <div class="text-2xl mb-2">📝</div>
+      <div class="text-xs font-medium text-slate-500 mb-1">ยังไม่มีข้อมูล post log</div>
+      <div class="text-xs text-slate-400 font-mono mt-2 bg-slate-50 rounded p-2 text-left">
+        python src/content_category_analyzer.py log tiktok education "ชื่อ post" --reach 5000 --engagement 300
+      </div>
+    </div>`;
+  }
+
+  // ── Recommendation ──
+  const recEl = document.getElementById('cp-recommendation');
+  if (cp.recommendation) {
+    recEl.innerHTML = '<span class="font-semibold">💡 Insight:</span> ' + cp.recommendation;
+  } else {
+    recEl.style.display = 'none';
+  }
+}
+
 // ── Boot ──
 applyStoredTheme();
 showView('view-home');
@@ -1981,6 +2112,7 @@ renderUpdateMeta();
 renderBestDays();
 renderGoals();
 renderMonthlyTrend();
+renderContentPerf();
 </script>
 
 </body>

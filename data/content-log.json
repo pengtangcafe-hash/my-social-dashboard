@@ -1,0 +1,42 @@
+{
+  "_comment": "บันทึก post ที่โพสต์ไป พร้อม category — เพิ่มได้ผ่าน CLI หรือแก้ไฟล์นี้โดยตรง",
+  "posts": [
+    {
+      "date": "2026-05-27",
+      "platform": "tiktok",
+      "category": "education",
+      "title": "วิธีแปรงฟันที่ถูกต้อง",
+      "reach": 4800.0,
+      "engagement": 285.0,
+      "notes": ""
+    },
+    {
+      "date": "2026-05-27",
+      "platform": "facebook",
+      "category": "before_after",
+      "title": "จัดฟัน 6 เดือน เปลี่ยนไปแค่ไหน",
+      "reach": 2100.0,
+      "engagement": 198.0,
+      "notes": ""
+    },
+    {
+      "date": "2026-05-27",
+      "platform": "instagram",
+      "category": "promotion",
+      "title": "โปรฟอกสีฟัน 2 คนราคาพิเศษ",
+      "reach": 950.0,
+      "engagement": 67.0,
+      "notes": ""
+    },
+    {
+      "date": "2026-05-27",
+      "platform": "tiktok",
+      "category": "faq",
+      "title": "จัดฟันเจ็บไหม ตอบตรงๆ",
+      "reach": 7200.0,
+      "engagement": 612.0,
+      "notes": ""
+    }
+  ],
+  "last_updated": "2026-05-27"
+}
