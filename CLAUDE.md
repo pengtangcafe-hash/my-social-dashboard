@@ -46,6 +46,15 @@
   - `/comp-track --compare year` — เปรียบเทียบปีนี้ vs ปีก่อน
   - `/comp-track --list` — ดู snapshots ที่มีทั้งหมด
   - `/comp-track --report` — สร้าง report รวมบันทึกไฟล์
+- /weekly [--show] — สรุปสัปดาห์ที่ผ่านมา + เปรียบเทียบ platform + แนะนำสัปดาห์ถัดไป
+  - `/weekly` — สร้าง weekly report สัปดาห์ปัจจุบัน
+  - `/weekly --show` — แสดง report ล่าสุด
+- /content-ideas [topic] [--platform] [--show] — แผน content 7 วัน พร้อม caption + hashtags
+  - `/content-ideas` — แผนทั่วไป 7 วัน
+  - `/content-ideas จัดฟัน` — เน้น content เรื่องจัดฟัน
+  - `/content-ideas โปรโมชั่น` — เน้น content โปรโมชั่น
+  - `/content-ideas --platform tiktok` — แผนเฉพาะ TikTok
+  - `/content-ideas --show` — แสดง plan ล่าสุด
 
 ## Tech Stack
 - Python 3 + pandas สำหรับ data processing
@@ -73,9 +82,26 @@
 - JSON fields: `category`, `pricing`, `strengths`, `social_trend`, `promotions`
 - categories: `competitor` | `dental_knowledge` | `news_events` | `equipment`
 
-### Competitor Tracking Agent (ใหม่)
+### Competitor Tracking Agent
 - `.claude/agents/comp-track-agent.md` — ค้นหา + บันทึก + เปรียบเทียบ snapshot คู่แข่ง
 - Storage: `data/competitors/{ชื่อ}/{YYYY-WXX}.json` (weekly) หรือ `{YYYY-MM}.json` (monthly)
 - Python module: `src/competitor_tracker.py` — save/load/compare/report
 - Command: `/comp-track` — ดู, snapshot, เปรียบเทียบ week/month/year
 - Tracks: promotions, content themes, platform activity, followers, top content
+
+### Weekly Report Agent
+- `.claude/agents/weekly-agent.md` — วิเคราะห์ week-over-week performance + competitor changes
+- Command: `/weekly` — สรุปสัปดาห์ที่ผ่านมา + แนะนำสัปดาห์ถัดไป
+- Output: `reports/weekly-{YYYYMMDD}.md`
+
+### Content Ideas Agent
+- `.claude/agents/content-ideas-agent.md` — สร้างแผน content 7 วัน พร้อม caption + hashtags
+- Command: `/content-ideas [topic]` — สร้างแผน content ที่เหมาะกับ platform + เทศกาล
+- Calendar: `data/dental-calendar.json` — ธีมรายเดือน, วันสำคัญ, hashtag sets
+- Output: `reports/content-ideas-{YYYYMMDD}.md`
+
+### Best Day to Post Analyzer
+- `src/posting_time_analyzer.py` — วิเคราะห์วันที่ดีที่สุดในการโพสต์จาก history 6 เดือน
+- Score: reach 60% + engagement 40%, normalized per platform
+- CLI: `python src/posting_time_analyzer.py inject dashboard/index.html`
+- Dashboard: แสดงผลใน home view ด้วย bar chart 7 วัน
