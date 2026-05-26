@@ -12,6 +12,7 @@ Usage (CLI):
   python src/competitor_tracker.py compare <competitor> year
   python src/competitor_tracker.py report  [competitor]
   python src/competitor_tracker.py list
+  python src/competitor_tracker.py inject  dashboard/index.html
 """
 
 import json
@@ -319,6 +320,100 @@ def generate_summary_report(competitor: str, mode: str = "week") -> str:
 
 
 # ──────────────────────────────────────────────
+# Dashboard inject
+# ──────────────────────────────────────────────
+
+def build_js_constant() -> str:
+    """
+    สร้าง JS constant COMP_TRACK จาก latest snapshot ของทุก competitor
+    format ตรงกับที่ renderCompTrack() ใน dashboard อ่าน
+    """
+    comps = list_all_competitors()
+    if not comps:
+        return 'const COMP_TRACK = {"period": "", "snapshot_date": "", "competitors": []};'
+
+    competitors_out = []
+    latest_period   = ""
+    latest_date     = ""
+
+    for comp in sorted(comps):
+        snaps = list_snapshots(comp)
+        if not snaps:
+            continue
+        snap = load_snapshot(comp, snaps[-1])   # snapshot ล่าสุด
+        if not snap:
+            continue
+
+        period = snap.get("period", snaps[-1])
+        sdate  = snap.get("snapshot_date", "")
+
+        # track overall latest
+        if period > latest_period:
+            latest_period = period
+        if sdate > latest_date:
+            latest_date = sdate
+
+        competitors_out.append({
+            "name":             snap.get("competitor", comp),
+            "primary_platform": snap.get("primary_platform", ""),
+            "activity_level":   snap.get("activity_level", "unknown"),
+            "posting_frequency": snap.get("posting_frequency", ""),
+            "content_themes":   snap.get("content_themes", []),
+            "promotions":       snap.get("promotions", []),
+            "top_content":      snap.get("top_content", []),
+            "notes":            snap.get("notes", ""),
+        })
+
+    result = {
+        "period":        latest_period or _week_label(date.today()),
+        "snapshot_date": latest_date   or date.today().isoformat(),
+        "competitors":   competitors_out,
+    }
+    return f"const COMP_TRACK = {json.dumps(result, ensure_ascii=False, indent=2)};"
+
+
+def inject_into_dashboard(html_path: str | Path) -> bool:
+    """
+    แทรก/อัปเดต COMP_TRACK constant ใน dashboard HTML
+    ค้นหา marker '// ── Competitor Tracker Data ──' แล้วแทนที่บล็อกเดิม
+    คืน True ถ้าสำเร็จ
+    """
+    html_path = Path(html_path)
+    if not html_path.exists():
+        print(f"ไม่พบไฟล์: {html_path}")
+        return False
+
+    html    = html_path.read_text(encoding="utf-8")
+    js_const = build_js_constant()
+    marker  = "// ── Competitor Tracker Data ──"
+    end_tok = "\n};"
+
+    if marker in html:
+        start = html.index(marker)
+        # หา }; ที่ปิดบล็อก COMP_TRACK (อยู่หลัง marker)
+        end = html.find(end_tok, start)
+        if end != -1:
+            end += len(end_tok)
+            html = html[:start] + f"{marker}\n{js_const}" + html[end:]
+            print(f"✅ อัปเดต COMP_TRACK ใน {html_path.name}")
+        else:
+            # marker มีแต่หา }; ไม่เจอ — แทนที่บรรทัด marker อย่างเดียว
+            html = html.replace(marker, f"{marker}\n{js_const}", 1)
+            print(f"✅ เพิ่ม COMP_TRACK ใน {html_path.name} (marker found, no end token)")
+    else:
+        # ไม่มี marker — แทรกก่อน // ── Chart instances cache ──
+        cache_marker = "// ── Chart instances cache ──"
+        if cache_marker in html:
+            html = html.replace(cache_marker, f"{marker}\n{js_const}\n\n{cache_marker}", 1)
+        else:
+            html = html.replace("<script>", f"<script>\n{marker}\n{js_const}\n", 1)
+        print(f"✅ เพิ่ม COMP_TRACK (fallback) ใน {html_path.name}")
+
+    html_path.write_text(html, encoding="utf-8")
+    return True
+
+
+# ──────────────────────────────────────────────
 # CLI
 # ──────────────────────────────────────────────
 
@@ -375,6 +470,13 @@ if __name__ == "__main__":
             sections.append("\n---\n")
         out_path.write_text("\n".join(sections), encoding="utf-8")
         print(f"บันทึกแล้ว: {out_path}")
+
+    elif cmd == "inject" and len(args) >= 2:
+        inject_into_dashboard(args[1])
+
+    elif cmd == "show-js":
+        # debug: แสดง JS constant ที่จะ inject
+        print(build_js_constant())
 
     else:
         print(f"คำสั่งไม่ถูกต้อง: {' '.join(args)}")

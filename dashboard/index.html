@@ -1230,65 +1230,150 @@ function gotoDeepDetail(idx) {
 
 // ── Competitor Tracker Data ──
 const COMP_TRACK = {
-  period: "2026-W22",
-  snapshot_date: "2026-05-27",
-  competitors: [
+  "period": "2026-W22",
+  "snapshot_date": "2026-05-27",
+  "competitors": [
     {
-      name: "หมอจั่นเจา",
-      primary_platform: "facebook",
-      activity_level: "medium",
-      posting_frequency: "สัปดาห์ละ 1-2 ครั้ง",
-      content_themes: ["before_after","dental_tips","clinic_tour","case_study","educational"],
-      promotions: ["ฟันปลอมฐานโลหะนำเข้าจากเยอรมัน 8,000 บ./ซี่แรก ซี่ต่อไป 500 บ. รับประกัน 1 ปี"],
-      top_content: [
-        {platform:"TikTok", title:"คลินิกทันตกรรมหมอจั่นเจาในเมืองเปิดบริการแล้ว", url:"https://www.tiktok.com/@dr.piyawat5/video/7539968538442878216"},
-        {platform:"Facebook", title:"สาขาในเมืองพร้อมดูแลทุกรอยยิ้ม", url:"https://www.facebook.com/JunjaoDentalClinic/videos/1823402325200137/"}
+      "name": "DentalPark",
+      "primary_platform": "tiktok",
+      "activity_level": "high",
+      "posting_frequency": "สัปดาห์ละ 3-5 ครั้ง",
+      "content_themes": [
+        "before_after",
+        "educational",
+        "engagement",
+        "clear_aligner",
+        "adult_orthodontics",
+        "isaan_language"
       ],
-      notes: "เปิดสาขาในเมืองสกลนคร (สาขาที่ 2 + มุกดาหาร) มี media producer ดูแล content โดยเฉพาะ"
+      "promotions": [
+        "จัดฟันใส (clear aligner) — นวัตกรรมใหม่ แบบสบาย (ราคาไม่ระบุ)"
+      ],
+      "top_content": [
+        {
+          "platform": "tiktok",
+          "title": "จัดฟันใสด้วยนวัตกรรมใหม่ แบบสบายๆ",
+          "views": null,
+          "url": "https://www.tiktok.com/@dental.park.clinic/video/7583700467545394450",
+          "topic": "clear aligner promotion"
+        },
+        {
+          "platform": "tiktok",
+          "title": "รุ่นใหญ่ก็จัดฟันได้ — #รุ่นใหญ่ก็ยิ้มมั่นใจได้",
+          "views": null,
+          "url": "https://www.tiktok.com/@dental.park.clinic/video/7574342787307474184",
+          "topic": "adult orthodontics targeting"
+        },
+        {
+          "platform": "tiktok",
+          "title": "มาถอดเหล็กกันรัวๆค้า — #dr.parkแม่แฝดหมอจัดฟัน",
+          "views": null,
+          "url": "https://www.tiktok.com/@dental.park.clinic/video/7544667889807248648",
+          "topic": "before_after completion"
+        }
+      ],
+      "notes": "DentalPark เป็นคู่แข่งที่ใช้ TikTok เป็น platform หลัก — โดดเด่นด้วย identity 'แม่แฝดหมอจัดฟัน' (#dr.parkแม่แฝดหมอจัดฟัน) และการใช้ภาษาอีสาน สร้างความใกล้ชิดกับคนท้องถิ่น content หลักคือ before_after + educational ortho + engagement ล่าสุดกำลัง push จัดฟันใส (clear aligner) อย่างจริงจัง เวลาทำการ จ-ศ 16:30-20:00 เสาร์-อาทิตย์ 09:00-16:00 เบอร์: 065-9917990"
     },
     {
-      name: "DioDental",
-      primary_platform: "facebook",
-      activity_level: "high",
-      posting_frequency: "สัปดาห์ละ 3-5 ครั้ง",
-      content_themes: ["clinic_tour","before_after","educational","brand_doctor","engagement"],
-      promotions: [
-        "จัดฟันใส ผ่อนเพียง 3,999 บ./เดือน",
-        "รับบัตรทอง (30 บาท)",
-        "รับประกันสังคม (900+300 บ.)",
-        "ปรึกษาฟรี — opl.to/dio"
+      "name": "DioDental",
+      "primary_platform": "facebook",
+      "activity_level": "high",
+      "posting_frequency": "สัปดาห์ละ 3-5 ครั้ง",
+      "content_themes": [
+        "clinic_tour",
+        "before_after",
+        "educational",
+        "brand_doctor",
+        "engagement"
       ],
-      top_content: [
-        {platform:"Facebook", title:"รีวิวจริงจากคนไข้ — รอยยิ้มไม่มั่นใจสู่รอยยิ้มสดใส", url:"https://www.facebook.com/diodentalsakhon/posts/786676560547399/"},
-        {platform:"TikTok", title:"พาทัวร์สาขาสกลนคร", url:"https://www.tiktok.com/@diodental/video/7186951957603421467"}
+      "promotions": [
+        "จัดฟันใส ผ่อนเพียง 3,999 บาท/เดือน",
+        "รับบัตรทอง (สิทธิ 30 บาท)",
+        "รับประกันสังคม (900+300 บาท)",
+        "ปรึกษาฟรี ไม่มีค่าใช้จ่าย — นัดผ่าน link: opl.to/dio"
       ],
-      notes: "Chain 21+ สาขา ISO 9001 | 2 เพจ FB (Esan + สกลนคร) | strategy: patient review + Brand Doctor (คุณหมอไทเกอร์)"
+      "top_content": [
+        {
+          "platform": "facebook",
+          "title": "รีวิวจริงจากคนไข้ — รอยยิ้มไม่มั่นใจสู่รอยยิ้มสดใส",
+          "views": null,
+          "url": "https://www.facebook.com/diodentalsakhon/posts/786676560547399/",
+          "topic": "before_after / patient review"
+        },
+        {
+          "platform": "tiktok",
+          "title": "พาทัวร์สาขาสกลนคร",
+          "views": null,
+          "url": "https://www.tiktok.com/@diodental/video/7186951957603421467",
+          "topic": "clinic tour"
+        }
+      ],
+      "notes": "Dio Dental เป็น chain 21+ สาขา ได้ ISO 9001 มี 2 เพจ Facebook แยกกัน (Esan region page + สกลนคร local page) strategy หลักคือ patient review + brand doctor trust content TikTok @diodental ใช้สำหรับ chain-level content ส่วน diodentalsakhon ใช้สำหรับ local Sakon Nakhon content"
     },
     {
-      name: "Toothmate",
-      primary_platform: "facebook",
-      activity_level: "low",
-      posting_frequency: "สัปดาห์ละ 1-2 ครั้ง",
-      content_themes: ["before_after","educational","price_transparency","team_intro"],
-      promotions: [],
-      top_content: [
-        {platform:"Facebook", title:"รีวิวเคส Composite Veneer", url:"https://www.facebook.com/ToothmateDC/posts/831516172576361/"},
-        {platform:"Instagram", title:"อัตราค่ารักษาโรคเหงือกและปริทันต์", url:"https://www.instagram.com/toothmate_dc/p/Cgb_TrxvsHO/"}
+      "name": "Toothmate",
+      "primary_platform": "facebook",
+      "activity_level": "low",
+      "posting_frequency": "สัปดาห์ละ 1-2 ครั้ง",
+      "content_themes": [
+        "before_after",
+        "educational",
+        "price_transparency",
+        "team_intro"
       ],
-      notes: "จุดแข็ง: price list สาธารณะ + หมอจบมหิดล+จุฬา | Activity ต่ำสุดในกลุ่ม | ไม่พบโปรโมชัน W22"
+      "promotions": [],
+      "top_content": [
+        {
+          "platform": "facebook",
+          "title": "รีวิวเคส Composite Veneer — ติดต่อนัดหมายได้ทาง Inbox",
+          "views": null,
+          "url": "https://www.facebook.com/ToothmateDC/posts/831516172576361/",
+          "topic": "before_after composite veneer"
+        },
+        {
+          "platform": "instagram",
+          "title": "อัตราค่ารักษาโรคเหงือกและปริทันต์",
+          "views": null,
+          "url": "https://www.instagram.com/toothmate_dc/p/Cgb_TrxvsHO/",
+          "topic": "price transparency / educational"
+        }
+      ],
+      "notes": "Toothmate โดดเด่นด้วยการเปิดเผย price list บนเว็บ (toothmatedentalclinic.com/prices/) จุดแข็งคือหมอจบมหิดล+จุฬา Instagram มีผู้ติดตาม 111 คน (60 posts) — activity ต่ำกว่าคู่แข่งอื่น ไม่มีหลักฐาน TikTok activity ชัดเจน ไม่พบโปรโมชันพิเศษในช่วง W22"
     },
     {
-      name: "DentalPark",
-      primary_platform: "tiktok",
-      activity_level: "high",
-      posting_frequency: "สัปดาห์ละ 3-5 ครั้ง",
-      content_themes: ["before_after","educational","engagement","clear_aligner","adult_orthodontics","isaan_language"],
-      promotions: ["จัดฟันใส (clear aligner) นวัตกรรมใหม่ แบบสบาย"],
-      top_content: [
-        {platform:"TikTok", title:"จัดฟันใสด้วยนวัตกรรมใหม่ แบบสบายๆ", url:"https://www.tiktok.com/@dental.park.clinic/video/7583700467545394450"},
-        {platform:"TikTok", title:"รุ่นใหญ่ก็จัดฟันได้ #รุ่นใหญ่ก็ยิ้มมั่นใจได้", url:"https://www.tiktok.com/@dental.park.clinic/video/7574342787307474184"}
+      "name": "หมอจั่นเจา",
+      "primary_platform": "tiktok",
+      "activity_level": "medium",
+      "posting_frequency": "สัปดาห์ละ 1-2 ครั้ง (ประมาณ)",
+      "content_themes": [
+        "dental_education",
+        "denture_metal_base",
+        "denture_titanium",
+        "orthodontics_damon",
+        "before_after_cases",
+        "clinic_tour",
+        "pricing_info"
       ],
-      notes: "TikTok-first | identity 'แม่แฝดหมอจัดฟัน' | ภาษาอีสาน | push clear aligner + adult orthodontics อย่างจริงจัง"
+      "promotions": [
+        "ฟันปลอมฐานโลหะนำเข้าจากเยอรมัน ราคา 8,000 บาท/ซี่แรก ซี่ต่อไปซี่ละ 500 บาท รับประกัน 1 ปี ระยะเวลาทำ 7-14 วัน"
+      ],
+      "top_content": [
+        {
+          "platform": "tiktok",
+          "title": "ฟันปลอมฐานโลหะ เหมาะกับใคร?",
+          "views": null,
+          "url": "https://www.tiktok.com/@dr.piyawat5/video/7637037849770052885",
+          "topic": "ให้ความรู้ทันตกรรม — ล่าสุด ~3 สัปดาห์ที่แล้ว"
+        },
+        {
+          "platform": "facebook",
+          "title": "สาขาในเมืองพร้อมดูแลทุกรอยยิ้ม",
+          "views": null,
+          "url": "https://www.facebook.com/JunjaoDentalClinic/videos/1823402325200137/",
+          "topic": "เปิดสาขาใหม่ในเมืองสกลนคร"
+        }
+      ],
+      "notes": "TikTok @dr.piyawat5 active — video ล่าสุดที่พบคือ ฟันปลอมฐานโลหะ เหมาะกับใคร (3 สัปดาห์ก่อน) content เน้น dental education + ราคา + before/after จัดฟัน Facebook JunjaoDentalClinic ยืนยัน active มี media producer ดูแล content โดยเฉพาะ บริการหลัก: จัดฟัน (Damon, Clear, Self), รากฟันเทียม, ฟันปลอม (โลหะ/ไทเทเนียม), วีเนียร์, ฟอกสีฟัน สาขา: 272/10 ถ.นิตโย (หลัก) + 1865 ถ.รัฐพัฒนา (ในเมือง) + มุกดาหาร website: junjaodentalclinic.com"
     }
   ]
 };

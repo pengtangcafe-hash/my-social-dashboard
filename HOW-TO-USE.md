@@ -29,7 +29,20 @@
 | `/intel TOPIC CITY` | ค้นหาเจาะจง เช่น `/intel จัดฟัน สกลนคร` |
 | `/intel-deep` | วิเคราะห์คู่แข่งเชิงลึก 5 มิติ + บันทึก history + push GitHub |
 
-### ติดตามคู่แข่ง Before/After (ใหม่)
+### สรุปและวางแผน
+
+| คำสั่ง | ทำอะไร |
+|---|---|
+| `/weekly` | สร้าง weekly report — performance สัปดาห์นี้ vs ก่อน + แนะนำสัปดาห์หน้า |
+| `/weekly --show` | แสดง report ล่าสุดโดยไม่สร้างใหม่ |
+| `/content-ideas` | สร้างแผน content 7 วัน พร้อม caption ไทย + hashtags + เวลาโพสต์ |
+| `/content-ideas จัดฟัน` | เน้น content เรื่องจัดฟัน |
+| `/content-ideas โปรโมชั่น` | เน้น content โปรโมชั่น |
+| `/content-ideas --show` | แสดงแผนล่าสุดโดยไม่สร้างใหม่ |
+
+---
+
+### ติดตามคู่แข่ง Before/After
 
 | คำสั่ง | ทำอะไร |
 |---|---|
@@ -54,12 +67,18 @@
 ## Workflow ประจำสัปดาห์ (แนะนำ)
 
 ```
-1. Export CSV จาก TikTok / Facebook / Instagram
-2. วางไฟล์ใน sample-data/
-3. พิมพ์ /analyze          ← วิเคราะห์ของเรา
-4. พิมพ์ /comp-track --snapshot   ← บันทึกสถานะคู่แข่งสัปดาห์นี้
-5. พิมพ์ /intel            ← อัปเดตข่าว (ถ้าต้องการ)
-6. ดับเบิลคลิก update-dashboard.bat
+── วันจันทร์ (เริ่มสัปดาห์) ──────────────────────────
+1. พิมพ์ /weekly               ← สรุปสัปดาห์ที่แล้ว + แนะนำสัปดาห์นี้
+2. พิมพ์ /content-ideas        ← ได้แผน content 7 วัน พร้อม caption
+
+── ระหว่างสัปดาห์ ─────────────────────────────────────
+3. Export CSV จาก TikTok / Facebook / Instagram
+4. วางไฟล์ใน sample-data/
+5. พิมพ์ /analyze              ← วิเคราะห์ performance ของเรา
+
+── วันศุกร์/เสาร์ (ปิดสัปดาห์) ────────────────────────
+6. พิมพ์ /comp-track --snapshot    ← บันทึกสถานะคู่แข่งสัปดาห์นี้
+7. ดับเบิลคลิก update-dashboard.bat
    → dashboard บน GitHub Pages อัปเดตภายใน 2 นาที
 ```
 
@@ -123,10 +142,16 @@ git push
 | `data/competitors/` | JSON snapshots คู่แข่งรายสัปดาห์ (ระบบใหม่) |
 | `dashboard/` | HTML dashboards ล่าสุด (local preview) |
 | `reports/` | รายงาน intel, comparison, comp-track ทั้งหมด |
-| `src/competitor_tracker.py` | Python engine ของระบบติดตามคู่แข่ง |
-| `.claude/agents/comp-track-agent.md` | Agent ค้นหา + บันทึก snapshot |
+| `src/competitor_tracker.py` | Python engine ติดตามคู่แข่ง + inject COMP_TRACK เข้า dashboard |
+| `src/posting_time_analyzer.py` | วิเคราะห์วันดีที่สุดในการโพสต์ + inject BEST_DAYS |
+| `src/update_logger.py` | บันทึกประวัติการอัปเดตแต่ละ section + inject UPDATE_LOG |
+| `data/dental-calendar.json` | ปฏิทินทันตกรรม: ธีมรายเดือน, วันสำคัญ, hashtags |
+| `.claude/agents/comp-track-agent.md` | Agent ค้นหา + บันทึก snapshot คู่แข่ง |
+| `.claude/agents/weekly-agent.md` | Agent สร้าง weekly summary report |
+| `.claude/agents/content-ideas-agent.md` | Agent สร้างแผน content 7 วัน |
 | `.claude/agents/intel-agent.md` | Agent ค้นหาข่าวตลาด |
 | `docs/intelligence-brief.md` | ฐานข้อมูลคู่แข่งหลัก |
+| `update-dashboard.bat` | ดับเบิลคลิกเพื่อ regenerate + inject + push GitHub Pages |
 
 ---
 
