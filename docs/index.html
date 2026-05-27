@@ -632,6 +632,29 @@
       <!-- Platform Summary -->
       <div id="ads-platform-summary" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6"></div>
 
+      <!-- Content Radar Card -->
+      <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden mb-6 shadow-sm">
+        <div style="background:linear-gradient(90deg,#0f0c29,#302b63);padding:16px 20px" class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">📡</span>
+            <h2 class="text-sm font-black text-white uppercase tracking-wider">Content Radar</h2>
+            <span class="text-xs px-2 py-0.5 rounded-full font-semibold" style="background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.8)" id="radar-count-badge"></span>
+          </div>
+          <span class="text-xs" style="color:rgba(255,255,255,0.4)" id="radar-updated"></span>
+        </div>
+        <div class="flex flex-wrap gap-1 p-3 border-b border-slate-100" style="background:var(--nav-active)">
+          <button onclick="setRadarFilter('all')"     id="radarTab-all"     class="radar-tab text-xs px-3 py-1 rounded-full font-semibold transition-colors" style="background:#1e293b;color:#fff">ทั้งหมด</button>
+          <button onclick="setRadarFilter('counter')" id="radarTab-counter" class="radar-tab text-xs px-3 py-1 rounded-full font-semibold transition-colors" style="background:var(--grid);color:var(--text-muted)">⚔️ Counter</button>
+          <button onclick="setRadarFilter('mirror')"  id="radarTab-mirror"  class="radar-tab text-xs px-3 py-1 rounded-full font-semibold transition-colors" style="background:var(--grid);color:var(--text-muted)">🪞 Mirror</button>
+          <button onclick="setRadarFilter('own')"     id="radarTab-own"     class="radar-tab text-xs px-3 py-1 rounded-full font-semibold transition-colors" style="background:var(--grid);color:var(--text-muted)">👑 Own It</button>
+          <button onclick="setRadarFilter('expand')"  id="radarTab-expand"  class="radar-tab text-xs px-3 py-1 rounded-full font-semibold transition-colors" style="background:var(--grid);color:var(--text-muted)">🚀 Expand</button>
+        </div>
+        <div id="radar-items" class="divide-y divide-slate-100"></div>
+        <div id="radar-no-data" class="hidden p-8 text-center text-xs" style="color:var(--text-muted)">
+          รัน <code class="bg-slate-100 px-1 rounded">python src/content_radar.py generate</code> เพื่อสร้าง Content Radar
+        </div>
+      </div>
+
       <!-- Tips Banner -->
       <div class="rounded-2xl p-4 border" style="background:linear-gradient(135deg,#fefce8,#fef3c7);border-color:#fcd34d">
         <div class="flex items-start gap-3">
@@ -813,7 +836,7 @@ function initCharts(viewId) {
   if (viewId === 'view-pricing') { try { renderPricingView(); } catch(e) { console.error('renderPricingView', e); } return; }
   if (viewId === 'view-competitor-deep') { try { renderDeepTab(); } catch(e) { console.error('renderDeepTab', e); } return; }
   if (viewId === 'view-comp-track') { try { renderCompTrack(); } catch(e) { console.error('renderCompTrack', e); } return; }
-  if (viewId === 'view-ads') { try { renderAdCampaigns(); } catch(e) { console.error('renderAdCampaigns', e); } return; }
+  if (viewId === 'view-ads') { try { renderAdCampaigns(); renderContentRadar(); } catch(e) { console.error('renderAdCampaigns', e); } return; }
   const platform = viewId.replace('view-', '');
   if (!DATA[platform]) return;
   try { initLineChart(platform); } catch(e) { console.error('initLineChart', e); }
@@ -1382,6 +1405,9 @@ function gotoDeepDetail(idx) {
   if (idx < comps.length) { selectedDeepComp = comps[idx].id; }
   setDeepTab('detail');
 }
+
+// ── Content Radar Data ──
+const CONTENT_RADAR = {"generated_at": "2026-05-27", "competitor_count": 4, "opportunity_count": 10, "competitors": ["DentalPark", "DioDental", "Toothmate", "หมอจั่นเจา"], "items": [{"competitor": "DentalPark", "comp_theme": "รุ่นใหญ่ก็จัดฟันได้ — ประเมินฟัน เตรียมเหงือก พร้อมใส่เหล็กห…", "strategy": "counter", "strategy_label": "Counter", "strategy_icon": "⚔️", "strategy_color": "#ef4444", "service": "จัดฟันใส", "our_angle": "จัดฟันใส — เราใช้แบรนด์อะไร? เปรียบให้เห็น 3 ตัวเลือก", "hook": "จัดฟันใส ราคาต่างกันเพราะอะไร? หมอตอบตรงๆ ไม่มีกั๊ก →", "caption": "จัดฟันใส มีหลายแบบ ราคาต่างกันมาก เพราะ?\n\n💡 Invisible vs แบรนด์ name brand\n💡 ความแม่นยำของ 3D scan\n💡 ระยะเวลาที่ใส่\n\nไม่ต้องงง มาปรึกษาก่อน ฟรี ไม่มีค่าใช้จ่าย\nบอกความต้องการ หมอออกแบบให้เลย 🦷\n\n#จัดฟันใส #ClearAligner #จัดฟันสกลนคร", "hashtags": ["#จัดฟันใส", "#ClearAligner", "#จัดฟันราคา", "#จัดฟันสกลนคร"], "reel_outline": "0-3s: 'จัดฟันใสราคาต่างกันมาก' | 4-10s: อธิบาย 3 ปัจจัย (graphic simple) | 11-14s: 'ปรึกษาเราก่อนได้เลย' | 15s: CTA", "platform": "tiktok"}, {"competitor": "DentalPark", "comp_theme": "DentalPark — before_after, educational", "strategy": "counter", "strategy_label": "Counter", "strategy_icon": "⚔️", "strategy_color": "#ef4444", "service": "ทั่วไป", "our_angle": "เปิดราคาตรง ไม่มีซ่อน — ดูก่อนตัดสินใจ", "hook": "ราคาทำฟันที่สกลนคร — เราเปิดให้ดูตรงๆ เลย", "caption": "อยากรู้ราคาก่อนนัด? บอกได้เลย 🦷\n\n💰 ขูดหินปูน — เริ่ม 500 บาท\n💰 อุดฟัน — เริ่ม 300 บาท\n💰 ฟอกสีฟัน — เริ่ม 1,490 บาท\n💰 จัดฟัน — เริ่ม 25,000 บาท\n💰 รากฟันเทียม — เริ่ม 30,000 บาท\n\nทุกราคาบวกก็บอก ไม่มีค่าแอบซ่อน\nปรึกษาฟรีก่อนตัดสินใจ 📲\n\n#ราคาทำฟัน #ทันตกรรมสกลนคร #ราคาโปร่งใส", "hashtags": ["#ราคาทำฟัน", "#ทันตกรรมสกลนคร", "#ราคาทำฟันสกลนคร", "#จัดฟันราคา"], "reel_outline": "0-3s: 'อยากรู้ราคา ดูได้เลย' | 4-12s: scroll ผ่านรายการราคา graphic | 13-15s: 'ปรึกษาก่อน ฟรี' CTA", "platform": "facebook"}, {"competitor": "DentalPark", "comp_theme": "รุ่นใหญ่ก็จัดฟันได้ — ประเมินฟัน เตรียมเหงือก พร้อมใส่เหล็กห…", "strategy": "mirror", "strategy_label": "Mirror", "strategy_icon": "🪞", "strategy_color": "#8b5cf6", "service": "จัดฟันใส", "our_angle": "รุ่นใหญ่ก็สดใสได้ — จัดฟันใส ไม่เห็นเหล็ก ไปทำงานได้", "hook": "อายุ 30+ อยากจัดฟัน แต่กลัวเหมือนเด็กม.ต้น? มาดูวิธีที่เขาไม่บอก →", "caption": "รุ่นใหญ่ก็สดใสได้ ✨\n\nจัดฟันใส (Clear Aligner) ใส่แล้วไม่มีใครรู้\nทำงานได้ ประชุมได้ กินข้าวได้\nถอดล้างง่าย ไม่ต้องงดอาหารที่ชอบ\n\nปรึกษาฟรี ไม่มีค่าใช้จ่าย 📲\n\n#จัดฟันใส #ClearAligner #จัดฟันสกลนคร #ผู้ใหญ่ก็จัดฟันได้", "hashtags": ["#จัดฟันใส", "#จัดฟันสกลนคร", "#รุ่นใหญ่ก็ยิ้มได้", "#ClearAligner", "#ทันตกรรมสกลนคร"], "reel_outline": "0-3s: Show ผู้หญิงอายุ 35+ กำลังรอยยิ้มสวย | 4-8s: 'ฉันจัดฟันตอนอายุ 37' | 9-12s: ก่อน-หลัง clear aligner | 13-15s: 'ปรึกษาฟรีวันนี้'", "platform": "tiktok"}, {"competitor": "DentalPark", "comp_theme": "engagement", "strategy": "mirror", "strategy_label": "Mirror", "strategy_icon": "🪞", "strategy_color": "#8b5cf6", "service": "ทั่วไป", "our_angle": "Relatable humor สไตล์อีสาน — ชีวิตคนที่กลัวหมอฟันแต่อยากฟันสวย", "hook": "คนที่กลัวหมอฟัน 🆚 คนที่อยากฟันสวย — อยู่คนเดียวกัน", "caption": "สิ่งที่คนที่กลัวหมอฟันเป็นทุกคน 😂\n\n'เดี๋ยวไปนะ... เดือนหน้า'\n'ยังไม่เจ็บมาก รอได้'\n'ไปแล้วแต่นัดไม่ได้ซักที'\n\nฉันรู้จักคนแบบนี้ (ก็ตัวเอง 555)\n\nแต่ถ้าพร้อมแล้ว เราพร้อมรอนะ 🦷❤️\nnot judgment, just dental love\n\n#กลัวหมอฟัน #ทันตกรรมสกลนคร #relatable", "hashtags": ["#กลัวหมอฟัน", "#ทันตกรรมสกลนคร", "#relatable", "#ฟันดี"], "reel_outline": "0-5s: แสดง 'inner monologue' คนที่เลื่อนนัดซ้ำ (text overlay) | 6-12s: สลับกับความจริงที่รู้อยู่ | 13-15s: 'พร้อมแล้วมาได้เลย'", "platform": "tiktok"}, {"competitor": "DioDental", "comp_theme": "พาทัวร์สาขาสกลนคร ฟันสะอาด บรรยากาศดี", "strategy": "mirror", "strategy_label": "Mirror", "strategy_icon": "🪞", "strategy_color": "#8b5cf6", "service": "คลินิก", "our_angle": "ทัวร์คลินิก — 'ทำไมลูกค้าถึงกลับมาซ้ำ?' หมอพาดู", "hook": "ครั้งแรกที่เข้าคลินิกทันตกรรม กลัวไหม? เข้าก่อนดูก่อนได้เลย →", "caption": "กลัวหมอฟัน? ปกติมากเลย 😊\n\nมาดูก่อนว่าคลินิกเราเป็นยังไง ก่อนตัดสินใจนัด\nบรรยากาศอบอุ่น เครื่องมือทันสมัย หมอใจดี\n\nเปิดบริการ จ-ศ 09:00-19:00 เสาร์-อาทิตย์ 09:00-17:00\nโทรนัดหรือ inbox มาเลย ไม่ต้องรอ 📲\n\n#ทันตกรรมสกลนคร #คลินิกฟันสกลนคร #กลัวหมอฟัน", "hashtags": ["#ทันตกรรมสกลนคร", "#คลินิกฟัน", "#กลัวหมอฟัน", "#สกลนคร"], "reel_outline": "0-3s: หน้าคลินิก shot | 4-10s: walk-through ห้องรอ ห้องรักษา | 11-14s: หมอยิ้มพูดทัก | 15s: ที่อยู่ + เบอร์", "platform": "facebook"}, {"competitor": "DentalPark", "comp_theme": "before_after", "strategy": "own", "strategy_label": "Own It", "strategy_icon": "👑", "strategy_color": "#10b981", "service": "จัดฟัน", "our_angle": "Before/After series จริง — ไม่ตกแต่ง ไม่กรอง", "hook": "6 เดือนที่ผ่านมา ฟันเปลี่ยนไปขนาดนี้ (ดูจริงๆ ไม่ใช้ filter) →", "caption": "นี่คือผลลัพธ์จริง — ไม่ filter ไม่แต่ง ✅\n\nคนไข้ของเราเริ่มต้นด้วยฟันซ้อน 6 เดือนต่อมาเห็นความเปลี่ยนแปลงชัดเจน\n\nทุกเคสไม่เหมือนกัน แต่ทุกเคสเราดูแลด้วยหัวใจ 🦷❤️\n\nอยากรู้ว่าเคสคุณใช้เวลาเท่าไหร่? มาปรึกษาฟรี\n\n#จัดฟันสกลนคร #BeforeAfter #จัดฟันได้ผลจริง", "hashtags": ["#จัดฟันสกลนคร", "#BeforeAfter", "#จัดฟันผลจริง", "#ทันตกรรมสกลนคร"], "reel_outline": "0-2s: ภาพก่อน (ไม่มีแสง fancy) | 3-8s: กระบวนการ (รวบรัด) | 9-14s: ผลหลัง reveal | 15s: 'นัดปรึกษาฟรี'", "platform": "tiktok"}, {"competitor": "—", "comp_theme": "(ไม่มีคู่แข่งทำ)", "strategy": "own", "strategy_label": "Own It", "strategy_icon": "👑", "strategy_color": "#10b981", "service": "ทั่วไป", "our_angle": "'หมอตอบตรงๆ' — FAQ series ที่คู่แข่งไม่กล้าตอบ", "hook": "คำถามที่คนกลัวถามหมอฟัน — หมอตอบตรงๆ ทุกข้อ", "caption": "หมอตอบตรง ไม่กั๊ก 🎤\n\nQ: จัดฟันเจ็บไหม?\nA: เจ็บแน่ แต่แค่ 2-3 วันแรก หลังจากนั้นชิน\n\nQ: ต้องถอนฟันก่อนจัดไหม?\nA: ขึ้นกับเคส ไม่ใช่ทุกคน\n\nQ: จัดฟันแล้วต้องใส่รีเทนเนอร์นานไหม?\nA: ใส่ตลอดชีวิตคืน ถ้าไม่อยากฟันกลับ\n\nอยากรู้อะไรอีก? comment ไว้ตอบเลย ⬇️\n\n#จัดฟันสกลนคร #FAQ #หมอตอบตรง #ทันตกรรม", "hashtags": ["#FAQ", "#หมอตอบตรง", "#จัดฟัน", "#ทันตกรรมสกลนคร", "#จัดฟันสกลนคร"], "reel_outline": "0-3s: 'คำถามที่คนกลัวถาม' | 4-12s: Q&A 3 ข้อ ตอบเร็ว | 13-15s: 'มีคำถามอื่น? Comment!' | ใช้ text overlay + face cam", "platform": "tiktok"}, {"competitor": "—", "comp_theme": "(ไม่มีคู่แข่งทำ)", "strategy": "own", "strategy_label": "Own It", "strategy_icon": "👑", "strategy_color": "#10b981", "service": "ฟอกสีฟัน", "our_angle": "ฟอกสีฟัน 1 ชั่วโมง ขาวขึ้น 5 เฉดสี — ทดสอบจริง", "hook": "ฟันเหลืองทั้งที่แปรงทุกวัน? นี่คือสาเหตุจริงๆ และวิธีแก้ →", "caption": "ฟันไม่ขาวทั้งที่แปรงทุกวัน? 😰\n\nเหตุผลจริง:\n☕ กาแฟ ชา — ฝังสีในเนื้อฟัน\n🍷 อาหารสีเข้ม — สะสมทุกวัน\n⏰ อายุ — ฟันเหลืองตามธรรมชาติ\n\nแก้ได้ด้วยฟอกสีฟัน 1 ชั่วโมง\nขาวขึ้นทันที ไม่เจ็บ ไม่ตัดฟัน\n\nราคาเริ่มต้น 1,490 บาท 💬 DM สอบถามได้\n\n#ฟอกสีฟัน #ฟอกสีฟันสกลนคร #ฟันขาว #Whitening", "hashtags": ["#ฟอกสีฟัน", "#ฟอกสีฟันสกลนคร", "#ฟันขาว", "#Whitening", "#ทันตกรรมสกลนคร"], "reel_outline": "0-3s: Close-up ฟันก่อน | 4-8s: อธิบาย 3 สาเหตุ fast cut | 9-13s: กระบวนการฟอก montage | 14-15s: ฟันหลัง + ราคา", "platform": "tiktok"}, {"competitor": "Toothmate", "comp_theme": "รีวิวเคส Composite Veneer — ติดต่อนัดหมายก่อนเข้ารับบริการ", "strategy": "expand", "strategy_label": "Expand", "strategy_icon": "🚀", "strategy_color": "#0ea5e9", "service": "วีเนียร์", "our_angle": "Composite Veneer vs Porcelain — ต่างกันยังไง? เลือกแบบไหนคุ้มกว่า", "hook": "วีเนียร์มี 2 แบบ ราคาต่างกัน 5 เท่า แต่ผลต่างกันเท่าไหร่?", "caption": "วีเนียร์ฟัน มีกี่แบบ รู้ไหม? 🦷\n\n✅ Composite Veneer — ทำวันเดียวเสร็จ ราคาเป็นมิตร แก้ไขได้\n✅ Porcelain Veneer — ทนทานกว่า สีสวยกว่า อายุ 10-15 ปี\n\nเลือกแบบไหนดีกว่า? ขึ้นอยู่กับฟันและงบของคุณ\nปรึกษาหมอก่อน ฟรี ไม่มีข้อผูกมัด 📲\n\n#วีเนียร์ #ฟันสวย #ทันตกรรมสกลนคร #Veneer", "hashtags": ["#วีเนียร์", "#ฟันสวย", "#CompositeVeneer", "#ทันตกรรมสกลนคร"], "reel_outline": "0-3s: Hook graphic 'วีเนียร์ 2 แบบ ต่างกันไหม?' | 4-10s: อธิบาย side-by-side | 11-14s: ก่อน-หลัง veneer จริง | 15s: CTA", "platform": "instagram"}, {"competitor": "หมอจั่นเจา", "comp_theme": "ฟันปลอมฐานโลหะ เหมาะกับใคร?", "strategy": "expand", "strategy_label": "Expand", "strategy_icon": "🚀", "strategy_color": "#0ea5e9", "service": "ฟันปลอม", "our_angle": "ฟันปลอม 3 แบบ เลือกแบบไหนเหมาะกับคุณ? หมอตอบ 60 วิ", "hook": "ฟันปลอมถอดได้ vs ฟันปลอมติดแน่น — ต่างกันยังไง ใครควรทำแบบไหน?", "caption": "ฟันปลอม มี 3 แบบ เลือกผิดเสียดาย 😬\n\n1️⃣ ฟันปลอมฐานอะคริลิก — ราคาประหยัด\n2️⃣ ฟันปลอมฐานโลหะ — แข็งแรง บางกว่า\n3️⃣ รากฟันเทียม — ใส่สบายที่สุด ถาวร\n\nเลือกตามงบ ตามสุขภาพกระดูก ตามไลฟ์สไตล์\nปรึกษาฟรี หมอแนะนำตรงๆ 📲\n\n#ฟันปลอมสกลนคร #รากฟันเทียม #ทันตกรรมสกลนคร", "hashtags": ["#ฟันปลอมสกลนคร", "#ฟันปลอม", "#รากฟันเทียม", "#ทันตกรรมสกลนคร"], "reel_outline": "0-3s: 'ฟันปลอมมี 3 แบบ คุณรู้ไหม?' | 4-12s: อธิบายแต่ละแบบ 3 วิ | 13-15s: 'บอกหมอได้เลยว่าต้องการอะไร'", "platform": "tiktok"}]};
 
 // ── Ad Campaign Data ──
 const AD_CAMPAIGNS = {"generated_at": "2026-05-27", "total_campaigns": 2, "total_spent": 4250.0, "total_reach": 18500, "total_leads": 12, "avg_cpl": 354.0, "campaigns": [{"id": "camp-001", "platform": "facebook", "service": "จัดฟัน", "objective": "leads", "budget": 3000.0, "budget_spent": 2750.0, "start_date": "2026-05-27", "end_date": "2026-06-10", "days": 14, "status": "active", "reach": 18500, "impressions": 0, "clicks": 0, "leads": 12, "actual_revenue": 0.0, "notes": "", "created_at": "2026-05-27", "spent": 2750.0, "cpr": 0.15, "cpl": 229.0, "ctr": 0.0, "roas": 39.27, "color": "#1877f2"}, {"id": "camp-002", "platform": "tiktok", "service": "ฟอกสีฟัน", "objective": "leads", "budget": 1500.0, "budget_spent": 0.0, "start_date": "2026-05-27", "end_date": "2026-06-03", "days": 7, "status": "active", "reach": 0, "impressions": 0, "clicks": 0, "leads": 0, "actual_revenue": 0.0, "notes": "", "created_at": "2026-05-27", "spent": 1500.0, "cpr": null, "cpl": null, "ctr": null, "roas": null, "color": "#010101"}]};
@@ -2326,6 +2352,97 @@ function renderAdCampaigns() {
     tipEl.innerHTML = '🏆 <strong>' + best.id + ' (' + best.service + ')</strong> มี ROAS สูงสุด <strong>' + best.roas + 'x</strong> — ควร Scale Budget ขึ้นก่อน campaign อื่น'
       + ' • รัน <code class="bg-amber-100 px-1 rounded">/ad-report</code> เพื่อดู ROI Report ฉบับเต็ม';
   }
+}
+
+// ── Content Radar ──
+var _radarFilter = 'all';
+
+function setRadarFilter(f) {
+  _radarFilter = f;
+  document.querySelectorAll('.radar-tab').forEach(function(btn) {
+    var isActive = btn.id === 'radarTab-' + f;
+    btn.style.background = isActive ? '#1e293b' : 'var(--grid)';
+    btn.style.color      = isActive ? '#fff'    : 'var(--text-muted)';
+  });
+  renderContentRadar();
+}
+
+function renderContentRadar() {
+  var listEl   = document.getElementById('radar-items');
+  var noEl     = document.getElementById('radar-no-data');
+  var badgeEl  = document.getElementById('radar-count-badge');
+  var updEl    = document.getElementById('radar-updated');
+  if (!listEl) return;
+
+  var rd = (typeof CONTENT_RADAR !== 'undefined') ? CONTENT_RADAR : null;
+  if (!rd || !rd.items || rd.items.length === 0) {
+    if (noEl) noEl.classList.remove('hidden');
+    return;
+  }
+  if (noEl) noEl.classList.add('hidden');
+  if (updEl) updEl.textContent = 'อัปเดต ' + (rd.generated_at || '');
+
+  var items = rd.items;
+  if (_radarFilter !== 'all') {
+    items = items.filter(function(x) { return x.strategy === _radarFilter; });
+  }
+  if (badgeEl) badgeEl.textContent = items.length + ' ไอเดีย';
+
+  var platColors = { facebook:'#1877f2', tiktok:'#010101', instagram:'#e1306c' };
+
+  var html = '';
+  items.forEach(function(item) {
+    var pcolor = platColors[item.platform] || '#94a3b8';
+    var stratBg = item.strategy_color + '20';  // 12% opacity hex approximation
+    var hashHtml = (item.hashtags || []).map(function(h) {
+      return '<span class="text-xs px-1.5 py-0.5 rounded font-medium" style="background:var(--nav-active);color:var(--text-muted)">' + h + '</span>';
+    }).join(' ');
+
+    html += '<div class="p-4 hover:bg-slate-50 transition-colors" style="cursor:default">';
+    // Row 1: strategy badge + competitor + platform
+    html += '<div class="flex flex-wrap items-center gap-2 mb-2">';
+    html += '<span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background:' + item.strategy_color + '22;color:' + item.strategy_color + '">'
+          + item.strategy_icon + ' ' + item.strategy_label + '</span>';
+    html += '<span class="text-xs" style="color:var(--text-muted)">vs <strong style="color:var(--text)">' + item.competitor + '</strong></span>';
+    html += '<span class="ml-auto text-xs font-bold px-2 py-0.5 rounded-md text-white" style="background:' + pcolor + '">' + item.platform.toUpperCase() + '</span>';
+    html += '</div>';
+    // Row 2: competitor content
+    html += '<p class="text-xs mb-1" style="color:var(--text-muted)">เขา: <em>' + item.comp_theme + '</em></p>';
+    // Row 3: our angle (bold)
+    html += '<p class="text-sm font-bold mb-2" style="color:var(--text)">เรา: ' + item.our_angle + '</p>';
+    // Hook (collapsed style)
+    html += '<div class="rounded-lg px-3 py-2 mb-2 text-xs italic" style="background:var(--nav-active);color:var(--text)">'
+          + '🎣 ' + item.hook + '</div>';
+    // Service + hashtags
+    html += '<div class="flex flex-wrap items-center gap-2">';
+    html += '<span class="text-xs px-2 py-0.5 rounded-full font-medium" style="background:var(--badge-bg);color:var(--badge-txt)">🦷 ' + item.service + '</span>';
+    html += hashHtml;
+    // Expand: caption toggle
+    html += '<button onclick="toggleCaption(this)" class="ml-auto text-xs underline" style="color:var(--accent)">ดู caption ▾</button>';
+    html += '</div>';
+    // Caption (hidden by default)
+    html += '<div class="radar-caption hidden mt-2 rounded-lg p-3 text-xs leading-relaxed whitespace-pre-wrap" style="background:var(--nav-active);color:var(--text)">';
+    html += item.caption;
+    html += '</div>';
+    // Reel outline (hidden)
+    if (item.reel_outline) {
+      html += '<div class="radar-caption hidden mt-1 rounded-lg p-3 text-xs leading-relaxed" style="background:#f0fdf4;color:#166534">';
+      html += '🎬 Reel: ' + item.reel_outline;
+      html += '</div>';
+    }
+    html += '</div>';
+  });
+
+  listEl.innerHTML = html;
+}
+
+function toggleCaption(btn) {
+  var parent = btn.closest('.p-4');
+  if (!parent) return;
+  var panels = parent.querySelectorAll('.radar-caption');
+  var isOpen = panels[0] && !panels[0].classList.contains('hidden');
+  panels.forEach(function(p) { p.classList.toggle('hidden', isOpen); });
+  btn.textContent = isOpen ? 'ดู caption ▾' : 'ซ่อน ▴';
 }
 
 // ── Boot ──

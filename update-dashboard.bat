@@ -35,6 +35,9 @@ if errorlevel 1 echo [WARNING] content_category_analyzer inject failed (continui
 python src\ad_tracker.py inject dashboard\index.html
 if errorlevel 1 echo [WARNING] ad_tracker inject failed (continuing...)
 
+python src\content_radar.py inject dashboard\index.html
+if errorlevel 1 echo [WARNING] content_radar inject failed (continuing...)
+
 echo [update-dashboard] All constants injected.
 
 :: Step 3: Copy to docs/ for GitHub Pages
