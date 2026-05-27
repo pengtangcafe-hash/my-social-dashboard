@@ -42,6 +42,38 @@
 
 ---
 
+### โฆษณา (Advertising — Organic + Paid)
+
+| คำสั่ง | ทำอะไร |
+|---|---|
+| `/ad-strategy` | วิเคราะห์คู่แข่ง + สร้างกลยุทธ์โฆษณาครบวงจร (Organic + Paid) พร้อม 30-Day Plan |
+| `/ad-strategy จัดฟัน` | เน้น strategy สำหรับบริการจัดฟันโดยเฉพาะ |
+| `/ad-brief จัดฟัน facebook` | สร้าง Creative Brief — Persona, USP, Budget, Timeline, Targeting |
+| `/ad-brief ฟอกสีฟัน tiktok` | Brief สำหรับ TikTok Ads |
+| `/ad-copy จัดฟัน facebook` | เขียน Ad Copy ภาษาไทย 3 Variations พร้อม Hook + CTA (A/B test ready) |
+| `/ad-copy รากเทียม tiktok script` | เขียน Script วิดีโอ TikTok เต็มรูปแบบ พร้อม Visual Timeline |
+| `/ad-track log facebook จัดฟัน 3000` | บันทึก campaign ใหม่ (platform / บริการ / งบ) |
+| `/ad-track update camp-001 --reach 15000 --leads 23` | อัปเดตผลลัพธ์ campaign |
+| `/ad-track list` | ดู campaigns ทั้งหมดที่มี |
+| `/ad-report` | สรุป ROI ทุก campaign — CPR, CPL, ROAS, Organic vs Paid |
+| `/ad-report vs-organic` | เปรียบเทียบ paid campaign vs organic content performance |
+
+**KPI ที่ track อัตโนมัติ:** CPR (Cost per Reach) | CPL (Cost per Lead) | CTR | ROAS
+
+**บันทึก campaign ทาง CLI ตรงๆ:**
+```bash
+# เริ่ม campaign ใหม่
+python src/ad_tracker.py log facebook "จัดฟัน" 3000 --days 14 --objective leads
+
+# อัปเดตผลลัพธ์หลัง campaign รัน
+python src/ad_tracker.py update camp-001 --reach 18500 --leads 12 --spend 2750
+
+# ดูทุก campaign + KPIs
+python src/ad_tracker.py show
+```
+
+---
+
 ### ติดตามคู่แข่ง Before/After
 
 | คำสั่ง | ทำอะไร |
@@ -200,6 +232,9 @@ git push
 | `data/competitors/` | JSON snapshots คู่แข่งรายสัปดาห์ (ระบบใหม่) |
 | `dashboard/` | HTML dashboards ล่าสุด (local preview) |
 | `reports/` | รายงาน intel, comparison, comp-track ทั้งหมด |
+| `src/ad_tracker.py` | บันทึก + คำนวณ KPI ad campaigns (CPR, CPL, ROAS) + inject AD_CAMPAIGNS |
+| `data/ad-campaigns.json` | ข้อมูล campaigns ทั้งหมด (platform, budget, reach, leads) |
+| `.claude/agents/advertising-agent.md` | Agent วิเคราะห์คู่แข่ง + สร้าง strategy/brief/copy |
 | `src/competitor_tracker.py` | Python engine ติดตามคู่แข่ง + inject COMP_TRACK เข้า dashboard |
 | `src/goal_tracker.py` | ติดตาม KPI vs เป้าหมายรายเดือน + inject GOAL_DATA |
 | `src/monthly_trend.py` | แนวโน้ม Reach/Engagement รายสัปดาห์-รายเดือน + inject MONTHLY_TREND |
