@@ -313,6 +313,20 @@
       </button>
 
       <div class="pt-2 pb-1">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Advertising</p>
+      </div>
+
+      <button onclick="showView('view-ads')" id="nav-ads"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+        ⚡ Ad Campaigns
+      </button>
+
+      <div class="pt-2 pb-1">
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Tools</p>
       </div>
 
@@ -552,6 +566,88 @@
       </div>
     </div>
 
+    <!-- ── Ad Campaigns View ── -->
+    <div id="view-ads" class="view">
+
+      <!-- Hero Banner -->
+      <div class="rounded-3xl p-6 mb-6 relative overflow-hidden"
+           style="background:linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#1a0a2e 100%)">
+        <!-- Glowing orbs decoration -->
+        <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;
+                    background:radial-gradient(circle,rgba(239,68,68,0.3) 0%,transparent 70%);
+                    border-radius:50%;pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-60px;left:100px;width:250px;height:250px;
+                    background:radial-gradient(circle,rgba(245,158,11,0.2) 0%,transparent 70%);
+                    border-radius:50%;pointer-events:none;"></div>
+
+        <div class="relative">
+          <div class="flex flex-wrap items-center gap-3 mb-4">
+            <span class="text-2xl">⚡</span>
+            <h1 class="text-3xl font-black text-white">Ad Campaigns</h1>
+            <span class="text-xs px-2.5 py-1 rounded-full font-bold uppercase tracking-wider"
+                  style="background:rgba(239,68,68,0.25);color:#fca5a5;border:1px solid rgba(239,68,68,0.4)">
+              🔥 Market Attack Mode
+            </span>
+          </div>
+
+          <!-- Summary KPI row -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="ads-hero-kpis">
+            <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12)">
+              <div class="text-xs uppercase tracking-widest mb-1" style="color:rgba(255,255,255,0.5)">งบที่ใช้</div>
+              <div class="text-2xl font-black text-white" id="ads-kpi-spent">—</div>
+              <div class="text-xs mt-0.5" style="color:rgba(255,255,255,0.4)">บาท</div>
+            </div>
+            <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12)">
+              <div class="text-xs uppercase tracking-widest mb-1" style="color:rgba(255,255,255,0.5)">Reach รวม</div>
+              <div class="text-2xl font-black text-white" id="ads-kpi-reach">—</div>
+              <div class="text-xs mt-0.5" style="color:rgba(255,255,255,0.4)">คน</div>
+            </div>
+            <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12)">
+              <div class="text-xs uppercase tracking-widest mb-1" style="color:rgba(255,255,255,0.5)">Leads รวม</div>
+              <div class="text-2xl font-black" style="color:#fbbf24" id="ads-kpi-leads">—</div>
+              <div class="text-xs mt-0.5" style="color:rgba(255,255,255,0.4)">คน</div>
+            </div>
+            <div class="rounded-2xl p-4" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12)">
+              <div class="text-xs uppercase tracking-widest mb-1" style="color:rgba(255,255,255,0.5)">CPL เฉลี่ย</div>
+              <div class="text-2xl font-black" style="color:#34d399" id="ads-kpi-cpl">—</div>
+              <div class="text-xs mt-0.5" style="color:rgba(255,255,255,0.4)">บาท/lead</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Campaign Cards -->
+      <div id="ads-campaign-list" class="space-y-4 mb-6"></div>
+
+      <!-- No data message -->
+      <div id="ads-no-data" class="hidden bg-white rounded-2xl border border-slate-200 p-8 text-center">
+        <div class="text-4xl mb-3">🚀</div>
+        <p class="font-bold text-slate-700 mb-1">ยังไม่มี Campaign</p>
+        <p class="text-xs text-slate-500 mb-4">เริ่มต้นด้วย CLI เพื่อบันทึก campaign แรก</p>
+        <code class="text-xs bg-slate-100 px-3 py-1.5 rounded-lg text-slate-600">
+          python src/ad_tracker.py log facebook จัดฟัน 3000
+        </code>
+      </div>
+
+      <!-- Platform Summary -->
+      <div id="ads-platform-summary" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6"></div>
+
+      <!-- Tips Banner -->
+      <div class="rounded-2xl p-4 border" style="background:linear-gradient(135deg,#fefce8,#fef3c7);border-color:#fcd34d">
+        <div class="flex items-start gap-3">
+          <span class="text-xl">💡</span>
+          <div>
+            <p class="text-sm font-bold text-amber-900 mb-1">เคล็ดลับตีตลาด</p>
+            <p class="text-xs text-amber-800 leading-relaxed" id="ads-tip">
+              รัน <code class="bg-amber-100 px-1 rounded">/ad-strategy</code> เพื่อดูกลยุทธ์เต็มรูปแบบ
+              หรือ <code class="bg-amber-100 px-1 rounded">/ad-brief [บริการ] [platform]</code> เพื่อสร้าง Creative Brief สำหรับ campaign ถัดไป
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
     <!-- ── Competitor Deep View ── -->
     <div id="view-competitor-deep" class="view">
       <h1 class="text-3xl font-black mb-1" style="color:var(--text)">วิเคราะห์เชิงลึกคู่แข่ง</h1>
@@ -717,6 +813,7 @@ function initCharts(viewId) {
   if (viewId === 'view-pricing') { try { renderPricingView(); } catch(e) { console.error('renderPricingView', e); } return; }
   if (viewId === 'view-competitor-deep') { try { renderDeepTab(); } catch(e) { console.error('renderDeepTab', e); } return; }
   if (viewId === 'view-comp-track') { try { renderCompTrack(); } catch(e) { console.error('renderCompTrack', e); } return; }
+  if (viewId === 'view-ads') { try { renderAdCampaigns(); } catch(e) { console.error('renderAdCampaigns', e); } return; }
   const platform = viewId.replace('view-', '');
   if (!DATA[platform]) return;
   try { initLineChart(platform); } catch(e) { console.error('initLineChart', e); }
@@ -1285,6 +1382,9 @@ function gotoDeepDetail(idx) {
   if (idx < comps.length) { selectedDeepComp = comps[idx].id; }
   setDeepTab('detail');
 }
+
+// ── Ad Campaign Data ──
+const AD_CAMPAIGNS = {"generated_at": "2026-05-27", "total_campaigns": 2, "total_spent": 4250.0, "total_reach": 18500, "total_leads": 12, "avg_cpl": 354.0, "campaigns": [{"id": "camp-001", "platform": "facebook", "service": "จัดฟัน", "objective": "leads", "budget": 3000.0, "budget_spent": 2750.0, "start_date": "2026-05-27", "end_date": "2026-06-10", "days": 14, "status": "active", "reach": 18500, "impressions": 0, "clicks": 0, "leads": 12, "actual_revenue": 0.0, "notes": "", "created_at": "2026-05-27", "spent": 2750.0, "cpr": 0.15, "cpl": 229.0, "ctr": 0.0, "roas": 39.27, "color": "#1877f2"}, {"id": "camp-002", "platform": "tiktok", "service": "ฟอกสีฟัน", "objective": "leads", "budget": 1500.0, "budget_spent": 0.0, "start_date": "2026-05-27", "end_date": "2026-06-03", "days": 7, "status": "active", "reach": 0, "impressions": 0, "clicks": 0, "leads": 0, "actual_revenue": 0.0, "notes": "", "created_at": "2026-05-27", "spent": 1500.0, "cpr": null, "cpl": null, "ctr": null, "roas": null, "color": "#010101"}]};
 
 // ── Content Category Data ──
 const CONTENT_PERF = {"generated_at": "2026-05-27", "has_format_data": true, "has_category_data": true, "total_logged_posts": 4, "fb_formats": {"labels": ["Reels", "รูปภาพ", "สตอรี่", "หลายรูปภาพ", "ข้อความ", "อื่นๆ", "ลิงก์"], "reach": [181, 169, 53, 36, 35, 8, 0], "engagement": [8, 13, 31, 0, 9, 0, 0], "impressions": [31729, 20394, 0, 2894, 4605, 681, 624], "top_reach": "Reels", "top_engagement": "สตอรี่"}, "categories": {"education": {"label": "ความรู้ทันตกรรม", "emoji": "💡", "posts": 1, "avg_reach": 4800, "avg_eng_rate": 5.94}, "before_after": {"label": "ก่อน-หลังรักษา", "emoji": "✨", "posts": 1, "avg_reach": 2100, "avg_eng_rate": 9.43}, "faq": {"label": "ตอบคำถามที่พบบ่อย", "emoji": "❓", "posts": 1, "avg_reach": 7200, "avg_eng_rate": 8.5}, "promotion": {"label": "โปรโมชั่น", "emoji": "🎁", "posts": 1, "avg_reach": 950, "avg_eng_rate": 7.05}, "behind_scenes": {"label": "เบื้องหลังคลินิก", "emoji": "🏥", "posts": 0, "avg_reach": 0, "avg_eng_rate": 0}, "local": {"label": "Content สกลนคร", "emoji": "🌊", "posts": 0, "avg_reach": 0, "avg_eng_rate": 0}}, "top_category": "before_after", "recommendation": "'Reels' สร้าง Reach สูงสุดบน Facebook — เพิ่มสัดส่วนในแผน content • 'สตอรี่' ได้ Engagement ต่อโพสต์สูงสุด • '✨ ก่อน-หลังรักษา' engagement rate เฉลี่ย 9.4% — แนะนำเพิ่ม content ประเภทนี้"};
@@ -2102,6 +2202,129 @@ function renderContentPerf() {
     recEl.innerHTML = '<span class="font-semibold">💡 Insight:</span> ' + cp.recommendation;
   } else {
     recEl.style.display = 'none';
+  }
+}
+
+// ── Ad Campaigns ──
+function fmt(n, decimals) {
+  if (n == null) return '—';
+  if (decimals !== undefined) return n.toLocaleString('th-TH', {minimumFractionDigits: decimals, maximumFractionDigits: decimals});
+  return n.toLocaleString('th-TH');
+}
+
+function renderAdCampaigns() {
+  var ad = (typeof AD_CAMPAIGNS !== 'undefined') ? AD_CAMPAIGNS : null;
+  var listEl = document.getElementById('ads-campaign-list');
+  var noDataEl = document.getElementById('ads-no-data');
+  var platformEl = document.getElementById('ads-platform-summary');
+  if (!listEl) return;
+
+  if (!ad || !ad.campaigns || ad.campaigns.length === 0) {
+    if (noDataEl) noDataEl.classList.remove('hidden');
+    return;
+  }
+  if (noDataEl) noDataEl.classList.add('hidden');
+
+  // Hero KPIs
+  var spentEl = document.getElementById('ads-kpi-spent');
+  var reachEl = document.getElementById('ads-kpi-reach');
+  var leadsEl = document.getElementById('ads-kpi-leads');
+  var cplEl   = document.getElementById('ads-kpi-cpl');
+  if (spentEl) spentEl.textContent = fmt(ad.total_spent);
+  if (reachEl) reachEl.textContent = fmt(ad.total_reach);
+  if (leadsEl) leadsEl.textContent = fmt(ad.total_leads);
+  if (cplEl)   cplEl.textContent   = ad.avg_cpl ? fmt(ad.avg_cpl) : '—';
+
+  // Status badge colors
+  var statusMap = { active: {bg:'#dcfce7', txt:'#166534', label:'🟢 Active'},
+                    ended:  {bg:'#f1f5f9', txt:'#64748b', label:'⚫ Ended'},
+                    paused: {bg:'#fef9c3', txt:'#854d0e', label:'⏸️ Paused'} };
+
+  // Platform colors
+  var platColors = { facebook:'#1877f2', tiktok:'#010101', instagram:'#e1306c',
+                     google:'#4285f4', line:'#06c755' };
+
+  // Build campaign cards
+  var html = '';
+  ad.campaigns.forEach(function(c) {
+    var st = statusMap[c.status] || statusMap['ended'];
+    var pcolor = platColors[c.platform] || '#94a3b8';
+    var budgetPct = c.budget > 0 ? Math.min(100, Math.round((c.budget_spent / c.budget) * 100)) : 0;
+    var burnColor = budgetPct > 90 ? '#ef4444' : budgetPct > 70 ? '#f59e0b' : '#22c55e';
+
+    // KPI pills
+    var kpis = '';
+    if (c.cpr != null) kpis += '<span style="background:#f0fdf4;color:#166534" class="text-xs px-2 py-0.5 rounded-full font-semibold">CPR ' + c.cpr + '฿</span>';
+    if (c.cpl != null) kpis += '<span style="background:#eff6ff;color:#1e40af" class="text-xs px-2 py-0.5 rounded-full font-semibold">CPL ' + fmt(c.cpl) + '฿</span>';
+    if (c.roas != null) kpis += '<span style="background:#fef3c7;color:#92400e" class="text-xs px-2 py-0.5 rounded-full font-bold">ROAS ' + c.roas + 'x</span>';
+    if (c.ctr != null) kpis += '<span style="background:#fdf4ff;color:#6b21a8" class="text-xs px-2 py-0.5 rounded-full font-semibold">CTR ' + c.ctr + '%</span>';
+
+    html += '<div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">';
+    // Color stripe + header
+    html += '<div style="height:4px;background:' + pcolor + '"></div>';
+    html += '<div class="p-5">';
+    // Row 1: ID + Platform + Service + Status
+    html += '<div class="flex flex-wrap items-center gap-2 mb-3">';
+    html += '<span class="text-xs font-mono text-slate-400">' + c.id + '</span>';
+    html += '<span class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-md text-white" style="background:' + pcolor + '">' + c.platform + '</span>';
+    html += '<span class="text-sm font-bold" style="color:var(--text)">' + c.service + '</span>';
+    html += '<span class="ml-auto text-xs font-semibold px-2 py-0.5 rounded-full" style="background:' + st.bg + ';color:' + st.txt + '">' + st.label + '</span>';
+    html += '</div>';
+    // Row 2: Budget + dates
+    html += '<div class="flex flex-wrap gap-4 text-xs mb-3" style="color:var(--text-muted)">';
+    html += '<span>💰 งบ <strong style="color:var(--text)">' + fmt(c.budget) + '฿</strong></span>';
+    html += '<span>📅 ' + c.start_date + ' → ' + c.end_date + '</span>';
+    if (c.reach) html += '<span>👥 Reach <strong style="color:var(--text)">' + fmt(c.reach) + '</strong></span>';
+    if (c.leads) html += '<span>🎯 Leads <strong style="color:#f59e0b">' + c.leads + '</strong></span>';
+    html += '</div>';
+    // Budget burn bar
+    html += '<div class="mb-3">';
+    html += '<div class="flex justify-between text-xs mb-1" style="color:var(--text-muted)">';
+    html += '<span>งบที่ใช้ไป</span><span style="color:' + burnColor + ';font-weight:700">' + fmt(c.budget_spent) + '฿ (' + budgetPct + '%)</span>';
+    html += '</div>';
+    html += '<div class="h-2 rounded-full" style="background:var(--grid)">';
+    html += '<div class="h-2 rounded-full transition-all" style="width:' + budgetPct + '%;background:' + burnColor + '"></div>';
+    html += '</div></div>';
+    // KPI pills
+    if (kpis) html += '<div class="flex flex-wrap gap-2">' + kpis + '</div>';
+    html += '</div></div>';
+  });
+  listEl.innerHTML = html;
+
+  // Platform summary
+  if (platformEl) {
+    var platMap = {};
+    ad.campaigns.forEach(function(c) {
+      var p = c.platform;
+      if (!platMap[p]) platMap[p] = {budget:0, spent:0, reach:0, leads:0, color: platColors[p]||'#94a3b8'};
+      platMap[p].budget += c.budget || 0;
+      platMap[p].spent  += c.budget_spent || 0;
+      platMap[p].reach  += c.reach || 0;
+      platMap[p].leads  += c.leads || 0;
+    });
+    var ph = '';
+    Object.keys(platMap).forEach(function(p) {
+      var d = platMap[p];
+      var cpl = d.leads > 0 ? Math.round(d.spent / d.leads) : null;
+      ph += '<div class="bg-white rounded-2xl border border-slate-200 p-4 overflow-hidden">';
+      ph += '<div class="h-1 rounded-t-sm -mx-4 -mt-4 mb-3" style="background:' + d.color + '"></div>';
+      ph += '<div class="text-xs font-black uppercase tracking-widest mb-2" style="color:' + d.color + '">' + p.toUpperCase() + '</div>';
+      ph += '<div class="grid grid-cols-2 gap-2 text-xs">';
+      ph += '<div><span style="color:var(--text-muted)">งบรวม</span><br><strong style="color:var(--text)">' + fmt(d.budget) + '฿</strong></div>';
+      ph += '<div><span style="color:var(--text-muted)">Reach</span><br><strong style="color:var(--text)">' + fmt(d.reach) + '</strong></div>';
+      ph += '<div><span style="color:var(--text-muted)">Leads</span><br><strong style="color:#f59e0b">' + d.leads + '</strong></div>';
+      ph += '<div><span style="color:var(--text-muted)">CPL</span><br><strong style="color:#22c55e">' + (cpl ? fmt(cpl)+'฿' : '—') + '</strong></div>';
+      ph += '</div></div>';
+    });
+    platformEl.innerHTML = ph;
+  }
+
+  // Dynamic tip based on best ROAS
+  var best = ad.campaigns.filter(function(c) { return c.roas; }).sort(function(a,b) { return (b.roas||0)-(a.roas||0); })[0];
+  var tipEl = document.getElementById('ads-tip');
+  if (tipEl && best) {
+    tipEl.innerHTML = '🏆 <strong>' + best.id + ' (' + best.service + ')</strong> มี ROAS สูงสุด <strong>' + best.roas + 'x</strong> — ควร Scale Budget ขึ้นก่อน campaign อื่น'
+      + ' • รัน <code class="bg-amber-100 px-1 rounded">/ad-report</code> เพื่อดู ROI Report ฉบับเต็ม';
   }
 }
 
